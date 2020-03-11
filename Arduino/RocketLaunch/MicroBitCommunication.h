@@ -2,25 +2,27 @@
 
 #include "ITransport.h"
 
+// The serial reader sees a 0 as a string null terminator and stops reading the data
+// So the lowest subject ID is 1
 enum class SendSubject
 {
-  PlayerCount = 0,
-  GameMode = 1,
-  Start = 2,
-  Quit = 3,
-  SubjectCount
+  PlayerCount = 1,
+  GameMode = 2,
+  Start = 3,
+  Quit = 4,
+  SubjectCount = 4
 };
 
 enum class ReceiveSubject
 {
-  Hit = 0,
-  SubjectCount
+  Hit = 1,
+  SubjectCount = 1
 };
 
 class MicroBitCommunication
 {
   public:
-    MicroBitCommunication(ITransport& communication, const uint8_t communicationEnablePin);
+    MicroBitCommunication(ITransport& communication, const uint8_t communicatioReceivenEnablePin, const uint8_t communicationSendEnablePin);
 
     void Start();
     void EnableCommunication();
@@ -37,7 +39,8 @@ class MicroBitCommunication
     bool ParseReceiveBuffer(const uint8_t* buffer, size_t bufferSize);
     void CallCallback();
 
-    const uint8_t m_communicationEnablePin;
+    const uint8_t m_communicatioReceivenEnablePin;
+    const uint8_t m_communicationSendEnablePin;
 
     ITransport& m_communication;
     const char m_valueSeparator = ';';

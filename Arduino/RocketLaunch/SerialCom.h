@@ -2,6 +2,8 @@
 
 #include "ITransport.h"
 
+#define SERIAL_RX_BUFFER_SIZE 256
+
 //#define USE_SOFTWARE_SERIAL
 
 #ifdef USE_SOFTWARE_SERIAL

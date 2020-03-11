@@ -5,9 +5,10 @@
 //===============
 // Constructor
 //===============
-MicroBitCommunication::MicroBitCommunication(ITransport& communication, const uint8_t communicationEnablePin)
+MicroBitCommunication::MicroBitCommunication(ITransport& communication, const uint8_t communicatioReceivenEnablePin, const uint8_t communicationSendEnablePin)
   : m_communication(communication),
-    m_communicationEnablePin(communicationEnablePin)
+    m_communicatioReceivenEnablePin(communicatioReceivenEnablePin),
+    m_communicationSendEnablePin(communicationSendEnablePin)
 {
 
 }
@@ -18,18 +19,19 @@ MicroBitCommunication::MicroBitCommunication(ITransport& communication, const ui
 
 void MicroBitCommunication::Start()
 {
-  pinMode(m_communicationEnablePin, OUTPUT);
+  pinMode(m_communicatioReceivenEnablePin, OUTPUT);
+  pinMode(m_communicationSendEnablePin, INPUT);
   EnableCommunication();
 }
 
 void MicroBitCommunication::EnableCommunication()
 {
-  digitalWrite(m_communicationEnablePin, HIGH);
+  digitalWrite(m_communicatioReceivenEnablePin, HIGH);
 }
 
 void MicroBitCommunication::DisableCommunication()
 {
-  digitalWrite(m_communicationEnablePin, LOW);
+  digitalWrite(m_communicatioReceivenEnablePin, LOW);
 }
 
 
@@ -63,18 +65,21 @@ bool MicroBitCommunication::OnTargetHit(void (*onTargetHitCallback)(const uint8_
 void MicroBitCommunication::GiveNumPlayers(const uint8_t numPlayers)
 {
   const uint8_t numPlayersBuf[] = {static_cast<uint8_t>(SendSubject::PlayerCount), m_valueSeparator, numPlayers};
+  while(digitalRead(m_communicationSendEnablePin) == LOW){};
   m_communication.SendBuffer(numPlayersBuf, sizeof(numPlayersBuf) / sizeof(numPlayersBuf[0]));
 }
 
 void MicroBitCommunication::SendStart()
 {
   const uint8_t buf[] = {static_cast<uint8_t>(SendSubject::Start)};
+  while(digitalRead(m_communicationSendEnablePin) == LOW){};
   m_communication.SendBuffer(buf, sizeof(buf) / sizeof(buf[0]));
 }
 
 void MicroBitCommunication::SendQuit()
 {
   const uint8_t buf[] = {static_cast<uint8_t>(SendSubject::Quit)};
+  while(digitalRead(m_communicationSendEnablePin) == LOW){};
   m_communication.SendBuffer(buf, sizeof(buf) / sizeof(buf[0]));
 }
 
@@ -107,7 +112,7 @@ bool MicroBitCommunication::ParseReceiveBuffer(const uint8_t* buffer, size_t buf
   // of the actual number (e.g. the first enum value, which is 0, is sent as 0x00)
 
   uint8_t subjectInt = buffer[0];
-  if (subjectInt >= static_cast<uint8_t>(ReceiveSubject::SubjectCount))
+  if (subjectInt == 0 || subjectInt > static_cast<uint8_t>(ReceiveSubject::SubjectCount))
   {
     return false;
   }

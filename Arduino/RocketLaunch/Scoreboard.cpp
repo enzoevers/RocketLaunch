@@ -18,6 +18,16 @@ Scoreboard::~Scoreboard()
 // Public functions
 //===============
 
+void Scoreboard::Reset()
+{
+  m_currentRow = 0;
+  m_currentColumn = 0;
+
+  ClearMatrix();
+
+  m_doIdleAnimation = true;
+}
+
 void Scoreboard::Update()
 {
   if (m_doIdleAnimation)
@@ -35,25 +45,6 @@ void Scoreboard::Update()
   //Serial.println(GetFPS());
 }
 
-void Scoreboard::Start()
-{
-  m_doIdleAnimation = false;
-
-  ClearMatrix();
-  //AnimationStart();
-  //AnimationIdleInGame();
-}
-
-void Scoreboard::Reset()
-{
-  m_currentRow = 0;
-  m_currentColumn = 0;
-
-  ClearMatrix();
-
-  m_doIdleAnimation = true;
-}
-
 bool Scoreboard::SetPlayerCount(const uint8_t numPlayers)
 {
   if (numPlayers > m_maxPlayers)
@@ -68,6 +59,15 @@ bool Scoreboard::SetPlayerCount(const uint8_t numPlayers)
 uint8_t Scoreboard::GetPlayerCount()
 {
   return m_playerCount;
+}
+
+void Scoreboard::Start()
+{
+  m_doIdleAnimation = false;
+
+  ClearMatrix();
+  AnimationStart();
+  AnimationIdleInGame();
 }
 
 bool Scoreboard::UpdateScore(uint32_t newScore, uint8_t player)
@@ -167,59 +167,3 @@ void Scoreboard::ClearMatrix()
   }
   FastLED.show();
 }
-
-/*
-  void Scoreboard::ShowSprite2d(const CRGB* sprite, const bool* spriteMask, const XY& spriteSize, const XY& topLeftOrigin)
-  {
-  if (sprite == nullptr || spriteMask == nullptr)
-  {
-    return;
-  }
-
-  if(topLeftOrigin.X >= m_matrixScreenSize.X || topLeftOrigin.Y >= m_matrixScreenSize.Y)
-  {
-    // Nothing to be drawn.
-    return;
-  }
-
-  XY topLeft = {};
-  if(topLeftOrigin.X < 0)
-  {
-    topLeft.X = 0;
-  }
-  if(topLeftOrigin.Y < 0)
-  {
-    topLeft.Y = 0;
-  }
-
-  XY bottomRight = {topLeftOrigin.X + (spriteSize.X - 1), topLeftOrigin.Y + (spriteSize.Y - 1)};
-  if(topLeftOrigin.X < 0)
-  {
-    bottomRight.X -= topLeftOrigin.X;
-  }
-  if(topLeftOrigin.Y < 0)
-  {
-    bottomRight.Y -= topLeftOrigin.Y;
-  }
-
-  if(bottomRight.X < 0 || bottomRight.Y < 0)
-  {
-    // Nothing to be drawn.
-    return;
-  }
-
-  for (size_t c = 0; c < bottomRight.X; c++)
-  {
-    for (size_t r = 0; r < bottomRight.Y; r++)
-    {
-      size_t matrixIndex = MatrixUtil::MatrixToLinearIndex(c + topLeftOrigin.X, r + topLeftOrigin.Y, m_matrixScreenSize.X, m_matrixScreenSize.Y);
-      size_t spriteIndex = MatrixUtil::MatrixToLinearIndex(c, r, spriteSize.X, spriteSize.Y);
-
-      if (spriteMask[spriteIndex])
-      {
-        m_ledMatrix[matrixIndex] = sprite[spriteIndex];
-      }
-    }
-  }
-  }
-*/

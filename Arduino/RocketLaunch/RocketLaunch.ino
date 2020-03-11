@@ -28,15 +28,15 @@ SerialCom mySerial(rxPin, txPin, 115200, startChar, stopChar);
 
 //----------
 // Micro:Bit communication
-const uint8_t communicationEnablePin = 12;
-MicroBitCommunication microBitCom(mySerial, communicationEnablePin);
+const uint8_t communicatioReceivenEnablePin = 11;
+const uint8_t communicatioSendEnablePin = 12;
+MicroBitCommunication microBitCom(mySerial, communicatioReceivenEnablePin, communicatioSendEnablePin);
 uint8_t playerCount = 1;
 uint8_t gameMode = 1;
 //----------
 
 //----------
 // Scoreboard
-// Set the pin in Scoreboard.h with the SCOREBOARD_DATA_PIN define
 Scoreboard scoreboard;
 //----------
 
@@ -55,6 +55,7 @@ uint32_t btnChangeTimestampMs = 0;
 const uint32_t startResetBtnPressThresholdMs = 1000; // 1 second
 bool doStart = false;
 bool doReset = false;
+bool didReset = false;
 //----------
 
 //----------
@@ -108,6 +109,7 @@ void loop()
   if (doStart)
   {
     InitializeGame();
+    delay(1); // Give the Micro:Bit some time to set its communication enable pin
     StartGame();
     doStart = false;
   }
@@ -115,35 +117,41 @@ void loop()
   {
     StopGame();
     doReset = false;
+    didReset = true;
   }
 }
 
 void StartResetButtonPoll()
 {
-  bool buttonState = digitalRead(startResetPin);
+  const bool buttonState = digitalRead(startResetPin);
+  const long currentMillis = millis();
 
   if ((lastButtonState != LOW) && (buttonState == LOW))
   {
     // Button was pressed
-    btnChangeTimestampMs = millis();
-    lastButtonState = buttonState;
+    btnChangeTimestampMs = currentMillis;
+    
+    didReset = false;
   }
-  else if ((lastButtonState != HIGH) && (buttonState == HIGH))
-  {  
-    // Button was released
-    if ((millis() - btnChangeTimestampMs) > startResetBtnPressThresholdMs)
+  else if ((lastButtonState == LOW) && (buttonState == LOW) && (didReset == false))
+  {
+    if ((currentMillis - btnChangeTimestampMs) > startResetBtnPressThresholdMs)
     {
       doStart = false;
       doReset = true;
     }
-    else
+  }
+  else if ((lastButtonState != HIGH) && (buttonState == HIGH))
+  {  
+    // Button was released
+    if ((currentMillis - btnChangeTimestampMs) <= startResetBtnPressThresholdMs)
     {
       doStart = true;
       doReset = false;
     }
-
-    lastButtonState = buttonState;
   }
+
+  lastButtonState = buttonState;
 }
 
 void InitializeGame()
@@ -197,7 +205,7 @@ void TargetHitCallback(const uint8_t player, const uint8_t points)
   {
     scoreboard.ReachedMaxScore(player);
     digitalWrite(cannonPin, HIGH);
-    delay(100);
+    delay(500);
     digitalWrite(cannonPin, LOW);
   }
   else
