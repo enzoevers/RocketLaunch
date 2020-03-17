@@ -5,10 +5,10 @@
 //===============
 // Constructor
 //===============
-MicroBitCommunication::MicroBitCommunication(ITransport& communication, const uint8_t communicatioReceivenEnablePin, const uint8_t communicationSendEnablePin)
+MicroBitCommunication::MicroBitCommunication(ITransport& communication, const uint8_t communicatioArduinoRxEnablePin, const uint8_t communicatioMicrobitRxSendEnablePin)
   : m_communication(communication),
-    m_communicatioReceivenEnablePin(communicatioReceivenEnablePin),
-    m_communicationSendEnablePin(communicationSendEnablePin)
+    m_communicatioArduinoRxEnablePin(communicatioArduinoRxEnablePin),
+    m_communicatioMicrobitRxSendEnablePin(communicatioMicrobitRxSendEnablePin)
 {
 
 }
@@ -19,19 +19,19 @@ MicroBitCommunication::MicroBitCommunication(ITransport& communication, const ui
 
 void MicroBitCommunication::Start()
 {
-  pinMode(m_communicatioReceivenEnablePin, OUTPUT);
-  pinMode(m_communicationSendEnablePin, INPUT);
+  pinMode(m_communicatioArduinoRxEnablePin, OUTPUT);
+  pinMode(m_communicatioMicrobitRxSendEnablePin, INPUT);
   EnableCommunication();
 }
 
 void MicroBitCommunication::EnableCommunication()
 {
-  digitalWrite(m_communicatioReceivenEnablePin, HIGH);
+  digitalWrite(m_communicatioArduinoRxEnablePin, HIGH);
 }
 
 void MicroBitCommunication::DisableCommunication()
 {
-  digitalWrite(m_communicatioReceivenEnablePin, LOW);
+  digitalWrite(m_communicatioArduinoRxEnablePin, LOW);
 }
 
 
@@ -65,21 +65,21 @@ bool MicroBitCommunication::OnTargetHit(void (*onTargetHitCallback)(const uint8_
 void MicroBitCommunication::GiveNumPlayers(const uint8_t numPlayers)
 {
   const uint8_t numPlayersBuf[] = {static_cast<uint8_t>(SendSubject::PlayerCount), m_valueSeparator, numPlayers};
-  while(digitalRead(m_communicationSendEnablePin) == LOW){};
+  while(digitalRead(m_communicatioMicrobitRxSendEnablePin) == LOW){};
   m_communication.SendBuffer(numPlayersBuf, sizeof(numPlayersBuf) / sizeof(numPlayersBuf[0]));
 }
 
 void MicroBitCommunication::SendStart()
 {
   const uint8_t buf[] = {static_cast<uint8_t>(SendSubject::Start)};
-  while(digitalRead(m_communicationSendEnablePin) == LOW){};
+  while(digitalRead(m_communicatioMicrobitRxSendEnablePin) == LOW){};
   m_communication.SendBuffer(buf, sizeof(buf) / sizeof(buf[0]));
 }
 
 void MicroBitCommunication::SendQuit()
 {
   const uint8_t buf[] = {static_cast<uint8_t>(SendSubject::Quit)};
-  while(digitalRead(m_communicationSendEnablePin) == LOW){};
+  while(digitalRead(m_communicatioMicrobitRxSendEnablePin) == LOW){};
   m_communication.SendBuffer(buf, sizeof(buf) / sizeof(buf[0]));
 }
 

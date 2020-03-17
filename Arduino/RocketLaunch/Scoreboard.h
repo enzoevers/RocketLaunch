@@ -1,6 +1,6 @@
 #pragma once
 
-#define SCOREBOARD_DATA_PIN 10
+#define SCOREBOARD_DATA_PIN 8
 
 #include "MatrixUtil.h"
 #include "SpriteViewer.h"

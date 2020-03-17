@@ -12,25 +12,23 @@
 
 //----------
 // Configuration pins
-const uint8_t playerSelectPin = 3;
-const uint8_t gameModePin = 4;
-const uint8_t startResetPin = 7;
+const uint8_t playerSelectPin = 4;
+const uint8_t gameModePin = 5;
+const uint8_t startResetPin = 6;
 //----------
 
 //----------
 // Serial
-const uint8_t rxPin = 11;
-const uint8_t txPin = 12;
 const char startChar = '#';
 const char stopChar = '%';
-SerialCom mySerial(rxPin, txPin, 115200, startChar, stopChar);
+SerialCom mySerial(115200, startChar, stopChar);
 //----------
 
 //----------
 // Micro:Bit communication
-const uint8_t communicatioReceivenEnablePin = 11;
-const uint8_t communicatioSendEnablePin = 12;
-MicroBitCommunication microBitCom(mySerial, communicatioReceivenEnablePin, communicatioSendEnablePin);
+const uint8_t communicatioArduinoRxEnablePin = 2;
+const uint8_t communicatioMicrobitRxSendEnablePin = 3;
+MicroBitCommunication microBitCom(mySerial, communicatioArduinoRxEnablePin, communicatioMicrobitRxSendEnablePin);
 uint8_t playerCount = 1;
 uint8_t gameMode = 1;
 //----------

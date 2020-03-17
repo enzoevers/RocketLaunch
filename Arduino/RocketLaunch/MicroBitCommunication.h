@@ -22,7 +22,7 @@ enum class ReceiveSubject
 class MicroBitCommunication
 {
   public:
-    MicroBitCommunication(ITransport& communication, const uint8_t communicatioReceivenEnablePin, const uint8_t communicationSendEnablePin);
+    MicroBitCommunication(ITransport& communication, const uint8_t communicatioArduinoRxEnablePin, const uint8_t communicatioMicrobitRxSendEnablePin);
 
     void Start();
     void EnableCommunication();
@@ -39,8 +39,8 @@ class MicroBitCommunication
     bool ParseReceiveBuffer(const uint8_t* buffer, size_t bufferSize);
     void CallCallback();
 
-    const uint8_t m_communicatioReceivenEnablePin;
-    const uint8_t m_communicationSendEnablePin;
+    const uint8_t m_communicatioArduinoRxEnablePin;
+    const uint8_t m_communicatioMicrobitRxSendEnablePin;
 
     ITransport& m_communication;
     const char m_valueSeparator = ';';

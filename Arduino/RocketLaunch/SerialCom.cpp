@@ -3,13 +3,9 @@
 //===============
 // Constructor
 //===============
-SerialCom::SerialCom(const uint8_t rxPin, const uint8_t txPin, const long baud, const char startChar, const char stopChar)
-  :
-#ifdef USE_SOFTWARE_SERIAL
-  m_mySerial(rxPin, txPin),
-#endif
-  m_startChar(startChar),
-  m_stopChar(stopChar)
+SerialCom::SerialCom(const long baud, const char startChar, const char stopChar)
+  : m_startChar(startChar),
+    m_stopChar(stopChar)
 {
   // Validate that the baud rate is supported as listed here:
   // https://www.arduino.cc/en/Reference/SoftwareSerialBegin

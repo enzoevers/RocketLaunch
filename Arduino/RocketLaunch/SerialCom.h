@@ -2,22 +2,8 @@
 
 #include "ITransport.h"
 
-#define SERIAL_RX_BUFFER_SIZE 256
-
-//#define USE_SOFTWARE_SERIAL
-
-#ifdef USE_SOFTWARE_SERIAL
-
-// Software serial is half-duplex.
-// This means not loopback-test can be performed
-#include <SoftwareSerial.h>
-
-#else
-
 // When programming the Arduino, pin 0 and 1 may need to be disconnected.
 #include <HardwareSerial.h>
-
-#endif
 
 enum class ReadState
 {
@@ -29,7 +15,7 @@ enum class ReadState
 class SerialCom : public ITransport
 {
   public:
-    SerialCom(const uint8_t rxPin, const uint8_t txPin, const long baud, const char startChar, const char stopChar);
+    SerialCom(const long baud, const char startChar, const char stopChar);
 
     //---------------
     // ITransport
@@ -42,11 +28,7 @@ class SerialCom : public ITransport
   private:
     void ParseByte(const uint8_t receivedByte);
 
-#ifdef USE_SOFTWARE_SERIAL
-    SoftwareSerial m_mySerial;
-#else
     HardwareSerial& m_mySerial = Serial;
-#endif
 
     long m_baud = 115200;
 
