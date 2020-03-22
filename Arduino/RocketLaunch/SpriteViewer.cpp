@@ -4,13 +4,11 @@
 // Constructor
 //===============
 
-SpriteViewer::SpriteViewer(CRGB* spriteData, bool* spriteMask, MatrixUtil::XY spriteSize, MatrixUtil::XY topLeftPosition, CRGB* matrixScreen, MatrixUtil::XY matrixSize)
-  : m_spriteData(spriteData),
-    m_spriteMask(spriteMask),
+SpriteViewer::SpriteViewer(Sprite* sprite, MatrixUtil::XY spriteTopLeftPosition, CRGB* matrixScreen, MatrixUtil::XY matrixSize)
+  : m_sprite(sprite),
     m_matrixScreen(matrixScreen),
-    m_spriteSize(spriteSize),
     m_matrixSize(matrixSize),
-    m_topLeftPosition(topLeftPosition)
+    m_topLeftPosition(spriteTopLeftPosition)
 {
 
 }
@@ -18,6 +16,18 @@ SpriteViewer::SpriteViewer(CRGB* spriteData, bool* spriteMask, MatrixUtil::XY sp
 //===============
 // Public functions
 //===============
+
+const MatrixUtil::XY SpriteViewer::GetSpriteSize()
+{
+  if (m_sprite == nullptr)
+  {
+    return {0, 0};
+  }
+  else
+  {
+    return m_sprite->spriteSize;
+  }
+}
 
 bool SpriteViewer::SetScreen(CRGB* matrixScreen, MatrixUtil::XY matrixSize)
 {
@@ -36,22 +46,27 @@ bool SpriteViewer::SetScreen(CRGB* matrixScreen, MatrixUtil::XY matrixSize)
   return true;
 }
 
-bool SpriteViewer::SetSprite(CRGB* spriteData, bool* spriteMask, MatrixUtil::XY spriteSize, MatrixUtil::XY topLeftPosition)
+bool SpriteViewer::SetSprite(Sprite* sprite, MatrixUtil::XY spriteTopLeftPosition)
 {
-  if (spriteData == nullptr || spriteMask == nullptr)
+  if (sprite == nullptr)
   {
     return false;
   }
 
-  if (spriteSize.X <= 0 || spriteSize.Y <= 0)
+  if (sprite->spriteData == nullptr || sprite->spriteMask == nullptr)
   {
     return false;
   }
 
-  m_spriteData = spriteData;
-  m_spriteMask = spriteMask;
-  m_spriteSize = spriteSize;
-  m_topLeftPosition = topLeftPosition;
+  if (sprite->spriteSize.X <= 0 || sprite->spriteSize.Y <= 0)
+  {
+    return false;
+  }
+
+  m_sprite->spriteData = sprite->spriteData;
+  m_sprite->spriteMask = sprite->spriteMask;
+  m_sprite->spriteSize = sprite->spriteSize;
+  m_topLeftPosition = spriteTopLeftPosition;
   return true;
 }
 
@@ -68,7 +83,17 @@ void SpriteViewer::TranslateSprite(MatrixUtil::XY translation)
 
 bool SpriteViewer::SetSpriteOnScreen()
 {
-  if (m_spriteData == nullptr || m_spriteMask == nullptr)
+  if (m_sprite == nullptr)
+  {
+    return false;
+  }
+
+  if (m_sprite->spriteData == nullptr || m_sprite->spriteMask == nullptr)
+  {
+    return false;
+  }
+
+  if (m_sprite->spriteSize.X <= 0 || m_sprite->spriteSize.Y <= 0)
   {
     return false;
   }
@@ -78,13 +103,8 @@ bool SpriteViewer::SetSpriteOnScreen()
     return false;
   }
 
-  if (m_spriteSize.X <= 0 || m_spriteSize.Y <= 0)
-  {
-    return false;
-  }
-
   // Check it the complete sprite is out of the matrix
-  MatrixUtil::XY bottomRight = {m_topLeftPosition.X + (m_spriteSize.X - 1), m_topLeftPosition.Y + (m_spriteSize.Y - 1)};
+  MatrixUtil::XY bottomRight = {m_topLeftPosition.X + (m_sprite->spriteSize.X - 1), m_topLeftPosition.Y + (m_sprite->spriteSize.Y - 1)};
 
   if (m_topLeftPosition.X >= m_matrixSize.X || m_topLeftPosition.Y >= m_matrixSize.Y
       || bottomRight.X < 0 || bottomRight.Y < 0)
@@ -94,20 +114,21 @@ bool SpriteViewer::SetSpriteOnScreen()
   }
 
   // Update the matrix screen data with the sprite data
-  for (size_t c = 0; c < m_spriteSize.X; c++)
+  for (size_t c = 0; c < m_sprite->spriteSize.X; c++)
   {
-    for (size_t r = 0; r < m_spriteSize.Y; r++)
+    for (size_t r = 0; r < m_sprite->spriteSize.Y; r++)
     {
       MatrixUtil::XY matrixCoordinate = { m_topLeftPosition.X + c, m_topLeftPosition.Y + r };
 
       if (CoordinateIsInScreen(matrixCoordinate))
       {
-        size_t matrixIndex = MatrixUtil::MatrixToLinearIndex(matrixCoordinate.X, matrixCoordinate.Y, m_matrixSize.X, m_matrixSize.Y);
-        size_t spriteIndex = MatrixUtil::MatrixToLinearIndex(c, r, m_spriteSize.X, m_spriteSize.Y);
+        size_t matrixIndex = MatrixUtil::VerticalSerpentineMatrixToLinearIndex(matrixCoordinate.X, matrixCoordinate.Y, m_matrixSize.X, m_matrixSize.Y);
+        size_t spriteIndex = MatrixUtil::VerticalSerpentineMatrixToLinearIndex(c, r, m_sprite->spriteSize.X, m_sprite->spriteSize.Y);
 
-        if (m_spriteMask[spriteIndex])
+        const uint64_t spriteRowMask = 1 << ((m_sprite->spriteSize.X - 1) - c);
+        if (m_sprite->spriteMask[r] & spriteRowMask)
         {
-          m_matrixScreen[matrixIndex] = m_spriteData[spriteIndex];
+          m_matrixScreen[matrixIndex] = m_sprite->spriteData[spriteIndex];
         }
       }
     }

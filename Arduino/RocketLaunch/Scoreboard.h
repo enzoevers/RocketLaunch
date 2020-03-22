@@ -4,25 +4,9 @@
 
 #include "MatrixUtil.h"
 #include "SpriteViewer.h"
+#include "SpriteCollection.h"
 #include <FastLED.h>
 
-//         ||                                                  ||
-//         ||                                                  ||
-//         DIN                                                DOUT
-//     c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c
-//     0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3
-//     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-//     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// r0 |0 →↓                                                          |
-// r1 |↓ ↑ ↓                                                          |
-// r2 |↓ ↑ ↓                                                          |
-// r3 |↓ ↑ ↓                                                          |
-// r4 |↓ ↑ ↓                                                          |
-// r5 |↓ ↑ ↓                                                          |
-// r6 |↓ ↑ ↓                                                          |
-// r8 |7 ↑ →                                                         |
-//     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
 // WS2812B datasheet: https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf
 // -> WS2812B-V2 (on the matrix) datasheet: https://d2j2m4p6r3pg95.cloudfront.net/module_files/led-cube/assets/datasheets/WS2812B.pdf
 //
@@ -108,27 +92,13 @@ class Scoreboard
     const uint8_t m_maxPlayers = 2;
     uint8_t m_playerCount = 1;
 
-    bool m_doIdleAnimation = false;
+    bool m_doIdleAnimation = false;    
 
-    //-----
-    // ball sprite
-    const MatrixUtil::XY m_ballSpriteSize = {4, 4};
-    MatrixUtil::XY m_ballSpriteTopLeft = { -m_ballSpriteSize.X, 2};
-    CRGB m_ballSpriteData[4*4] =
-    {
-      CHSV(0, 255, 0), CHSV(0, 255, 0), CHSV(0, 255, 0), CHSV(0, 255, 0),
-      CHSV(0, 255, 0), CHSV(0, 255, 0), CHSV(0, 255, 0), CHSV(0, 255, 0),
-      CHSV(0, 255, 0), CHSV(0, 255, 0), CHSV(0, 255, 0), CHSV(0, 255, 0),
-      CHSV(0, 255, 0), CHSV(0, 255, 0), CHSV(0, 255, 0), CHSV(0, 255, 0)
-    };
-    bool m_ballSpriteMask[4*4] =
-    {
-      0, 1, 1, 0,
-      1, 1, 1, 1,
-      1, 1, 1, 1,
-      0, 1, 1, 0
-    };
+    // Sprites
+    
+    MatrixUtil::XY m_ballSpriteTopLeft = { -SpriteCollection::ballSprite.spriteSize.X, 2};
+    SpriteViewer* m_ballSpriteViewer = new SpriteViewer(&SpriteCollection::ballSprite, m_ballSpriteTopLeft, m_ledMatrix, m_matrixScreenSize);
 
-    SpriteViewer* m_ballSprite = new SpriteViewer(m_ballSpriteData, m_ballSpriteMask, m_ballSpriteSize, m_ballSpriteTopLeft, m_ledMatrix, m_matrixScreenSize);
-    //---
+    MatrixUtil::XY m_character_R_SpriteTopLeft = { -SpriteCollection::character_R_Sprite.spriteSize.X, 2};
+    SpriteViewer* m_character_R_SpriteViewer = new SpriteViewer(&SpriteCollection::character_R_Sprite, m_character_R_SpriteTopLeft, m_ledMatrix, m_matrixScreenSize);
 };

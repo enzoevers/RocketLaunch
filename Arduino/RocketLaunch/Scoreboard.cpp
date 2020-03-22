@@ -10,8 +10,11 @@ Scoreboard::Scoreboard()
 
 Scoreboard::~Scoreboard()
 {
-  delete m_ballSprite;
-  m_ballSprite = nullptr;
+  delete m_ballSpriteViewer;
+  m_ballSpriteViewer = nullptr;
+
+  delete m_character_R_SpriteViewer;
+  m_character_R_SpriteViewer = nullptr;
 }
 
 //===============
@@ -41,8 +44,6 @@ void Scoreboard::Update()
       AnimationIdleNoGame();
     }
   }
-
-  //Serial.println(GetFPS());
 }
 
 bool Scoreboard::SetPlayerCount(const uint8_t numPlayers)
@@ -118,17 +119,17 @@ void Scoreboard::AnimationIdleNoGame()
     m_currentHue += columnHueDelta;
     for (size_t r = 0; r < m_matrixScreenSize.Y; r++)
     {
-      size_t index = MatrixUtil::MatrixToLinearIndex(c, r, m_matrixScreenSize.X, m_matrixScreenSize.Y);
+      size_t index = MatrixUtil::VerticalSerpentineMatrixToLinearIndex(c, r, m_matrixScreenSize.X, m_matrixScreenSize.Y);
       m_ledMatrix[index] = CHSV(m_currentHue, m_currentSaturation, m_currentValue);
     }
   }
 
-  m_ballSprite->SetPosition(m_ballSpriteTopLeft);
-  m_ballSprite->SetSpriteOnScreen();
+  m_ballSpriteViewer->SetPosition(m_ballSpriteTopLeft);
+  m_ballSpriteViewer->SetSpriteOnScreen();
   m_ballSpriteTopLeft.X++;
   if (m_ballSpriteTopLeft.X >= m_matrixScreenSize.X)
   {
-    m_ballSpriteTopLeft.X = -m_ballSpriteSize.X;
+    m_ballSpriteTopLeft.X = -(m_ballSpriteViewer->GetSpriteSize()).X;
   }
   //-----
 

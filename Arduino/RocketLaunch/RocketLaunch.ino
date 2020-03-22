@@ -40,8 +40,25 @@ Scoreboard scoreboard;
 
 //----------
 // Players
+const uint8_t maxPlayerCount = 2;
 Player player1;
 Player player2; // player2 my not be used
+const Player* players[maxPlayerCount] = { &player1, &player2 };
+uint8_t winningPlayer = 0;
+//----------
+
+
+//----------
+// Points
+struct ScoreInfo
+{
+  bool newScoreFlag = false;
+  uint8_t player = 0;
+  uint8_t points = 0;
+};
+
+ScoreInfo receivedScoreInfo = {};
+const uint32_t maxScore = 100;
 //----------
 
 //----------
@@ -61,13 +78,31 @@ bool didReset = false;
 const uint8_t cannonPin = 2;
 //----------
 
-const uint32_t maxScore = 100;
+//----------
+// Game state
+enum class GameState
+{
+  OutOfGame,
+  StartGame,
+  InGameIdle,
+  InGameScored,
+  ReachedMaxScore,
+  StopGame
+};
 
+GameState previousState = GameState::OutOfGame;
+GameState currentState = GameState::OutOfGame;
+//----------
+
+//----------
+// General functions
 void StartResetButtonPressed();
 void InitializeGame();
 void StartGame();
 void StopGame();
+void fireConfettiCannons();
 void TargetHitCallback(const uint8_t player, const uint8_t points);
+//----------
 
 void setup()
 {
@@ -90,9 +125,9 @@ void loop()
   microBitCom.Update();
 
   // The FastLED library (used in Scoreboard)
-  // disables the interrupts which can 
+  // disables the interrupts which can
   // cause received serial bytes to be lost.
-  // 
+  //
   // To avoid lost bytes the Micro:Bit is signalled to
   // wait with sending bytes while FastLED is writing data
   // to the LEDs
@@ -101,22 +136,113 @@ void loop()
   scoreboard.Update();
   microBitCom.EnableCommunication();
   delay(5); // Time to receive data
-  
+
   StartResetButtonPoll();
 
-  if (doStart)
+  switch (currentState)
   {
-    InitializeGame();
-    delay(1); // Give the Micro:Bit some time to set its communication enable pin
-    StartGame();
-    doStart = false;
-  }
-  else if (doReset)
-  {
-    StopGame();
-    doReset = false;
-    didReset = true;
-  }
+    case GameState::OutOfGame:
+      {
+        // A result from StartResetButtonPoll()
+        if (doStart)
+        {
+          previousState = currentState;
+          currentState = GameState::StartGame;
+        }
+
+        break;
+      }
+    case GameState::StartGame:
+      {
+        InitializeGame();
+        delay(1); // Give the Micro:Bit some time to set its communication enable pin
+
+        // TODO: Do startup animation on scoreboard
+
+        StartGame();
+        doStart = false;
+
+        previousState = currentState;
+        currentState = GameState::InGameIdle;
+
+        break;
+      }
+    case GameState::InGameIdle:
+      {
+        if (previousState == GameState::StartGame)
+        {
+          // TODO: Start InGameIdle animation
+        }
+        else if (previousState == GameState::InGameScored)
+        {
+          // TODO: Continue InGameIdle animation
+        }
+        
+        // A result from StartResetButtonPoll()
+        if (doReset)
+        {
+          previousState = currentState;
+          currentState = GameState::StopGame;
+        }
+
+        // Updated in TargetHitCallback()
+        if (receivedScoreInfo.newScoreFlag)
+        {
+          receivedScoreInfo.newScoreFlag = false; // Reset the flag
+
+          previousState = currentState;
+          currentState = GameState::InGameScored;
+        }
+
+        break;
+      }
+    case GameState::InGameScored:
+      {
+        uint8_t player = receivedScoreInfo.player;
+
+        if ((player >= 1) && (player <= maxPlayerCount))
+        {
+          uint32_t newScore = players[receivedScoreInfo.player - 1]->AddPoints(receivedScoreInfo.points);
+
+          if (newScore >= maxScore)
+          {
+            winningPlayer = player;
+            previousState = currentState;
+            currentState = GameState::ReachedMaxScore;
+          }
+          else
+          {
+            scoreboard.UpdateScore(newScore, player);
+
+            previousState = currentState;
+            currentState = GameState::InGameIdle;
+          }
+        }
+
+        break;
+      }
+    case GameState::ReachedMaxScore:
+      {
+        scoreboard.ReachedMaxScore(winningPlayer);
+        fireConfettiCannons();
+
+        previousState = currentState;
+        currentState = GameState::StopGame;
+
+        break;
+      }
+    case GameState::StopGame:
+      {
+        StopGame();
+        doReset = false;
+        didReset = true;
+
+        previousState = currentState;
+        currentState = GameState::OutOfGame;
+
+        break;
+      }
+  };
 }
 
 void StartResetButtonPoll()
@@ -128,7 +254,7 @@ void StartResetButtonPoll()
   {
     // Button was pressed
     btnChangeTimestampMs = currentMillis;
-    
+
     didReset = false;
   }
   else if ((lastButtonState == LOW) && (buttonState == LOW) && (didReset == false))
@@ -140,7 +266,7 @@ void StartResetButtonPoll()
     }
   }
   else if ((lastButtonState != HIGH) && (buttonState == HIGH))
-  {  
+  {
     // Button was released
     if ((currentMillis - btnChangeTimestampMs) <= startResetBtnPressThresholdMs)
     {
@@ -154,8 +280,10 @@ void StartResetButtonPoll()
 
 void InitializeGame()
 {
-  // 0: 1 player ; 1: 2 players
+  // reading a 0 -> 1 player
+  // reading a 1 -> 2 players
   playerCount = (digitalRead(playerSelectPin) == 0) ? 1 : 2;
+
   gameMode = (digitalRead(gameModePin) == 0) ? 1 : 2;
 
   scoreboard.SetPlayerCount(playerCount);
@@ -177,37 +305,16 @@ void StopGame()
   scoreboard.Reset();
 }
 
+void fireConfettiCannons()
+{
+  digitalWrite(cannonPin, HIGH);
+  delay(500);
+  digitalWrite(cannonPin, LOW);
+}
+
 void TargetHitCallback(const uint8_t player, const uint8_t points)
 {
-  uint32_t newScore = 0;
-
-  switch (player)
-  {
-    case 1:
-      {
-        newScore = player1.AddPoints(points);
-        break;
-      }
-    case 2:
-      {
-        newScore = player2.AddPoints(points);
-        break;
-      }
-    default:
-      {
-        break;
-      }
-  };
-
-  if (newScore >= maxScore)
-  {
-    scoreboard.ReachedMaxScore(player);
-    digitalWrite(cannonPin, HIGH);
-    delay(500);
-    digitalWrite(cannonPin, LOW);
-  }
-  else
-  {
-    scoreboard.UpdateScore(newScore, player);
-  }
+  receivedScoreInfo.newScoreFlag = true;
+  receivedScoreInfo.player = player;
+  receivedScoreInfo.points = points;
 }
