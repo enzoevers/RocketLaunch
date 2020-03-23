@@ -105,10 +105,10 @@ class Scoreboard
     SpriteViewer* m_character_3_SpriteViewer = new SpriteViewer(&SpriteCollection::character_3_Sprite, m_ledMatrix, m_matrixScreenSize);
     SpriteViewer* m_character_4_SpriteViewer = new SpriteViewer(&SpriteCollection::character_4_Sprite, m_ledMatrix, m_matrixScreenSize);
     SpriteViewer* m_character_5_SpriteViewer = new SpriteViewer(&SpriteCollection::character_5_Sprite, m_ledMatrix, m_matrixScreenSize);
-    //SpriteViewer* m_character_6_SpriteViewer = new SpriteViewer(&SpriteCollection::character_6_Sprite, m_ledMatrix, m_matrixScreenSize);
-    //SpriteViewer* m_character_7_SpriteViewer = new SpriteViewer(&SpriteCollection::character_7_Sprite, m_ledMatrix, m_matrixScreenSize);
-    //SpriteViewer* m_character_8_SpriteViewer = new SpriteViewer(&SpriteCollection::character_8_Sprite, m_ledMatrix, m_matrixScreenSize);
-    //SpriteViewer* m_character_9_SpriteViewer = new SpriteViewer(&SpriteCollection::character_9_Sprite, m_ledMatrix, m_matrixScreenSize);
+    SpriteViewer* m_character_6_SpriteViewer = new SpriteViewer(&SpriteCollection::character_6_Sprite, m_ledMatrix, m_matrixScreenSize);
+    SpriteViewer* m_character_7_SpriteViewer = new SpriteViewer(&SpriteCollection::character_7_Sprite, m_ledMatrix, m_matrixScreenSize);
+    SpriteViewer* m_character_8_SpriteViewer = new SpriteViewer(&SpriteCollection::character_8_Sprite, m_ledMatrix, m_matrixScreenSize);
+    SpriteViewer* m_character_9_SpriteViewer = new SpriteViewer(&SpriteCollection::character_9_Sprite, m_ledMatrix, m_matrixScreenSize);
 
     SpriteViewer* m_numberSprites[10] =
     {
@@ -118,9 +118,9 @@ class Scoreboard
       m_character_3_SpriteViewer,
       m_character_4_SpriteViewer,
       m_character_5_SpriteViewer,
-      //m_character_6_SpriteViewer,
-      //m_character_7_SpriteViewer,
-      //m_character_8_SpriteViewer,
-      //m_character_9_SpriteViewer
+      m_character_6_SpriteViewer,
+      m_character_7_SpriteViewer,
+      m_character_8_SpriteViewer,
+      m_character_9_SpriteViewer
     };
 };

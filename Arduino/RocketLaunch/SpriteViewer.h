@@ -7,7 +7,10 @@ struct Sprite
 {
   MatrixUtil::XY spriteSize;
   CHSV colorHSV;
-  uint32_t* spriteMask; // Bitmask per row
+
+  // Bitmask per row
+  // A sprite may only have a maximum of 8 columns to reduce memory usage
+  uint8_t* spriteMask; 
 };
 
 class SpriteViewer
