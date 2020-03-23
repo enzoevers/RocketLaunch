@@ -6,16 +6,17 @@
 struct Sprite
 {
   MatrixUtil::XY spriteSize;
-  CHSV* spriteData;
-  uint64_t* spriteMask; // Bitmask per row
+  CHSV colorHSV;
+  uint32_t* spriteMask; // Bitmask per row
 };
 
 class SpriteViewer
 {
   public:
-    SpriteViewer(Sprite* sprite, MatrixUtil::XY spriteTopLeftPosition, CRGB* matrixScreen, MatrixUtil::XY matrixSize);
+    SpriteViewer(Sprite* sprite, CRGB* matrixScreen, MatrixUtil::XY matrixSize);
 
     const MatrixUtil::XY GetSpriteSize();
+    const MatrixUtil::XY GetPosition() { return m_topLeftPosition; }
 
     bool SetScreen(CRGB* matrixScreen, MatrixUtil::XY matrixSize);
     bool SetSprite(Sprite* sprite, MatrixUtil::XY spriteTopLeftPosition);

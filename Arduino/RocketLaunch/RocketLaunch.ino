@@ -6,6 +6,7 @@
 //====================
 
 #include "Scoreboard.h"
+#include "GameState.h"
 #include "Player.h"
 #include "SerialCom.h"
 #include "MicroBitCommunication.h"
@@ -34,11 +35,6 @@ uint8_t gameMode = 1;
 //----------
 
 //----------
-// Scoreboard
-Scoreboard scoreboard;
-//----------
-
-//----------
 // Players
 const uint8_t maxPlayerCount = 2;
 Player player1;
@@ -47,6 +43,11 @@ const Player* players[maxPlayerCount] = { &player1, &player2 };
 uint8_t winningPlayer = 0;
 //----------
 
+//----------
+// Scoreboard
+Scoreboard scoreboard;
+bool animationRoundComplete = false;
+//----------
 
 //----------
 // Points
@@ -59,6 +60,9 @@ struct ScoreInfo
 
 ScoreInfo receivedScoreInfo = {};
 const uint32_t maxScore = 100;
+
+const unsigned long maxTimeInScoreStateMs = 10000; // 10 seconds
+unsigned long startTimeOfMaxScoreState = 0;
 //----------
 
 //----------
@@ -80,22 +84,13 @@ const uint8_t cannonPin = 2;
 
 //----------
 // Game state
-enum class GameState
-{
-  OutOfGame,
-  StartGame,
-  InGameIdle,
-  InGameScored,
-  ReachedMaxScore,
-  StopGame
-};
-
 GameState previousState = GameState::OutOfGame;
 GameState currentState = GameState::OutOfGame;
 //----------
 
 //----------
 // General functions
+void UpdateGameState();
 void StartResetButtonPressed();
 void InitializeGame();
 void StartGame();
@@ -122,23 +117,30 @@ void setup()
 
 void loop()
 {
-  microBitCom.Update();
-
   // The FastLED library (used in Scoreboard)
   // disables the interrupts which can
   // cause received serial bytes to be lost.
   //
-  // To avoid lost bytes the Micro:Bit is signalled to
+  // To avoid losing bytes from the Micro:Bit, the Micro:Bit is signalled to
   // wait with sending bytes while FastLED is writing data
   // to the LEDs
-  microBitCom.DisableCommunication();
-  delayMicroseconds(200); // Wait to make sure that last byte is received
-  scoreboard.Update();
-  microBitCom.EnableCommunication();
-  delay(5); // Time to receive data
 
+  microBitCom.Update(); // Read data from the receive buffer
   StartResetButtonPoll();
 
+  // Update the game state based on
+  // the received bytes from the Micro:Bit and the button press
+  UpdateGameState();
+
+  microBitCom.DisableCommunication();
+  delayMicroseconds(200); // Wait to make sure that last byte(s) is stored in the receive buffer
+  animationRoundComplete = scoreboard.Update(currentState); // Perform an animation step on the LED matrix
+  microBitCom.EnableCommunication();
+  delay(5); // Time to receive data
+}
+
+void UpdateGameState()
+{
   switch (currentState)
   {
     case GameState::OutOfGame:
@@ -157,8 +159,6 @@ void loop()
         InitializeGame();
         delay(1); // Give the Micro:Bit some time to set its communication enable pin
 
-        // TODO: Do startup animation on scoreboard
-
         StartGame();
         doStart = false;
 
@@ -169,15 +169,6 @@ void loop()
       }
     case GameState::InGameIdle:
       {
-        if (previousState == GameState::StartGame)
-        {
-          // TODO: Start InGameIdle animation
-        }
-        else if (previousState == GameState::InGameScored)
-        {
-          // TODO: Continue InGameIdle animation
-        }
-        
         // A result from StartResetButtonPoll()
         if (doReset)
         {
@@ -188,8 +179,6 @@ void loop()
         // Updated in TargetHitCallback()
         if (receivedScoreInfo.newScoreFlag)
         {
-          receivedScoreInfo.newScoreFlag = false; // Reset the flag
-
           previousState = currentState;
           currentState = GameState::InGameScored;
         }
@@ -198,6 +187,8 @@ void loop()
       }
     case GameState::InGameScored:
       {
+        receivedScoreInfo.newScoreFlag = false; // Reset the flag
+        
         uint8_t player = receivedScoreInfo.player;
 
         if ((player >= 1) && (player <= maxPlayerCount))
@@ -206,7 +197,9 @@ void loop()
 
           if (newScore >= maxScore)
           {
-            winningPlayer = player;
+            winningPlayer = player;               //
+            startTimeOfMaxScoreState = millis();  // Used in the GameState::ReachedMaxScore state
+            
             previousState = currentState;
             currentState = GameState::ReachedMaxScore;
           }
@@ -226,8 +219,11 @@ void loop()
         scoreboard.ReachedMaxScore(winningPlayer);
         fireConfettiCannons();
 
-        previousState = currentState;
-        currentState = GameState::StopGame;
+        if (doReset || ((millis() - startTimeOfMaxScoreState) >=  maxTimeInScoreStateMs))
+        {
+          previousState = currentState;
+          currentState = GameState::StopGame;
+        }
 
         break;
       }
@@ -237,9 +233,12 @@ void loop()
         doReset = false;
         didReset = true;
 
-        previousState = currentState;
-        currentState = GameState::OutOfGame;
-
+        if (animationRoundComplete)
+        {
+          previousState = currentState;
+          currentState = GameState::OutOfGame;
+        }
+        
         break;
       }
   };

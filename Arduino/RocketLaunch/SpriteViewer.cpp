@@ -4,11 +4,10 @@
 // Constructor
 //===============
 
-SpriteViewer::SpriteViewer(Sprite* sprite, MatrixUtil::XY spriteTopLeftPosition, CRGB* matrixScreen, MatrixUtil::XY matrixSize)
+SpriteViewer::SpriteViewer(Sprite* sprite, CRGB* matrixScreen, MatrixUtil::XY matrixSize)
   : m_sprite(sprite),
     m_matrixScreen(matrixScreen),
-    m_matrixSize(matrixSize),
-    m_topLeftPosition(spriteTopLeftPosition)
+    m_matrixSize(matrixSize)
 {
 
 }
@@ -53,7 +52,7 @@ bool SpriteViewer::SetSprite(Sprite* sprite, MatrixUtil::XY spriteTopLeftPositio
     return false;
   }
 
-  if (sprite->spriteData == nullptr || sprite->spriteMask == nullptr)
+  if (sprite->spriteMask == nullptr)
   {
     return false;
   }
@@ -63,7 +62,7 @@ bool SpriteViewer::SetSprite(Sprite* sprite, MatrixUtil::XY spriteTopLeftPositio
     return false;
   }
 
-  m_sprite->spriteData = sprite->spriteData;
+  m_sprite->colorHSV = sprite->colorHSV;
   m_sprite->spriteMask = sprite->spriteMask;
   m_sprite->spriteSize = sprite->spriteSize;
   m_topLeftPosition = spriteTopLeftPosition;
@@ -88,7 +87,7 @@ bool SpriteViewer::SetSpriteOnScreen()
     return false;
   }
 
-  if (m_sprite->spriteData == nullptr || m_sprite->spriteMask == nullptr)
+  if (m_sprite->spriteMask == nullptr)
   {
     return false;
   }
@@ -128,7 +127,7 @@ bool SpriteViewer::SetSpriteOnScreen()
         const uint64_t spriteRowMask = 1 << ((m_sprite->spriteSize.X - 1) - c);
         if (m_sprite->spriteMask[r] & spriteRowMask)
         {
-          m_matrixScreen[matrixIndex] = m_sprite->spriteData[spriteIndex];
+          m_matrixScreen[matrixIndex] = m_sprite->colorHSV;
         }
       }
     }

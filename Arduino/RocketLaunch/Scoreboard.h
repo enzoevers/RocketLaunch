@@ -5,6 +5,8 @@
 #include "MatrixUtil.h"
 #include "SpriteViewer.h"
 #include "SpriteCollection.h"
+#include "GameState.h"
+#include "Player.h"
 #include <FastLED.h>
 
 // WS2812B datasheet: https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf
@@ -31,8 +33,8 @@ class Scoreboard
   public:
     Scoreboard();
     ~Scoreboard();
-    
-    void Update();
+
+    bool Update(GameState& state);
 
     bool SetPlayerCount(const uint8_t numPlayers);
     uint8_t GetPlayerCount();
@@ -45,35 +47,31 @@ class Scoreboard
     uint32_t GetWriteTime();
 
   private:
-    void AnimationIdleNoGame();
-    void AnimationStart();
-    void AnimationIdleInGame();
-    void AnimationNewScore(uint32_t newScore, uint8_t player);
-    void AnimationVictory(uint8_t player);
-    void ClearMatrix();
 
-    // Arguments:
-    //  sprite: data of the 2D sprite in a linear array to show on the matrix.
-    //  spriteMask: this mask is a linear array (similar to 'sprite') used to determine which pixels in the 'sprite' array to show on the matrix
-    //  spriteSize: the width (.X) and height (.Y) of the sprite
-    //  topLeftOrigin: origin of the sprite
-    //
-    // If the sprite does not completely fit on the matrix, only the visible pixels are shown
-    //void ShowSprite2d(const CRGB* sprite, const bool* spriteMask, const XY& spriteSize, const XY& topLeftOrigin);
-
-    const uint16_t m_maxUpdateTimeMs = 1000 / 100; // 1 second / 100 FPS = 10ms
-    uint16_t m_updateTimeMs = 0;
-
-    const uint8_t GetFPS() {
-      return 1000 / m_updateTimeMs;  // 1 second / m_updateTimeMs
-    }
+    // These functions return:
+    //  true: all steps of one anumation round are done
+    //  false: not all steps of one animation round are executed yet
+    bool AnimationIdleNoGame();
+    bool AnimationStart();
+    bool AnimationIdleInGame();
+    bool AnimationNewScore(uint32_t newScore, uint8_t player);
+    bool AnimationVictory(uint8_t player);
+    bool AnimationStopGame();
+    bool ClearMatrix();
 
     const uint16_t m_durationMsIdleNoGame = 2500;
     const uint16_t m_durationMsStart = 2000;
     const uint16_t m_durationMsIdleInGame = 2000;
     const uint16_t m_durationMsNewScore = 2000;
     const uint16_t m_durationMsVictory = 2000;
+    const uint16_t m_durationMsStopGame = 2000;
 
+    const uint16_t m_minUpdateTimeMs = 1000 / 100; // 1 second / 100 FPS = 10ms
+    uint16_t m_updateTimeMs = 0;
+
+    const uint8_t GetFPS() {
+      return 1000 / m_updateTimeMs;  // 1 second / m_updateTimeMs
+    }
 
     const MatrixUtil::XY m_matrixScreenSize = { 32, 8 };
     static const int16_t m_numLeds = 32 * 8;
@@ -91,14 +89,38 @@ class Scoreboard
 
     const uint8_t m_maxPlayers = 2;
     uint8_t m_playerCount = 1;
+    uint8_t m_winningPlayer = 1;
 
-    bool m_doIdleAnimation = false;    
+    uint32_t m_lastScorePlayer1 = 0;
+    uint32_t m_lastScorePlayer2 = 0;
+
+    uint32_t m_currentScorePlayer1 = 0;
+    uint32_t m_currentScorePlayer2 = 0;
 
     // Sprites
-    
-    MatrixUtil::XY m_ballSpriteTopLeft = { -SpriteCollection::ballSprite.spriteSize.X, 2};
-    SpriteViewer* m_ballSpriteViewer = new SpriteViewer(&SpriteCollection::ballSprite, m_ballSpriteTopLeft, m_ledMatrix, m_matrixScreenSize);
+    SpriteViewer* m_ballSpriteViewer = new SpriteViewer(&SpriteCollection::ballSprite, m_ledMatrix, m_matrixScreenSize);
+    SpriteViewer* m_character_0_SpriteViewer = new SpriteViewer(&SpriteCollection::character_0_Sprite, m_ledMatrix, m_matrixScreenSize);
+    SpriteViewer* m_character_1_SpriteViewer = new SpriteViewer(&SpriteCollection::character_1_Sprite, m_ledMatrix, m_matrixScreenSize);
+    SpriteViewer* m_character_2_SpriteViewer = new SpriteViewer(&SpriteCollection::character_2_Sprite, m_ledMatrix, m_matrixScreenSize);
+    SpriteViewer* m_character_3_SpriteViewer = new SpriteViewer(&SpriteCollection::character_3_Sprite, m_ledMatrix, m_matrixScreenSize);
+    SpriteViewer* m_character_4_SpriteViewer = new SpriteViewer(&SpriteCollection::character_4_Sprite, m_ledMatrix, m_matrixScreenSize);
+    SpriteViewer* m_character_5_SpriteViewer = new SpriteViewer(&SpriteCollection::character_5_Sprite, m_ledMatrix, m_matrixScreenSize);
+    //SpriteViewer* m_character_6_SpriteViewer = new SpriteViewer(&SpriteCollection::character_6_Sprite, m_ledMatrix, m_matrixScreenSize);
+    //SpriteViewer* m_character_7_SpriteViewer = new SpriteViewer(&SpriteCollection::character_7_Sprite, m_ledMatrix, m_matrixScreenSize);
+    //SpriteViewer* m_character_8_SpriteViewer = new SpriteViewer(&SpriteCollection::character_8_Sprite, m_ledMatrix, m_matrixScreenSize);
+    //SpriteViewer* m_character_9_SpriteViewer = new SpriteViewer(&SpriteCollection::character_9_Sprite, m_ledMatrix, m_matrixScreenSize);
 
-    MatrixUtil::XY m_character_R_SpriteTopLeft = { -SpriteCollection::character_R_Sprite.spriteSize.X, 2};
-    SpriteViewer* m_character_R_SpriteViewer = new SpriteViewer(&SpriteCollection::character_R_Sprite, m_character_R_SpriteTopLeft, m_ledMatrix, m_matrixScreenSize);
+    SpriteViewer* m_numberSprites[10] =
+    {
+      m_character_0_SpriteViewer,
+      m_character_1_SpriteViewer,
+      m_character_2_SpriteViewer,
+      m_character_3_SpriteViewer,
+      m_character_4_SpriteViewer,
+      m_character_5_SpriteViewer,
+      //m_character_6_SpriteViewer,
+      //m_character_7_SpriteViewer,
+      //m_character_8_SpriteViewer,
+      //m_character_9_SpriteViewer
+    };
 };
