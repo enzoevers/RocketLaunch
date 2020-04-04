@@ -16,14 +16,16 @@ struct Sprite
 class SpriteViewer
 {
   public:
-    SpriteViewer(Sprite* sprite, CRGB* matrixScreen, MatrixUtil::XY matrixSize);
+    SpriteViewer(Sprite sprite, CRGB* matrixScreen, MatrixUtil::XY matrixSize);
 
     const MatrixUtil::XY GetSpriteSize();
     const MatrixUtil::XY GetPosition() { return m_topLeftPosition; }
+    const Sprite& GetSprite() { return m_sprite; }
 
     bool SetScreen(CRGB* matrixScreen, MatrixUtil::XY matrixSize);
-    bool SetSprite(Sprite* sprite, MatrixUtil::XY spriteTopLeftPosition);
+    bool SetSprite(Sprite sprite, MatrixUtil::XY spriteTopLeftPosition);
 
+    void SetPriteSolidColor(CHSV newSolidColor);
     void SetPosition(MatrixUtil::XY topLeftPosition);
     void TranslateSprite(MatrixUtil::XY translation);
 
@@ -35,7 +37,7 @@ class SpriteViewer
   private:
     bool CoordinateIsInScreen(const MatrixUtil::XY& coordinate);
 
-    Sprite* m_sprite = nullptr;
+    Sprite m_sprite;
 
     MatrixUtil::XY m_matrixSize = {0, 0};
     MatrixUtil::XY m_topLeftPosition = {0, 0};

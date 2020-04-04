@@ -21,7 +21,7 @@ const uint8_t ballSpriteMask[ballSpriteHeight] =
 const Sprite ballSprite
 {
   {ballSpriteWidth, ballSpriteHeight},
-  CHSV(HSV_RAINDBOW_RED, 255, 255),
+  CHSV(0, 0, 0),
   ballSpriteMask
 };
 //-----
@@ -241,7 +241,25 @@ const Sprite character_8_Sprite
 
 //-----
 // character_9_Sprite
-const Sprite& character_9_Sprite = character_6_Sprite;
+const uint8_t character_9_SpriteWidth = 3;
+const uint8_t character_9_SpriteHeight = 5;
+const uint16_t character_9_SpriteLedCount = character_9_SpriteWidth * character_9_SpriteHeight;
+
+const uint8_t character_9_SpriteMask[character_9_SpriteHeight] =
+{
+  0b010,
+  0b101,
+  0b011,
+  0b001,
+  0b110
+};
+
+const Sprite character_9_Sprite
+{
+  {character_9_SpriteWidth, character_9_SpriteHeight},
+  CHSV(HSV_RAINDBOW_RED, 255, 255),
+  character_9_SpriteMask
+};
 //-----
 
 };

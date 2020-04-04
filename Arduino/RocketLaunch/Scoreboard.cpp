@@ -14,7 +14,7 @@ Scoreboard::~Scoreboard()
   delete m_ballSpriteViewer;
   m_ballSpriteViewer = nullptr;
 
-  for(int i = 0; i < sizeof(m_numberSprites)/sizeof(m_numberSprites[0]); i++)
+  for (int i = 0; i < sizeof(m_numberSprites) / sizeof(m_numberSprites[0]); i++)
   {
     delete m_numberSprites[i];
     m_numberSprites[i] = nullptr;
@@ -37,13 +37,54 @@ bool Scoreboard::Update(GameState& state)
 {
   bool animationComplete = false;
 
+  uint16_t tmpUpdateTimeMs = m_minUpdateTimeMs;
+
+  //
+  // Determine the update time of the screen
+  //
+  switch (state)
+  {
+    case GameState::OutOfGame:
+      {
+        tmpUpdateTimeMs = m_durationMsIdleNoGame / m_numStepsIdleNoGame;
+        break;
+      }
+    case GameState::StartGame:
+      {
+        tmpUpdateTimeMs = m_durationMsStart / m_numStepsStart;
+        break;
+      }
+    case GameState::InGameIdle:
+      {
+        tmpUpdateTimeMs = m_durationMsIdleInGame / m_numStepsIdleInGame;
+        break;
+      }
+    case GameState::InGameScored:
+      {
+        break;
+      }
+    case GameState::ReachedMaxScore:
+      {
+        tmpUpdateTimeMs = m_durationMsVictory / m_numStepsVictory;
+        break;
+      }
+    case GameState::StopGame:
+      {
+        tmpUpdateTimeMs = m_durationMsStopGame / m_numStepsStopGame;
+        break;
+      }
+  };
+
+  m_updateTimeMs = tmpUpdateTimeMs;
+
+  //
+  // Update the screen
+  //
   // The *_I version of this macro lets you channge the timer
   // with name animationTimer (this can be any name).
   // The default period is m_minUpdateTimeMs (just a variable or constant)
   EVERY_N_MILLISECONDS_I(animationTimer, m_minUpdateTimeMs)
   {
-    animationTimer.setPeriod(m_updateTimeMs);
-
     switch (state)
     {
       case GameState::OutOfGame:
@@ -94,6 +135,8 @@ bool Scoreboard::Update(GameState& state)
           break;
         }
     };
+
+    animationTimer.setPeriod(m_updateTimeMs);
   }
 
   return animationComplete;
@@ -113,13 +156,6 @@ bool Scoreboard::SetPlayerCount(const uint8_t numPlayers)
 uint8_t Scoreboard::GetPlayerCount()
 {
   return m_playerCount;
-}
-
-void Scoreboard::Start()
-{
-  ClearMatrix();
-  AnimationStart();
-  AnimationIdleInGame();
 }
 
 bool Scoreboard::UpdateScore(uint32_t newScore, uint8_t player)
@@ -167,16 +203,10 @@ bool Scoreboard::AnimationIdleNoGame()
   const uint8_t columnHueDelta = ((float)hueMatrixDelta / m_matrixScreenSize.X);
   const uint8_t hueLedDelta = 2;
 
-  const uint16_t animationSteps = 256 / hueLedDelta;
-  static uint8_t currentStep = 0;
-
-  const uint16_t tmpUpdateTimeMs = m_durationMsIdleNoGame / animationSteps;
-  m_updateTimeMs = (tmpUpdateTimeMs < m_minUpdateTimeMs) ? m_minUpdateTimeMs : tmpUpdateTimeMs;
-
   m_currentSaturation = 255;
   m_currentValue = 150; // Brightness
 
-  m_currentHue = currentStep * hueLedDelta;
+  m_currentHue = m_curStepIdleNoGame * hueLedDelta;
   for (size_t c = 0; c < m_matrixScreenSize.X; c++)
   {
     m_currentHue += columnHueDelta;
@@ -197,10 +227,10 @@ bool Scoreboard::AnimationIdleNoGame()
   //-----
 
   FastLED.show();
-  if (++currentStep >= animationSteps)
+  if (++m_curStepIdleNoGame >= m_numStepsIdleNoGame)
   {
     animationComplete = true;
-    currentStep = 0;
+    m_curStepIdleNoGame = 0;
   }
 
   return animationComplete;
@@ -215,20 +245,43 @@ bool Scoreboard::AnimationStart()
     for (size_t r = 0; r < m_matrixScreenSize.Y; r++)
     {
       size_t index = MatrixUtil::VerticalSerpentineMatrixToLinearIndex(c, r, m_matrixScreenSize.X, m_matrixScreenSize.Y);
-      m_ledMatrix[index] = CHSV(HSV_RAINDBOW_ORANGE, 200, 100);
+      m_ledMatrix[index] = CRGB::Black;
     }
   }
 
-  m_numberSprites[0]->SetPosition({0, 1});
-  m_numberSprites[0]->SetSpriteOnScreen();
+  if (m_curStepStart > 0 && m_curStepStart < 4)
+  {
+    if (m_curStepStart >= 1)
+    {
+      SpriteViewer ballOne = *m_ballSpriteViewer;
+      ballOne.SetPriteSolidColor(CHSV(HSV_RAINDBOW_RED, 255, 255));
+      ballOne.SetPosition({2, 2});
+      ballOne.SetSpriteOnScreen();
+    }
 
-  m_numberSprites[1]->SetPosition({m_numberSprites[0]->GetSpriteSize().X, 1});
-  m_numberSprites[1]->SetSpriteOnScreen();
+    if (m_curStepStart >= 2)
+    {
+      SpriteViewer ballTwo = *m_ballSpriteViewer;
+      ballTwo.SetPriteSolidColor(CHSV(HSV_RAINDBOW_GREEN, 255, 255));
+      ballTwo.SetPosition({13, 2});
+      ballTwo.SetSpriteOnScreen();
+    }
 
-  m_numberSprites[2]->SetPosition({m_numberSprites[1]->GetSpriteSize().X, 1});
-  m_numberSprites[2]->SetSpriteOnScreen();
+    if (m_curStepStart >= 3)
+    {
+      SpriteViewer ballThree = *m_ballSpriteViewer;
+      ballThree.SetPriteSolidColor(CHSV(HSV_RAINDBOW_BLUE, 255, 255));
+      ballThree.SetPosition({25, 2});
+      ballThree.SetSpriteOnScreen();
+    }
+  }
 
   FastLED.show();
+  if (++m_curStepStart == m_numStepsStart)
+  {
+    animationComplete = true;
+    m_curStepStart = 0;
+  }
 
   return animationComplete;
 }
@@ -237,8 +290,8 @@ bool Scoreboard::AnimationIdleInGame()
 {
   bool animationComplete = false;
 
-  
-  
+
+
   return animationComplete;
 }
 

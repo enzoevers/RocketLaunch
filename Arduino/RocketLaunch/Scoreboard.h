@@ -2,6 +2,9 @@
 
 #define SCOREBOARD_DATA_PIN 8
 
+// CREATE_NUMBER_SPRITE(2) outputs: new SpriteViewer(&SpriteCollection::character_2_Sprite, m_ledMatrix, m_matrixScreenSize)
+#define CREATE_NUMBER_SPRITE(n) (new SpriteViewer(SpriteCollection::character_##n##_Sprite, m_ledMatrix, m_matrixScreenSize))
+
 #include "MatrixUtil.h"
 #include "SpriteViewer.h"
 #include "SpriteCollection.h"
@@ -38,8 +41,7 @@ class Scoreboard
 
     bool SetPlayerCount(const uint8_t numPlayers);
     uint8_t GetPlayerCount();
-
-    void Start();
+    
     void Reset();
     bool UpdateScore(uint32_t newScore, uint8_t player);
     bool ReachedMaxScore(uint8_t player);
@@ -60,14 +62,28 @@ class Scoreboard
     bool ClearMatrix();
 
     const uint16_t m_durationMsIdleNoGame = 2500;
-    const uint16_t m_durationMsStart = 2000;
+    const uint16_t m_durationMsStart = 6000;
     const uint16_t m_durationMsIdleInGame = 2000;
     const uint16_t m_durationMsNewScore = 2000;
-    const uint16_t m_durationMsVictory = 2000;
+    const uint16_t m_durationMsVictory = 10000;
     const uint16_t m_durationMsStopGame = 2000;
 
+    uint16_t m_numStepsIdleNoGame = 256/2;
+    uint16_t m_numStepsStart = 5;
+    uint16_t m_numStepsIdleInGame = 0;
+    uint16_t m_numStepsNewScore = 0;
+    uint16_t m_numStepsVictory = 0;
+    uint16_t m_numStepsStopGame = 0;
+    
+    uint16_t m_curStepIdleNoGame = 0;
+    uint16_t m_curStepStart = 0;
+    uint16_t m_curStepIdleInGame = 0;
+    uint16_t m_curStepNewScore = 0;
+    uint16_t m_curStepVictory = 0;
+    uint16_t m_curStepStopGame = 0;
+
     const uint16_t m_minUpdateTimeMs = 1000 / 100; // 1 second / 100 FPS = 10ms
-    uint16_t m_updateTimeMs = 0;
+    uint16_t m_updateTimeMs = 40; // Refresh rate of 25Hz
 
     const uint8_t GetFPS() {
       return 1000 / m_updateTimeMs;  // 1 second / m_updateTimeMs
@@ -98,29 +114,19 @@ class Scoreboard
     uint32_t m_currentScorePlayer2 = 0;
 
     // Sprites
-    SpriteViewer* m_ballSpriteViewer = new SpriteViewer(&SpriteCollection::ballSprite, m_ledMatrix, m_matrixScreenSize);
-    SpriteViewer* m_character_0_SpriteViewer = new SpriteViewer(&SpriteCollection::character_0_Sprite, m_ledMatrix, m_matrixScreenSize);
-    SpriteViewer* m_character_1_SpriteViewer = new SpriteViewer(&SpriteCollection::character_1_Sprite, m_ledMatrix, m_matrixScreenSize);
-    SpriteViewer* m_character_2_SpriteViewer = new SpriteViewer(&SpriteCollection::character_2_Sprite, m_ledMatrix, m_matrixScreenSize);
-    SpriteViewer* m_character_3_SpriteViewer = new SpriteViewer(&SpriteCollection::character_3_Sprite, m_ledMatrix, m_matrixScreenSize);
-    SpriteViewer* m_character_4_SpriteViewer = new SpriteViewer(&SpriteCollection::character_4_Sprite, m_ledMatrix, m_matrixScreenSize);
-    SpriteViewer* m_character_5_SpriteViewer = new SpriteViewer(&SpriteCollection::character_5_Sprite, m_ledMatrix, m_matrixScreenSize);
-    SpriteViewer* m_character_6_SpriteViewer = new SpriteViewer(&SpriteCollection::character_6_Sprite, m_ledMatrix, m_matrixScreenSize);
-    SpriteViewer* m_character_7_SpriteViewer = new SpriteViewer(&SpriteCollection::character_7_Sprite, m_ledMatrix, m_matrixScreenSize);
-    SpriteViewer* m_character_8_SpriteViewer = new SpriteViewer(&SpriteCollection::character_8_Sprite, m_ledMatrix, m_matrixScreenSize);
-    SpriteViewer* m_character_9_SpriteViewer = new SpriteViewer(&SpriteCollection::character_9_Sprite, m_ledMatrix, m_matrixScreenSize);
+    SpriteViewer* m_ballSpriteViewer = new SpriteViewer(SpriteCollection::ballSprite, m_ledMatrix, m_matrixScreenSize);
 
     SpriteViewer* m_numberSprites[10] =
     {
-      m_character_0_SpriteViewer,
-      m_character_1_SpriteViewer,
-      m_character_2_SpriteViewer,
-      m_character_3_SpriteViewer,
-      m_character_4_SpriteViewer,
-      m_character_5_SpriteViewer,
-      m_character_6_SpriteViewer,
-      m_character_7_SpriteViewer,
-      m_character_8_SpriteViewer,
-      m_character_9_SpriteViewer
+      CREATE_NUMBER_SPRITE(0),
+      CREATE_NUMBER_SPRITE(1),
+      CREATE_NUMBER_SPRITE(2),
+      CREATE_NUMBER_SPRITE(3),
+      CREATE_NUMBER_SPRITE(4),
+      CREATE_NUMBER_SPRITE(5),
+      CREATE_NUMBER_SPRITE(6),
+      CREATE_NUMBER_SPRITE(7),
+      CREATE_NUMBER_SPRITE(8),
+      CREATE_NUMBER_SPRITE(9)
     };
 };

@@ -134,7 +134,9 @@ void loop()
 
   microBitCom.DisableCommunication();
   delayMicroseconds(200); // Wait to make sure that last byte(s) is stored in the receive buffer
+
   animationRoundComplete = scoreboard.Update(currentState); // Perform an animation step on the LED matrix
+
   microBitCom.EnableCommunication();
   delay(5); // Time to receive data
 }
@@ -156,14 +158,20 @@ void UpdateGameState()
       }
     case GameState::StartGame:
       {
-        InitializeGame();
-        delay(1); // Give the Micro:Bit some time to set its communication enable pin
+        if (doStart)
+        {
+          InitializeGame();
+          delay(1); // Give the Micro:Bit some time to set its communication enable pin
 
-        StartGame();
-        doStart = false;
+          StartGame();
+          doStart = false;
+        }
 
-        previousState = currentState;
-        currentState = GameState::InGameIdle;
+        if (animationRoundComplete)
+        {
+          previousState = currentState;
+          currentState = GameState::InGameIdle;
+        }
 
         break;
       }
@@ -188,7 +196,7 @@ void UpdateGameState()
     case GameState::InGameScored:
       {
         receivedScoreInfo.newScoreFlag = false; // Reset the flag
-        
+
         uint8_t player = receivedScoreInfo.player;
 
         if ((player >= 1) && (player <= maxPlayerCount))
@@ -199,7 +207,7 @@ void UpdateGameState()
           {
             winningPlayer = player;               //
             startTimeOfMaxScoreState = millis();  // Used in the GameState::ReachedMaxScore state
-            
+
             previousState = currentState;
             currentState = GameState::ReachedMaxScore;
           }
@@ -238,7 +246,7 @@ void UpdateGameState()
           previousState = currentState;
           currentState = GameState::OutOfGame;
         }
-        
+
         break;
       }
   };
@@ -293,7 +301,7 @@ void InitializeGame()
 void StartGame()
 {
   microBitCom.SendStart();
-  scoreboard.Start();
+  scoreboard.Reset();
 }
 
 void StopGame()
