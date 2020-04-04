@@ -59,7 +59,7 @@ struct ScoreInfo
 };
 
 ScoreInfo receivedScoreInfo = {};
-const uint32_t maxScore = 100;
+const uint32_t maxScore = 120;
 
 const unsigned long maxTimeInScoreStateMs = 10000; // 10 seconds
 unsigned long startTimeOfMaxScoreState = 0;
@@ -308,7 +308,7 @@ void InitializeGame()
 void StartGame()
 {
   microBitCom.SendStart();
-  //scoreboard.Reset();
+  scoreboard.Reset();
 }
 
 void StopGame()

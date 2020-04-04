@@ -56,6 +56,8 @@ class Scoreboard
     bool AnimationIdleNoGame();
     bool AnimationStart();
     bool AnimationIdleInGame();
+    void AnimationIdleInGame_SinglePlayer();
+    void AnimationIdleInGame_DualPlayer();
     bool AnimationNewScore(uint32_t newScore, uint8_t player);
     bool AnimationVictory(uint8_t player);
     bool AnimationStopGame();
@@ -64,16 +66,16 @@ class Scoreboard
     const uint16_t m_durationMsIdleNoGame = 2500;
     const uint16_t m_durationMsStart = 6000;
     const uint16_t m_durationMsIdleInGame = 2000;
-    const uint16_t m_durationMsNewScore = 2000;
+    const uint16_t m_durationMsNewScore = 1000;
     const uint16_t m_durationMsVictory = 5000;
     const uint16_t m_durationMsStopGame = 2000;
 
     uint16_t m_numStepsIdleNoGame = 256/2;
     uint16_t m_numStepsStart = 5;
-    uint16_t m_numStepsIdleInGame = 1;
+    uint16_t m_numStepsIdleInGame = 48;
     uint16_t m_numStepsNewScore = 1;
-    uint16_t m_numStepsVictory = 1;
-    uint16_t m_numStepsStopGame = 1;
+    uint16_t m_numStepsVictory = 1; // TODO
+    uint16_t m_numStepsStopGame = 1; // TODO
     
     uint16_t m_curStepIdleNoGame = 0;
     uint16_t m_curStepStart = 0;
@@ -84,10 +86,14 @@ class Scoreboard
 
     const uint16_t m_minUpdateTimeMs = 1000 / 100; // 1 second / 100 FPS = 10ms
     uint16_t m_updateTimeMs = 40; // Refresh rate of 25Hz
+    unsigned long m_lastMillisScreenUpdate = 0;
+    bool m_updateScreenNow = false;
 
     const uint8_t GetFPS() {
       return 1000 / m_updateTimeMs;  // 1 second / m_updateTimeMs
     }
+
+    GameState m_prevState = GameState::OutOfGame;
 
     const MatrixUtil::XY m_matrixScreenSize = { 32, 8 };
     static const int16_t m_numLeds = 32 * 8;

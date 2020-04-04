@@ -27,11 +27,14 @@ const Sprite ballSprite
 //-----
 
 
+//====================
+// Numeric sprites
+//====================
+
 //-----
 // character_0_Sprite
 const uint8_t character_0_SpriteWidth = 3;
 const uint8_t character_0_SpriteHeight = 4;
-const uint16_t character_0_SpriteLedCount = character_0_SpriteWidth * character_0_SpriteHeight;
 
 const uint8_t character_0_SpriteMask[character_0_SpriteHeight] =
 {
@@ -53,7 +56,6 @@ const Sprite character_0_Sprite
 // character_1_Sprite
 const uint8_t character_1_SpriteWidth = 3;
 const uint8_t character_1_SpriteHeight = 5;
-const uint16_t character_1_SpriteLedCount = character_1_SpriteWidth * character_1_SpriteHeight;
 
 const uint8_t character_1_SpriteMask[character_1_SpriteHeight] =
 {
@@ -77,7 +79,6 @@ const Sprite character_1_Sprite
 // character_2_Sprite
 const int8_t character_2_SpriteWidth = 3;
 const int8_t character_2_SpriteHeight = 5;
-const uint16_t character_2_SpriteLedCount = character_2_SpriteWidth * character_2_SpriteHeight;
 
 const uint8_t character_2_SpriteMask[character_2_SpriteHeight] =
 {
@@ -101,7 +102,6 @@ const Sprite character_2_Sprite
 // character_3_Sprite
 const uint8_t character_3_SpriteWidth = 3;
 const uint8_t character_3_SpriteHeight = 5;
-const uint16_t character_3_SpriteLedCount = character_3_SpriteWidth * character_3_SpriteHeight;
 
 const uint8_t character_3_SpriteMask[character_3_SpriteHeight] =
 {
@@ -125,14 +125,12 @@ const Sprite character_3_Sprite
 // character_4_Sprite
 const uint8_t character_4_SpriteWidth = 3;
 const uint8_t character_4_SpriteHeight = 4;
-const uint16_t character_4_SpriteLedCount = character_4_SpriteWidth * character_4_SpriteHeight;
 
 const uint8_t character_4_SpriteMask[character_4_SpriteHeight] =
 {
-
-  0b001,
   0b011,
   0b101,
+  0b111,
   0b001
 };
 
@@ -148,7 +146,6 @@ const Sprite character_4_Sprite
 // character_5_Sprite
 const uint8_t character_5_SpriteWidth = 3;
 const uint8_t character_5_SpriteHeight = 5;
-const uint16_t character_5_SpriteLedCount = character_5_SpriteWidth * character_5_SpriteHeight;
 
 const uint8_t character_5_SpriteMask[character_5_SpriteHeight] =
 {
@@ -172,7 +169,6 @@ const Sprite character_5_Sprite
 // character_6_Sprite
 const uint8_t character_6_SpriteWidth = 3;
 const uint8_t character_6_SpriteHeight = 5;
-const uint16_t character_6_SpriteLedCount = character_6_SpriteWidth * character_6_SpriteHeight;
 
 const uint8_t character_6_SpriteMask[character_6_SpriteHeight] =
 {
@@ -196,11 +192,9 @@ const Sprite character_6_Sprite
 // character_7_Sprite
 const int16_t character_7_SpriteWidth = 3;
 const int16_t character_7_SpriteHeight = 4;
-const uint32_t character_7_SpriteLedCount = character_7_SpriteWidth * character_7_SpriteHeight;
 
 const uint8_t character_7_SpriteMask[character_7_SpriteHeight] =
 {
-
   0b111,
   0b001,
   0b010,
@@ -219,7 +213,6 @@ const Sprite character_7_Sprite
 // character_8_Sprite
 const uint8_t character_8_SpriteWidth = 3;
 const uint8_t character_8_SpriteHeight = 5;
-const uint16_t character_8_SpriteLedCount = character_8_SpriteWidth * character_8_SpriteHeight;
 
 const uint8_t character_8_SpriteMask[character_8_SpriteHeight] =
 {
@@ -243,7 +236,6 @@ const Sprite character_8_Sprite
 // character_9_Sprite
 const uint8_t character_9_SpriteWidth = 3;
 const uint8_t character_9_SpriteHeight = 5;
-const uint16_t character_9_SpriteLedCount = character_9_SpriteWidth * character_9_SpriteHeight;
 
 const uint8_t character_9_SpriteMask[character_9_SpriteHeight] =
 {

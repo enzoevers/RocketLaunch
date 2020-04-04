@@ -1,6 +1,7 @@
 #include "Scoreboard.h"
 #include "Colors.h"
 
+
 //===============
 // Constructor
 //===============
@@ -30,61 +31,83 @@ void Scoreboard::Reset()
   m_currentRow = 0;
   m_currentColumn = 0;
 
-  ClearMatrix();
+  m_playerCount = 1;
+  m_winningPlayer = 1;
+
+  m_lastScorePlayer1 = 0;
+  m_lastScorePlayer2 = 0;
+
+  m_currentScorePlayer1 = 0;
+  m_currentScorePlayer2 = 0;
+
+  m_curStepIdleNoGame = 0;
+  m_curStepStart = 0;
+  m_curStepIdleInGame = 0;
+  m_curStepNewScore = 0;
+  m_curStepVictory = 0;
+  m_curStepStopGame = 0;
+
+
+  //ClearMatrix();
 }
 
 bool Scoreboard::Update(GameState& state)
 {
   bool animationComplete = false;
 
-  uint16_t tmpUpdateTimeMs = m_minUpdateTimeMs;
-
-  //
-  // Determine the update time of the screen
-  //
-  switch (state)
+  if (m_prevState != state)
   {
-    case GameState::OutOfGame:
-      {
-        tmpUpdateTimeMs = m_durationMsIdleNoGame / m_numStepsIdleNoGame;
-        break;
-      }
-    case GameState::StartGame:
-      {
-        tmpUpdateTimeMs = m_durationMsStart / m_numStepsStart;
-        break;
-      }
-    case GameState::InGameIdle:
-      {
-        tmpUpdateTimeMs = m_durationMsIdleInGame / m_numStepsIdleInGame;
-        break;
-      }
-    case GameState::InGameScored:
-      {
-        break;
-      }
-    case GameState::ReachedMaxScore:
-      {
-        tmpUpdateTimeMs = m_durationMsVictory / m_numStepsVictory;
-        break;
-      }
-    case GameState::StopGame:
-      {
-        tmpUpdateTimeMs = m_durationMsStopGame / m_numStepsStopGame;
-        break;
-      }
-  };
+    m_prevState = state;
+    uint16_t tmpUpdateTimeMs = m_minUpdateTimeMs;
 
-  m_updateTimeMs = tmpUpdateTimeMs;
+    //
+    // Determine the update time of the screen
+    //
+    switch (state)
+    {
+      case GameState::OutOfGame:
+        {
+          tmpUpdateTimeMs = m_durationMsIdleNoGame / m_numStepsIdleNoGame;
+          break;
+        }
+      case GameState::StartGame:
+        {
+          tmpUpdateTimeMs = m_durationMsStart / m_numStepsStart;
+          break;
+        }
+      case GameState::InGameIdle:
+        {
+          tmpUpdateTimeMs = m_durationMsIdleInGame / m_numStepsIdleInGame;
+          break;
+        }
+      case GameState::InGameScored:
+        {
+          break;
+        }
+      case GameState::ReachedMaxScore:
+        {
+          tmpUpdateTimeMs = m_durationMsVictory / m_numStepsVictory;
+          break;
+        }
+      case GameState::StopGame:
+        {
+          tmpUpdateTimeMs = m_durationMsStopGame / m_numStepsStopGame;
+          break;
+        }
+    };
+
+    m_updateTimeMs = tmpUpdateTimeMs;
+    m_updateScreenNow = true;
+  }
 
   //
   // Update the screen
   //
-  // The *_I version of this macro lets you channge the timer
-  // with name animationTimer (this can be any name).
-  // The default period is m_minUpdateTimeMs (just a variable or constant)
-  EVERY_N_MILLISECONDS_I(animationTimer, m_minUpdateTimeMs)
+  if (m_updateScreenNow || (millis() - m_lastMillisScreenUpdate) > m_updateTimeMs)
   {
+    m_lastMillisScreenUpdate = millis();
+    m_updateScreenNow = false;
+
     switch (state)
     {
       case GameState::OutOfGame:
@@ -135,8 +158,6 @@ bool Scoreboard::Update(GameState& state)
           break;
         }
     };
-
-    animationTimer.setPeriod(m_updateTimeMs);
   }
 
   return animationComplete;
@@ -170,12 +191,16 @@ bool Scoreboard::UpdateScore(uint32_t newScore, uint8_t player)
     case 1:
       {
         m_currentScorePlayer1 = newScore;
+        break;
       }
     case 2:
       {
         m_currentScorePlayer2 = newScore;
+        break;
       }
   };
+
+  m_updateScreenNow = true;
 
   return true;
 }
@@ -188,6 +213,8 @@ bool Scoreboard::ReachedMaxScore(uint8_t player)
   }
 
   m_winningPlayer = player;
+
+  m_updateScreenNow = true;
   return true;
 }
 
@@ -198,6 +225,12 @@ bool Scoreboard::ReachedMaxScore(uint8_t player)
 bool Scoreboard::AnimationIdleNoGame()
 {
   bool animationComplete = false;
+
+  if (m_curStepIdleNoGame >= m_numStepsIdleNoGame)
+  {
+    animationComplete = true;
+    m_curStepIdleNoGame = 0;
+  }
 
   const uint8_t hueMatrixDelta = 64;
   const uint8_t columnHueDelta = ((float)hueMatrixDelta / m_matrixScreenSize.X);
@@ -224,7 +257,7 @@ bool Scoreboard::AnimationIdleNoGame()
   // Set sprites
   //
   m_ballSpriteViewer->SetSpriteOnScreen();
-  
+
   m_ballSpriteViewer->TranslateSprite({1, 0});
   if (m_ballSpriteViewer->GetPosition().X >= m_matrixScreenSize.X)
   {
@@ -233,11 +266,7 @@ bool Scoreboard::AnimationIdleNoGame()
   //-----
 
   FastLED.show();
-  if (++m_curStepIdleNoGame >= m_numStepsIdleNoGame)
-  {
-    animationComplete = true;
-    m_curStepIdleNoGame = 0;
-  }
+  m_curStepIdleNoGame++;
 
   return animationComplete;
 }
@@ -246,7 +275,15 @@ bool Scoreboard::AnimationStart()
 {
   bool animationComplete = false;
 
+  if (m_curStepStart == m_numStepsStart)
+  {
+    animationComplete = true;
+    m_curStepStart = 0;
+  }
 
+  //
+  // Set background
+  //
   for (size_t c = 0; c < m_matrixScreenSize.X; c++)
   {
     for (size_t r = 0; r < m_matrixScreenSize.Y; r++)
@@ -309,11 +346,7 @@ bool Scoreboard::AnimationStart()
   }
 
   FastLED.show();
-  if (++m_curStepStart == m_numStepsStart)
-  {
-    animationComplete = true;
-    m_curStepStart = 0;
-  }
+  m_curStepStart++;
 
   return animationComplete;
 }
@@ -322,35 +355,160 @@ bool Scoreboard::AnimationIdleInGame()
 {
   bool animationComplete = false;
 
-  for (size_t c = 0; c < m_matrixScreenSize.X; c++)
-  {
-    for (size_t r = 0; r < m_matrixScreenSize.Y; r++)
-    {
-      size_t index = MatrixUtil::VerticalSerpentineMatrixToLinearIndex(c, r, m_matrixScreenSize.X, m_matrixScreenSize.Y);
-      m_ledMatrix[index] = CRGB::Pink;
-    }
-  }
-
-  FastLED.show();
-  if (++m_curStepIdleInGame == m_numStepsIdleInGame)
+  if (m_curStepIdleInGame == m_numStepsIdleInGame)
   {
     animationComplete = true;
     m_curStepIdleInGame = 0;
   }
 
+  switch (m_playerCount)
+  {
+    case 1:
+      {
+        AnimationIdleInGame_SinglePlayer();
+        break;
+      }
+    case 2:
+      {
+        AnimationIdleInGame_DualPlayer();
+        break;
+      }
+  };
+
+  FastLED.show();
+  m_curStepIdleInGame++;
+
   return animationComplete;
 }
 
-bool Scoreboard::AnimationNewScore(uint32_t newScore, uint8_t player)
+void Scoreboard::AnimationIdleInGame_SinglePlayer()
 {
-  bool animationComplete = false;
-  
+  //
+  // Set background
+  //
   for (size_t c = 0; c < m_matrixScreenSize.X; c++)
   {
     for (size_t r = 0; r < m_matrixScreenSize.Y; r++)
     {
       size_t index = MatrixUtil::VerticalSerpentineMatrixToLinearIndex(c, r, m_matrixScreenSize.X, m_matrixScreenSize.Y);
-      m_ledMatrix[index] = CRGB::Orange;
+
+      CRGB color;
+      if (c == 0 || c == (m_matrixScreenSize.X - 1)
+          || r == 0 || r == (m_matrixScreenSize.Y - 1))
+      {
+        color = CHSV(HSV_RAINDBOW_GREEN, 255, 80);
+      }
+      else
+      {
+        color = CRGB::Black;
+      }
+      m_ledMatrix[index] = color;
+    }
+  }
+
+  //
+  // Set sprites
+  //
+  // m_currentScorePlayer1
+  char scoreStringBuf[4]; // Max score is < 1000 which means 3 characters + \0 at max
+  const uint8_t numChars = sprintf(scoreStringBuf, "%d", m_currentScorePlayer1);
+
+  Serial.println(scoreStringBuf);
+
+  // All numeric sprites in the SpriteCollection namespace are 3 pixels wide
+  // and in front of each number a one pixel spacing is given. This will result in
+  // an length of a even value which makes dividing up the free space easier
+  const uint8_t spriteWidth = 1 + 3; // 1 spacing pixel; 3 sprite pixels
+  const uint8_t totalScoreWidth = numChars * spriteWidth;
+  const uint8_t verticalSpacingFromBottom = 1;
+  MatrixUtil::XY startIndexSprite =
+  {
+    ((m_matrixScreenSize.X - totalScoreWidth) / 2) - 1, // -1 to account for the index starting at 0
+    0
+  };
+
+  for (int i = 0; i < numChars; i++)
+  {
+    const uint8_t asciiValueStart = 48; // http://www.asciitable.com/
+    uint8_t value = scoreStringBuf[i] - asciiValueStart;
+    if (value < 0 || value > 9)
+    {
+      value = 0; // The default value;
+    }
+
+    // The sprite object can be temporary because once the data
+    // of the sprite is written to the matrix with SetSpriteOnScreen()
+    // the sprite object isn't used anymore
+    SpriteViewer tmpSprite = *m_numberSprites[value];
+
+    startIndexSprite.X += 1; // One spacing pixel in front of each character
+    if (i > 0)
+    {
+      startIndexSprite.X += tmpSprite.GetSpriteSize().X;
+    }
+    startIndexSprite.Y = m_matrixScreenSize.Y - verticalSpacingFromBottom - tmpSprite.GetSpriteSize().Y - 1;
+
+    tmpSprite.SetPosition(startIndexSprite);
+    tmpSprite.SetPriteSolidColor(CHSV(HSV_RAINDBOW_GREEN, 255, 200));
+    tmpSprite.SetSpriteOnScreen();
+  }
+}
+
+void Scoreboard::AnimationIdleInGame_DualPlayer()
+{
+  // Right side: player 1
+  for (size_t c = 0; c < m_matrixScreenSize.X / 2; c++)
+  {
+    for (size_t r = 0; r < m_matrixScreenSize.Y; r++)
+    {
+      size_t index = MatrixUtil::VerticalSerpentineMatrixToLinearIndex(c, r, m_matrixScreenSize.X, m_matrixScreenSize.Y);
+
+      CRGB color;
+      if (c == 0 || c == (m_matrixScreenSize.X / 2 - 1)
+          || r == 0 || r == (m_matrixScreenSize.Y - 1))
+      {
+        color = CHSV(HSV_RAINDBOW_GREEN, 255, 80);
+      }
+      else
+      {
+        color = CRGB::Black;
+      }
+      m_ledMatrix[index] = color;
+    }
+  }
+
+  // Left side: player 2
+  for (size_t c = m_matrixScreenSize.X / 2; c < m_matrixScreenSize.X; c++)
+  {
+    for (size_t r = 0; r < m_matrixScreenSize.Y; r++)
+    {
+      size_t index = MatrixUtil::VerticalSerpentineMatrixToLinearIndex(c, r, m_matrixScreenSize.X, m_matrixScreenSize.Y);
+
+      CRGB color;
+      if (c == m_matrixScreenSize.X / 2 || c == (m_matrixScreenSize.X - 1)
+          || r == 0 || r == (m_matrixScreenSize.Y - 1))
+      {
+        color = CHSV(HSV_RAINDBOW_BLUE, 255, 80);
+      }
+      else
+      {
+        color = CRGB::Black;
+      }
+      m_ledMatrix[index] = color;
+    }
+  }
+}
+
+bool Scoreboard::AnimationNewScore(uint32_t newScore, uint8_t player)
+{
+  bool animationComplete = false;
+
+  for (size_t c = 0; c < m_matrixScreenSize.X; c++)
+  {
+    for (size_t r = 0; r < m_matrixScreenSize.Y; r++)
+    {
+      size_t index = MatrixUtil::VerticalSerpentineMatrixToLinearIndex(c, r, m_matrixScreenSize.X, m_matrixScreenSize.Y);
+      m_ledMatrix[index] = CRGB::Black;
     }
   }
 
@@ -360,6 +518,12 @@ bool Scoreboard::AnimationNewScore(uint32_t newScore, uint8_t player)
 bool Scoreboard::AnimationVictory(uint8_t player)
 {
   bool animationComplete = false;
+
+  if (m_curStepVictory == m_numStepsVictory)
+  {
+    animationComplete = true;
+    m_curStepVictory = 0;
+  }
 
   for (size_t c = 0; c < m_matrixScreenSize.X; c++)
   {
@@ -371,11 +535,7 @@ bool Scoreboard::AnimationVictory(uint8_t player)
   }
 
   FastLED.show();
-  if (++m_curStepVictory == m_numStepsVictory)
-  {
-    animationComplete = true;
-    m_curStepVictory = 0;
-  }
+  m_curStepVictory++;
 
   return animationComplete;
 }
@@ -383,6 +543,12 @@ bool Scoreboard::AnimationVictory(uint8_t player)
 bool Scoreboard::AnimationStopGame()
 {
   bool animationComplete = false;
+
+  if (m_curStepStopGame == m_numStepsStopGame)
+  {
+    animationComplete = true;
+    m_curStepStopGame = 0;
+  }
 
   for (size_t c = 0; c < m_matrixScreenSize.X; c++)
   {
@@ -394,11 +560,7 @@ bool Scoreboard::AnimationStopGame()
   }
 
   FastLED.show();
-  if (++m_curStepStopGame == m_numStepsStopGame)
-  {
-    animationComplete = true;
-    m_curStepStopGame = 0;
-  }
+  m_curStepStopGame++;
 
   return animationComplete;
 }
