@@ -65,15 +65,15 @@ class Scoreboard
     const uint16_t m_durationMsStart = 6000;
     const uint16_t m_durationMsIdleInGame = 2000;
     const uint16_t m_durationMsNewScore = 2000;
-    const uint16_t m_durationMsVictory = 10000;
+    const uint16_t m_durationMsVictory = 5000;
     const uint16_t m_durationMsStopGame = 2000;
 
     uint16_t m_numStepsIdleNoGame = 256/2;
     uint16_t m_numStepsStart = 5;
-    uint16_t m_numStepsIdleInGame = 0;
-    uint16_t m_numStepsNewScore = 0;
-    uint16_t m_numStepsVictory = 0;
-    uint16_t m_numStepsStopGame = 0;
+    uint16_t m_numStepsIdleInGame = 1;
+    uint16_t m_numStepsNewScore = 1;
+    uint16_t m_numStepsVictory = 1;
+    uint16_t m_numStepsStopGame = 1;
     
     uint16_t m_curStepIdleNoGame = 0;
     uint16_t m_curStepStart = 0;

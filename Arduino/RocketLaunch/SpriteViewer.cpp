@@ -66,8 +66,8 @@ void SpriteViewer::SetPosition(MatrixUtil::XY topLeftPosition)
 
 void SpriteViewer::TranslateSprite(MatrixUtil::XY translation)
 {
-  m_topLeftPosition.X += m_topLeftPosition.X;
-  m_topLeftPosition.Y += m_topLeftPosition.Y;
+  m_topLeftPosition.X += translation.X;
+  m_topLeftPosition.Y += translation.Y;
 }
 
 bool SpriteViewer::SetSpriteOnScreen()

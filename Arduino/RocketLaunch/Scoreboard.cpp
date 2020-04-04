@@ -206,6 +206,9 @@ bool Scoreboard::AnimationIdleNoGame()
   m_currentSaturation = 255;
   m_currentValue = 150; // Brightness
 
+  //
+  // Set background
+  //
   m_currentHue = m_curStepIdleNoGame * hueLedDelta;
   for (size_t c = 0; c < m_matrixScreenSize.X; c++)
   {
@@ -217,8 +220,11 @@ bool Scoreboard::AnimationIdleNoGame()
     }
   }
 
-  m_ballSpriteViewer->SetPosition({ -(m_ballSpriteViewer->GetSpriteSize()).X, 2});
+  //
+  // Set sprites
+  //
   m_ballSpriteViewer->SetSpriteOnScreen();
+  
   m_ballSpriteViewer->TranslateSprite({1, 0});
   if (m_ballSpriteViewer->GetPosition().X >= m_matrixScreenSize.X)
   {
@@ -240,6 +246,7 @@ bool Scoreboard::AnimationStart()
 {
   bool animationComplete = false;
 
+
   for (size_t c = 0; c < m_matrixScreenSize.X; c++)
   {
     for (size_t r = 0; r < m_matrixScreenSize.Y; r++)
@@ -249,7 +256,21 @@ bool Scoreboard::AnimationStart()
     }
   }
 
-  if (m_curStepStart > 0 && m_curStepStart < 4)
+  //
+  // Set sprites
+  //
+  if (m_curStepStart == 0)
+  {
+    for (size_t c = 0; c < m_matrixScreenSize.X; c++)
+    {
+      for (size_t r = 0; r < m_matrixScreenSize.Y; r++)
+      {
+        size_t index = MatrixUtil::VerticalSerpentineMatrixToLinearIndex(c, r, m_matrixScreenSize.X, m_matrixScreenSize.Y);
+        m_ledMatrix[index] = CRGB::Red;
+      }
+    }
+  }
+  else if (m_curStepStart > 0 && m_curStepStart < 4)
   {
     if (m_curStepStart >= 1)
     {
@@ -262,7 +283,7 @@ bool Scoreboard::AnimationStart()
     if (m_curStepStart >= 2)
     {
       SpriteViewer ballTwo = *m_ballSpriteViewer;
-      ballTwo.SetPriteSolidColor(CHSV(HSV_RAINDBOW_GREEN, 255, 255));
+      ballTwo.SetPriteSolidColor(CHSV(HSV_RAINDBOW_RED, 255, 255));
       ballTwo.SetPosition({13, 2});
       ballTwo.SetSpriteOnScreen();
     }
@@ -270,9 +291,20 @@ bool Scoreboard::AnimationStart()
     if (m_curStepStart >= 3)
     {
       SpriteViewer ballThree = *m_ballSpriteViewer;
-      ballThree.SetPriteSolidColor(CHSV(HSV_RAINDBOW_BLUE, 255, 255));
+      ballThree.SetPriteSolidColor(CHSV(HSV_RAINDBOW_RED, 255, 255));
       ballThree.SetPosition({25, 2});
       ballThree.SetSpriteOnScreen();
+    }
+  }
+  else if (m_curStepStart == 4)
+  {
+    for (size_t c = 0; c < m_matrixScreenSize.X; c++)
+    {
+      for (size_t r = 0; r < m_matrixScreenSize.Y; r++)
+      {
+        size_t index = MatrixUtil::VerticalSerpentineMatrixToLinearIndex(c, r, m_matrixScreenSize.X, m_matrixScreenSize.Y);
+        m_ledMatrix[index] = CRGB::Green;
+      }
     }
   }
 
@@ -290,7 +322,21 @@ bool Scoreboard::AnimationIdleInGame()
 {
   bool animationComplete = false;
 
+  for (size_t c = 0; c < m_matrixScreenSize.X; c++)
+  {
+    for (size_t r = 0; r < m_matrixScreenSize.Y; r++)
+    {
+      size_t index = MatrixUtil::VerticalSerpentineMatrixToLinearIndex(c, r, m_matrixScreenSize.X, m_matrixScreenSize.Y);
+      m_ledMatrix[index] = CRGB::Pink;
+    }
+  }
 
+  FastLED.show();
+  if (++m_curStepIdleInGame == m_numStepsIdleInGame)
+  {
+    animationComplete = true;
+    m_curStepIdleInGame = 0;
+  }
 
   return animationComplete;
 }
@@ -298,18 +344,62 @@ bool Scoreboard::AnimationIdleInGame()
 bool Scoreboard::AnimationNewScore(uint32_t newScore, uint8_t player)
 {
   bool animationComplete = false;
+  
+  for (size_t c = 0; c < m_matrixScreenSize.X; c++)
+  {
+    for (size_t r = 0; r < m_matrixScreenSize.Y; r++)
+    {
+      size_t index = MatrixUtil::VerticalSerpentineMatrixToLinearIndex(c, r, m_matrixScreenSize.X, m_matrixScreenSize.Y);
+      m_ledMatrix[index] = CRGB::Orange;
+    }
+  }
+
   return animationComplete;
 }
 
 bool Scoreboard::AnimationVictory(uint8_t player)
 {
   bool animationComplete = false;
+
+  for (size_t c = 0; c < m_matrixScreenSize.X; c++)
+  {
+    for (size_t r = 0; r < m_matrixScreenSize.Y; r++)
+    {
+      size_t index = MatrixUtil::VerticalSerpentineMatrixToLinearIndex(c, r, m_matrixScreenSize.X, m_matrixScreenSize.Y);
+      m_ledMatrix[index] = CRGB::Blue;
+    }
+  }
+
+  FastLED.show();
+  if (++m_curStepVictory == m_numStepsVictory)
+  {
+    animationComplete = true;
+    m_curStepVictory = 0;
+  }
+
   return animationComplete;
 }
 
 bool Scoreboard::AnimationStopGame()
 {
   bool animationComplete = false;
+
+  for (size_t c = 0; c < m_matrixScreenSize.X; c++)
+  {
+    for (size_t r = 0; r < m_matrixScreenSize.Y; r++)
+    {
+      size_t index = MatrixUtil::VerticalSerpentineMatrixToLinearIndex(c, r, m_matrixScreenSize.X, m_matrixScreenSize.Y);
+      m_ledMatrix[index] = CRGB::Yellow;
+    }
+  }
+
+  FastLED.show();
+  if (++m_curStepStopGame == m_numStepsStopGame)
+  {
+    animationComplete = true;
+    m_curStepStopGame = 0;
+  }
+
   return animationComplete;
 }
 

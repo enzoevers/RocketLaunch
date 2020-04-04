@@ -160,10 +160,10 @@ void UpdateGameState()
       {
         if (doStart)
         {
+          StartGame();
           InitializeGame();
           delay(1); // Give the Micro:Bit some time to set its communication enable pin
 
-          StartGame();
           doStart = false;
         }
 
@@ -205,8 +205,7 @@ void UpdateGameState()
 
           if (newScore >= maxScore)
           {
-            winningPlayer = player;               //
-            startTimeOfMaxScoreState = millis();  // Used in the GameState::ReachedMaxScore state
+            winningPlayer = player;               // Used in the GameState::ReachedMaxScore state
 
             previousState = currentState;
             currentState = GameState::ReachedMaxScore;
@@ -227,19 +226,27 @@ void UpdateGameState()
         scoreboard.ReachedMaxScore(winningPlayer);
         fireConfettiCannons();
 
-        if (doReset || ((millis() - startTimeOfMaxScoreState) >=  maxTimeInScoreStateMs))
+        if (doReset || animationRoundComplete)
         {
           previousState = currentState;
           currentState = GameState::StopGame;
+
+          // Make sure that it is true even if
+          // GameState::StopGame was set because
+          // animation finished (animationRoundComplete)
+          doReset = true;
         }
 
         break;
       }
     case GameState::StopGame:
       {
-        StopGame();
-        doReset = false;
-        didReset = true;
+        if (doReset)
+        {
+          StopGame();
+          doReset = false;
+          didReset = true;
+        }
 
         if (animationRoundComplete)
         {
@@ -301,7 +308,7 @@ void InitializeGame()
 void StartGame()
 {
   microBitCom.SendStart();
-  scoreboard.Reset();
+  //scoreboard.Reset();
 }
 
 void StopGame()
@@ -309,7 +316,7 @@ void StopGame()
   microBitCom.SendQuit();
   player1.Reset();
   player2.Reset();
-  scoreboard.Reset();
+  //scoreboard.Reset();
 }
 
 void fireConfettiCannons()
