@@ -2,27 +2,16 @@
 
 #define SCOREBOARD_DATA_PIN 8
 
+// CREATE_NUMBER_SPRITE(2) outputs: new SpriteViewer(&SpriteCollection::character_2_Sprite, m_ledMatrix, m_matrixScreenSize)
+#define CREATE_NUMBER_SPRITE(n) (new SpriteViewer(SpriteCollection::character_##n##_Sprite, m_ledMatrix, m_matrixScreenSize))
+
 #include "MatrixUtil.h"
 #include "SpriteViewer.h"
+#include "SpriteCollection.h"
+#include "GameState.h"
+#include "Player.h"
 #include <FastLED.h>
 
-//         ||                                                  ||
-//         ||                                                  ||
-//         DIN                                                DOUT
-//     c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c
-//     0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3
-//     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-//     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// r0 |0 →↓                                                          |
-// r1 |↓ ↑ ↓                                                          |
-// r2 |↓ ↑ ↓                                                          |
-// r3 |↓ ↑ ↓                                                          |
-// r4 |↓ ↑ ↓                                                          |
-// r5 |↓ ↑ ↓                                                          |
-// r6 |↓ ↑ ↓                                                          |
-// r8 |7 ↑ →                                                         |
-//     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
 // WS2812B datasheet: https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf
 // -> WS2812B-V2 (on the matrix) datasheet: https://d2j2m4p6r3pg95.cloudfront.net/module_files/led-cube/assets/datasheets/WS2812B.pdf
 //
@@ -47,13 +36,12 @@ class Scoreboard
   public:
     Scoreboard();
     ~Scoreboard();
-    
-    void Update();
+
+    bool Update(GameState& state);
 
     bool SetPlayerCount(const uint8_t numPlayers);
     uint8_t GetPlayerCount();
-
-    void Start();
+    
     void Reset();
     bool UpdateScore(uint32_t newScore, uint8_t player);
     bool ReachedMaxScore(uint8_t player);
@@ -61,35 +49,45 @@ class Scoreboard
     uint32_t GetWriteTime();
 
   private:
-    void AnimationIdleNoGame();
-    void AnimationStart();
-    void AnimationIdleInGame();
-    void AnimationNewScore(uint32_t newScore, uint8_t player);
-    void AnimationVictory(uint8_t player);
-    void ClearMatrix();
 
-    // Arguments:
-    //  sprite: data of the 2D sprite in a linear array to show on the matrix.
-    //  spriteMask: this mask is a linear array (similar to 'sprite') used to determine which pixels in the 'sprite' array to show on the matrix
-    //  spriteSize: the width (.X) and height (.Y) of the sprite
-    //  topLeftOrigin: origin of the sprite
-    //
-    // If the sprite does not completely fit on the matrix, only the visible pixels are shown
-    //void ShowSprite2d(const CRGB* sprite, const bool* spriteMask, const XY& spriteSize, const XY& topLeftOrigin);
+    // These functions return:
+    //  true: all steps of one anumation round are done
+    //  false: not all steps of one animation round are executed yet
+    bool AnimationIdleNoGame();
+    bool AnimationStart();
+    bool AnimationIdleInGame();
+    bool AnimationNewScore(uint32_t newScore, uint8_t player);
+    bool AnimationVictory(uint8_t player);
+    bool AnimationStopGame();
+    bool ClearMatrix();
 
-    const uint16_t m_maxUpdateTimeMs = 1000 / 100; // 1 second / 100 FPS = 10ms
-    uint16_t m_updateTimeMs = 0;
+    const uint16_t m_durationMsIdleNoGame = 2500;
+    const uint16_t m_durationMsStart = 6000;
+    const uint16_t m_durationMsIdleInGame = 2000;
+    const uint16_t m_durationMsNewScore = 2000;
+    const uint16_t m_durationMsVictory = 5000;
+    const uint16_t m_durationMsStopGame = 2000;
+
+    uint16_t m_numStepsIdleNoGame = 256/2;
+    uint16_t m_numStepsStart = 5;
+    uint16_t m_numStepsIdleInGame = 1;
+    uint16_t m_numStepsNewScore = 1;
+    uint16_t m_numStepsVictory = 1;
+    uint16_t m_numStepsStopGame = 1;
+    
+    uint16_t m_curStepIdleNoGame = 0;
+    uint16_t m_curStepStart = 0;
+    uint16_t m_curStepIdleInGame = 0;
+    uint16_t m_curStepNewScore = 0;
+    uint16_t m_curStepVictory = 0;
+    uint16_t m_curStepStopGame = 0;
+
+    const uint16_t m_minUpdateTimeMs = 1000 / 100; // 1 second / 100 FPS = 10ms
+    uint16_t m_updateTimeMs = 40; // Refresh rate of 25Hz
 
     const uint8_t GetFPS() {
       return 1000 / m_updateTimeMs;  // 1 second / m_updateTimeMs
     }
-
-    const uint16_t m_durationMsIdleNoGame = 2500;
-    const uint16_t m_durationMsStart = 2000;
-    const uint16_t m_durationMsIdleInGame = 2000;
-    const uint16_t m_durationMsNewScore = 2000;
-    const uint16_t m_durationMsVictory = 2000;
-
 
     const MatrixUtil::XY m_matrixScreenSize = { 32, 8 };
     static const int16_t m_numLeds = 32 * 8;
@@ -107,28 +105,28 @@ class Scoreboard
 
     const uint8_t m_maxPlayers = 2;
     uint8_t m_playerCount = 1;
+    uint8_t m_winningPlayer = 1;
 
-    bool m_doIdleAnimation = false;
+    uint32_t m_lastScorePlayer1 = 0;
+    uint32_t m_lastScorePlayer2 = 0;
 
-    //-----
-    // ball sprite
-    const MatrixUtil::XY m_ballSpriteSize = {4, 4};
-    MatrixUtil::XY m_ballSpriteTopLeft = { -m_ballSpriteSize.X, 2};
-    CRGB m_ballSpriteData[4*4] =
+    uint32_t m_currentScorePlayer1 = 0;
+    uint32_t m_currentScorePlayer2 = 0;
+
+    // Sprites
+    SpriteViewer* m_ballSpriteViewer = new SpriteViewer(SpriteCollection::ballSprite, m_ledMatrix, m_matrixScreenSize);
+
+    SpriteViewer* m_numberSprites[10] =
     {
-      CHSV(0, 255, 0), CHSV(0, 255, 0), CHSV(0, 255, 0), CHSV(0, 255, 0),
-      CHSV(0, 255, 0), CHSV(0, 255, 0), CHSV(0, 255, 0), CHSV(0, 255, 0),
-      CHSV(0, 255, 0), CHSV(0, 255, 0), CHSV(0, 255, 0), CHSV(0, 255, 0),
-      CHSV(0, 255, 0), CHSV(0, 255, 0), CHSV(0, 255, 0), CHSV(0, 255, 0)
+      CREATE_NUMBER_SPRITE(0),
+      CREATE_NUMBER_SPRITE(1),
+      CREATE_NUMBER_SPRITE(2),
+      CREATE_NUMBER_SPRITE(3),
+      CREATE_NUMBER_SPRITE(4),
+      CREATE_NUMBER_SPRITE(5),
+      CREATE_NUMBER_SPRITE(6),
+      CREATE_NUMBER_SPRITE(7),
+      CREATE_NUMBER_SPRITE(8),
+      CREATE_NUMBER_SPRITE(9)
     };
-    bool m_ballSpriteMask[4*4] =
-    {
-      0, 1, 1, 0,
-      1, 1, 1, 1,
-      1, 1, 1, 1,
-      0, 1, 1, 0
-    };
-
-    SpriteViewer* m_ballSprite = new SpriteViewer(m_ballSpriteData, m_ballSpriteMask, m_ballSpriteSize, m_ballSpriteTopLeft, m_ledMatrix, m_matrixScreenSize);
-    //---
 };

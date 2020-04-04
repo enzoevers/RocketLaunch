@@ -12,27 +12,23 @@ struct XY
   int16_t Y;
 };
 
-static size_t MatrixToLinearIndex(size_t column, size_t row, size_t numColums, size_t numRows)
-{
-  if (column >= numColums || row >= numRows)
-  {
-    return 0;
-  }
-
-  size_t linearIndex = column * numRows;
-
-  if ((column % 2) == 0)
-  {
-    // Columns with an even index
-    linearIndex += row;
-  }
-  else
-  {
-    // Columns with an uneven index
-    linearIndex += ((numRows - 1) - row);
-  }
-
-  return linearIndex;
-}
-
+//         ||                                                  ||
+//         ||                                                  ||
+//         DIN                                                DOUT
+//     c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c
+//     0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3
+//     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+//     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// r0 |0 →↓                                                          |
+// r1 |↓ ↑ ↓                                                          |
+// r2 |↓ ↑ ↓                                                          |
+// r3 |↓ ↑ ↓                                                          |
+// r4 |↓ ↑ ↓                                                          |
+// r5 |↓ ↑ ↓                                                          |
+// r6 |↓ ↑ ↓                                                          |
+// r8 |7 ↑ →                                                         |
+//     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//
+// Layout for a vertical serpentine connected matrix
+const size_t VerticalSerpentineMatrixToLinearIndex(const size_t column, const size_t row, const size_t numColums, const size_t numRows);
 }

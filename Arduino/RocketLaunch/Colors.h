@@ -1,0 +1,11 @@
+#pragma once
+
+// https://github.com/FastLED/FastLED/wiki/FastLED-HSV-Colors
+#define HSV_RAINDBOW_RED 0
+#define HSV_RAINDBOW_ORANGE 32
+#define HSV_RAINDBOW_YELLOW 64
+#define HSV_RAINDBOW_GREEN 96
+#define HSV_RAINDBOW_AQUA 128
+#define HSV_RAINDBOW_BLUE 160
+#define HSV_RAINDBOW_PURPLE 192
+#define HSV_RAINDBOW_PINK 224

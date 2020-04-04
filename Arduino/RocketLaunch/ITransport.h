@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#define RECEIVE_BUFFER_SIZE 32
+#define RECEIVE_BUFFER_SIZE 16
 
 class ITransport
 {

@@ -11,7 +11,9 @@ class Player
     //  earnedPoints: the points earned from hitting a target
     //
     // Return: the new total score
-    uint32_t AddPoints(uint8_t earnedPoints);
+    const uint32_t AddPoints(const uint8_t earnedPoints);
+    
+    const uint32_t GetCurrentPoints();
 
   private:
     uint32_t m_currentPoints = 0;
