@@ -263,7 +263,6 @@ bool Scoreboard::AnimationIdleNoGame()
   {
     m_ballSpriteViewer->SetPosition({ -(m_ballSpriteViewer->GetSpriteSize()).X, 2});
   }
-  //-----
 
   FastLED.show();
   m_curStepIdleNoGame++;
@@ -423,7 +422,7 @@ void Scoreboard::AnimationIdleInGame_SinglePlayer()
     0
   };
 
-  AnimationIdleInGame_WritePoints(scoreStringBuf, numChars, CHSV(HSV_RAINDBOW_GREEN, 255, 200), startIndexSprite);
+  AnimationIdleInGame_WritePoints(scoreStringBuf, numChars, CHSV(HSV_RAINDBOW_GREEN, 10, 150), startIndexSprite);
 }
 
 void Scoreboard::AnimationIdleInGame_DualPlayer()
@@ -472,7 +471,7 @@ void Scoreboard::AnimationIdleInGame_DualPlayer()
     0
   };
 
-  AnimationIdleInGame_WritePoints(scoreStringBuf, numChars, CHSV(HSV_RAINDBOW_GREEN, 255, 200), startIndexSprite);
+  AnimationIdleInGame_WritePoints(scoreStringBuf, numChars, CHSV(HSV_RAINDBOW_GREEN, 10, 150), startIndexSprite);
 
   //
   // Left side: player 2
@@ -513,7 +512,7 @@ void Scoreboard::AnimationIdleInGame_DualPlayer()
     0
   };
 
-  AnimationIdleInGame_WritePoints(scoreStringBuf, numChars, CHSV(HSV_RAINDBOW_BLUE, 255, 200), startIndexSprite);
+  AnimationIdleInGame_WritePoints(scoreStringBuf, numChars, CHSV(HSV_RAINDBOW_BLUE, 10, 150), startIndexSprite);
 }
 
 void Scoreboard::AnimationIdleInGame_WritePoints(char* scoreStringBuf, uint8_t numChars, CHSV color, MatrixUtil::XY startIndexSprite)

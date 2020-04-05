@@ -309,42 +309,6 @@ Text Label 4600 4700 0    50   ~ 0
 LedDataTarget4_3V3
 Wire Wire Line
 	4600 4700 5350 4700
-Wire Wire Line
-	3150 5850 3650 5850
-Wire Wire Line
-	3150 5650 3650 5650
-Wire Wire Line
-	3150 5550 3650 5550
-Wire Wire Line
-	3150 5450 3650 5450
-Wire Wire Line
-	3150 5350 3650 5350
-Wire Wire Line
-	3150 5250 3650 5250
-Wire Wire Line
-	3150 5150 3650 5150
-Wire Wire Line
-	3150 5050 3650 5050
-Wire Wire Line
-	3150 4950 3650 4950
-Wire Wire Line
-	3150 4850 3650 4850
-Wire Wire Line
-	3150 4750 3650 4750
-Wire Wire Line
-	3150 4650 3650 4650
-Wire Wire Line
-	3150 4450 3650 4450
-Wire Wire Line
-	3150 4350 3650 4350
-Wire Wire Line
-	3150 4250 3650 4250
-Wire Wire Line
-	3150 4150 3650 4150
-Wire Wire Line
-	3150 4050 3650 4050
-Wire Wire Line
-	3150 5950 3650 5950
 Text Label 900  5950 0    50   ~ 0
 MicroBit_P3
 Text Label 900  5850 0    50   ~ 0
@@ -356,7 +320,7 @@ MicroBit_P4
 Text Label 900  5650 0    50   ~ 0
 MicroBit_P5
 Wire Wire Line
-	900  5650 1400 5650
+	900  5650 2050 5650
 Text Label 900  5550 0    50   ~ 0
 MicroBit_P6
 Text Label 900  5450 0    50   ~ 0
@@ -375,8 +339,6 @@ Wire Wire Line
 	900  5050 1400 5050
 Text Label 900  4950 0    50   ~ 0
 MicroBit_P11
-Wire Wire Line
-	900  4950 1400 4950
 Text Label 900  4850 0    50   ~ 0
 MicroBit_P12
 Wire Wire Line
@@ -402,53 +364,24 @@ F 3 "" H 3650 4150 50  0001 C CNN
 	1    3650 4150
 	0    -1   -1   0   
 $EndComp
-Wire Wire Line
-	4450 4550 3650 4550
-Wire Wire Line
-	3150 4550 3650 4550
-Connection ~ 3650 4550
 Text Label 4450 4550 2    50   ~ 0
 LedDataTarget4_3V3
 Text Label 4450 4650 2    50   ~ 0
 LedDataTarget3_3V3
-Wire Wire Line
-	4450 4650 3650 4650
-Connection ~ 3650 4650
 Text Label 4450 4750 2    50   ~ 0
 LedDataTarget2_3V3
-Wire Wire Line
-	4450 4750 3650 4750
-Text Label 4450 5150 2    50   ~ 0
+Text Label 4450 5250 2    50   ~ 0
 LedDataTarget1_3V3
-Wire Wire Line
-	4450 5150 3650 5150
-Connection ~ 3650 4750
-Connection ~ 3650 5150
-Wire Wire Line
-	3650 5850 4200 5850
 Text Label 4200 5850 2    50   ~ 0
 SwitchTarget1
-Wire Wire Line
-	3150 5750 3650 5750
-Wire Wire Line
-	3650 5750 4200 5750
-Text Label 4200 5750 2    50   ~ 0
+Text Label 4200 5650 2    50   ~ 0
 SwitchTarget2
-Wire Wire Line
-	3650 5350 4200 5350
 Text Label 4200 5350 2    50   ~ 0
 SwitchTarget3
-Wire Wire Line
-	3650 5250 4200 5250
-Text Label 4200 5250 2    50   ~ 0
+Text Label 4200 4950 2    50   ~ 0
 SwitchTarget4
-Connection ~ 3650 5750
-Connection ~ 3650 5850
-Wire Wire Line
-	3650 5950 4800 5950
 Text Label 4800 5950 2    50   ~ 0
 Serial_Arduino_RX_Enable_3V3
-Connection ~ 3650 5950
 Wire Wire Line
 	4950 3550 3850 3550
 Text Label 3850 3550 0    50   ~ 0
@@ -474,23 +407,16 @@ F 3 "" H 3700 2400 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	3650 2400 3700 2400
-Wire Wire Line
-	3650 5550 4850 5550
 Text Label 4850 5550 2    50   ~ 0
 Serial_MicroBit_RX_Enable_3V3
-Connection ~ 3650 5550
 Text Label 6350 3850 2    50   ~ 0
 Serial_MicroBit_RX_3V3
 Wire Wire Line
 	5450 3850 6350 3850
 Text Label 4550 4450 2    50   ~ 0
 Serial_MicroBit_RX_3V3
-Wire Wire Line
-	3650 4450 4550 4450
 Text Label 4550 4350 2    50   ~ 0
 Serial_MicroBit_TX_3V3
-Wire Wire Line
-	3650 4350 4550 4350
 Wire Wire Line
 	3800 1500 4500 1500
 Text Label 4500 1500 2    50   ~ 0
@@ -644,25 +570,22 @@ F 3 " ~" H 2850 3450 50  0001 C CNN
 	1    2700 3500
 	1    0    0    -1  
 $EndComp
-Connection ~ 3650 4350
-Connection ~ 3650 4450
 Connection ~ 3650 5250
-Connection ~ 3650 5350
 Text Label 2300 4550 2    50   ~ 0
 LedDataTarget4_3V3
 Text Label 2300 4650 2    50   ~ 0
 LedDataTarget3_3V3
 Text Label 2300 4750 2    50   ~ 0
 LedDataTarget2_3V3
-Text Label 2300 5150 2    50   ~ 0
+Text Label 2300 5250 2    50   ~ 0
 LedDataTarget1_3V3
 Text Label 2050 5850 2    50   ~ 0
 SwitchTarget1
-Text Label 2050 5750 2    50   ~ 0
+Text Label 2050 5650 2    50   ~ 0
 SwitchTarget2
 Text Label 2050 5350 2    50   ~ 0
 SwitchTarget3
-Text Label 2050 5250 2    50   ~ 0
+Text Label 2050 4950 2    50   ~ 0
 SwitchTarget4
 Text Label 2650 5950 2    50   ~ 0
 Serial_Arduino_RX_Enable_3V3
@@ -683,15 +606,13 @@ Wire Wire Line
 Wire Wire Line
 	900  4750 2300 4750
 Wire Wire Line
-	900  5150 2300 5150
-Wire Wire Line
-	900  5250 2050 5250
+	900  5250 2300 5250
 Wire Wire Line
 	900  5350 2050 5350
 Wire Wire Line
 	900  5550 2700 5550
 Wire Wire Line
-	900  5750 2050 5750
+	900  5750 1400 5750
 Wire Wire Line
 	900  5850 2050 5850
 Wire Wire Line
@@ -699,7 +620,6 @@ Wire Wire Line
 Connection ~ 3650 4150
 Wire Wire Line
 	3650 4050 3650 4150
-Connection ~ 3650 4050
 $Comp
 L Connector_Generic:Conn_01x05 J4
 U 1 1 5E7ECC5B
@@ -1146,11 +1066,8 @@ Text Label 5250 1700 0    50   ~ 0
 ConfettiCannon
 Wire Wire Line
 	5250 1700 5850 1700
-Wire Wire Line
-	2650 4250 3150 4250
 Text Label 2650 4250 0    50   ~ 0
 MicroBit_3V3
-Connection ~ 3150 4250
 Wire Notes Line
 	1750 4100 2450 4100
 Wire Notes Line
@@ -1405,4 +1322,87 @@ Text Label 2500 1300 0    50   ~ 0
 PointSelectorSwitch
 Wire Wire Line
 	2500 1300 3300 1300
+Wire Wire Line
+	3200 5250 3650 5250
+Wire Wire Line
+	2650 4250 3150 4250
+Connection ~ 3150 4250
+Connection ~ 3650 4050
+Connection ~ 3650 4350
+Connection ~ 3650 4450
+Connection ~ 3650 4550
+Connection ~ 3650 4650
+Connection ~ 3650 4750
+Connection ~ 3650 5350
+Connection ~ 3650 5550
+Connection ~ 3650 5850
+Connection ~ 3650 5950
+Wire Wire Line
+	3150 5850 3650 5850
+Wire Wire Line
+	3150 5650 3650 5650
+Wire Wire Line
+	3150 5550 3650 5550
+Wire Wire Line
+	3150 5450 3650 5450
+Wire Wire Line
+	3150 5350 3650 5350
+Wire Wire Line
+	3150 5150 3650 5150
+Wire Wire Line
+	3150 5050 3650 5050
+Wire Wire Line
+	3150 4950 3650 4950
+Wire Wire Line
+	3150 4850 3650 4850
+Wire Wire Line
+	3150 4750 3650 4750
+Wire Wire Line
+	3150 4650 3650 4650
+Wire Wire Line
+	3150 4450 3650 4450
+Wire Wire Line
+	3150 4350 3650 4350
+Wire Wire Line
+	3150 4150 3650 4150
+Wire Wire Line
+	3150 4050 3650 4050
+Wire Wire Line
+	3150 5950 3650 5950
+Wire Wire Line
+	3650 4550 4450 4550
+Wire Wire Line
+	3150 4550 3650 4550
+Wire Wire Line
+	3650 4650 4450 4650
+Wire Wire Line
+	3650 4750 4450 4750
+Wire Wire Line
+	3650 4950 4200 4950
+Wire Wire Line
+	3150 5750 3650 5750
+Wire Wire Line
+	3150 4250 3650 4250
+Wire Wire Line
+	3650 4350 4550 4350
+Wire Wire Line
+	3650 4450 4550 4450
+Wire Wire Line
+	3650 5350 4200 5350
+Wire Wire Line
+	3650 5550 4850 5550
+Wire Wire Line
+	3650 5650 4200 5650
+Wire Wire Line
+	3650 5850 4200 5850
+Wire Wire Line
+	3650 5950 4800 5950
+Wire Wire Line
+	3650 5250 4450 5250
+Wire Wire Line
+	900  4950 2050 4950
+Wire Wire Line
+	900  5150 1400 5150
+Connection ~ 3650 4950
+Connection ~ 3650 5650
 $EndSCHEMATC

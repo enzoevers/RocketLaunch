@@ -106,11 +106,11 @@ const uint8_t character_3_SpriteHeight = 5;
 const uint8_t character_3_SpriteMask[character_3_SpriteHeight] =
 {
 
-  0b111,
+  0b110,
   0b001,
   0b011,
   0b001,
-  0b111
+  0b110
 };
 
 const Sprite character_3_Sprite
@@ -124,10 +124,11 @@ const Sprite character_3_Sprite
 //-----
 // character_4_Sprite
 const uint8_t character_4_SpriteWidth = 3;
-const uint8_t character_4_SpriteHeight = 4;
+const uint8_t character_4_SpriteHeight = 5;
 
 const uint8_t character_4_SpriteMask[character_4_SpriteHeight] =
 {
+  0b001,
   0b011,
   0b101,
   0b111,
@@ -191,14 +192,15 @@ const Sprite character_6_Sprite
 //-----
 // character_7_Sprite
 const int16_t character_7_SpriteWidth = 3;
-const int16_t character_7_SpriteHeight = 4;
+const int16_t character_7_SpriteHeight = 5;
 
 const uint8_t character_7_SpriteMask[character_7_SpriteHeight] =
 {
   0b111,
   0b001,
+  0b011,
   0b010,
-  0b100
+  0b010
 };
 
 const Sprite character_7_Sprite
