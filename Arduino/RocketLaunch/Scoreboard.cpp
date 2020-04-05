@@ -408,55 +408,33 @@ void Scoreboard::AnimationIdleInGame_SinglePlayer()
 
   //
   // Set sprites
-  //
-  // m_currentScorePlayer1
+  //  
   char scoreStringBuf[4]; // Max score is < 1000 which means 3 characters + \0 at max
   const uint8_t numChars = sprintf(scoreStringBuf, "%d", m_currentScorePlayer1);
-
-  Serial.println(scoreStringBuf);
-
+  
   // All numeric sprites in the SpriteCollection namespace are 3 pixels wide
   // and in front of each number a one pixel spacing is given. This will result in
   // an length of a even value which makes dividing up the free space easier
   const uint8_t spriteWidth = 1 + 3; // 1 spacing pixel; 3 sprite pixels
   const uint8_t totalScoreWidth = numChars * spriteWidth;
-  const uint8_t verticalSpacingFromBottom = 1;
   MatrixUtil::XY startIndexSprite =
   {
     ((m_matrixScreenSize.X - totalScoreWidth) / 2) - 1, // -1 to account for the index starting at 0
     0
   };
 
-  for (int i = 0; i < numChars; i++)
-  {
-    const uint8_t asciiValueStart = 48; // http://www.asciitable.com/
-    uint8_t value = scoreStringBuf[i] - asciiValueStart;
-    if (value < 0 || value > 9)
-    {
-      value = 0; // The default value;
-    }
-
-    // The sprite object can be temporary because once the data
-    // of the sprite is written to the matrix with SetSpriteOnScreen()
-    // the sprite object isn't used anymore
-    SpriteViewer tmpSprite = *m_numberSprites[value];
-
-    startIndexSprite.X += 1; // One spacing pixel in front of each character
-    if (i > 0)
-    {
-      startIndexSprite.X += tmpSprite.GetSpriteSize().X;
-    }
-    startIndexSprite.Y = m_matrixScreenSize.Y - verticalSpacingFromBottom - tmpSprite.GetSpriteSize().Y - 1;
-
-    tmpSprite.SetPosition(startIndexSprite);
-    tmpSprite.SetPriteSolidColor(CHSV(HSV_RAINDBOW_GREEN, 255, 200));
-    tmpSprite.SetSpriteOnScreen();
-  }
+  AnimationIdleInGame_WritePoints(scoreStringBuf, numChars, CHSV(HSV_RAINDBOW_GREEN, 255, 200), startIndexSprite);
 }
 
 void Scoreboard::AnimationIdleInGame_DualPlayer()
 {
+  //
   // Right side: player 1
+  //
+  
+  //
+  // Set Background
+  //
   for (size_t c = 0; c < m_matrixScreenSize.X / 2; c++)
   {
     for (size_t r = 0; r < m_matrixScreenSize.Y; r++)
@@ -477,7 +455,32 @@ void Scoreboard::AnimationIdleInGame_DualPlayer()
     }
   }
 
+  //
+  // Set sprites
+  //  
+  char scoreStringBuf[4]; // Max score is < 1000 which means 3 characters + \0 at max
+  uint8_t numChars = sprintf(scoreStringBuf, "%d", m_currentScorePlayer1);
+  
+  // All numeric sprites in the SpriteCollection namespace are 3 pixels wide
+  // and in front of each number a one pixel spacing is given. This will result in
+  // an length of a even value which makes dividing up the free space easier
+  const uint8_t spriteWidth = 1 + 3; // 1 spacing pixel; 3 sprite pixels
+  uint8_t totalScoreWidth = numChars * spriteWidth;
+  MatrixUtil::XY startIndexSprite =
+  {
+    ((m_matrixScreenSize.X/2 - totalScoreWidth) / 2) - 1, // -1 to account for the index starting at 0
+    0
+  };
+
+  AnimationIdleInGame_WritePoints(scoreStringBuf, numChars, CHSV(HSV_RAINDBOW_GREEN, 255, 200), startIndexSprite);
+
+  //
   // Left side: player 2
+  //
+
+  //
+  // Set Background
+  //
   for (size_t c = m_matrixScreenSize.X / 2; c < m_matrixScreenSize.X; c++)
   {
     for (size_t r = 0; r < m_matrixScreenSize.Y; r++)
@@ -496,6 +499,54 @@ void Scoreboard::AnimationIdleInGame_DualPlayer()
       }
       m_ledMatrix[index] = color;
     }
+  }
+
+  //
+  // Set sprites
+  //  
+  numChars = sprintf(scoreStringBuf, "%d", m_currentScorePlayer2);
+  
+  totalScoreWidth = numChars * spriteWidth;
+  startIndexSprite =
+  {
+    (((m_matrixScreenSize.X/2 - totalScoreWidth) / 2) + m_matrixScreenSize.X/2) - 1, // -1 to account for the index starting at 0
+    0
+  };
+
+  AnimationIdleInGame_WritePoints(scoreStringBuf, numChars, CHSV(HSV_RAINDBOW_BLUE, 255, 200), startIndexSprite);
+}
+
+void Scoreboard::AnimationIdleInGame_WritePoints(char* scoreStringBuf, uint8_t numChars, CHSV color, MatrixUtil::XY startIndexSprite)
+{
+  const uint8_t verticalSpacingFromBottom = 1;
+
+  // For each number is the value select the
+  // correct sprite, give it a position, and set
+  // the sprite data on the screen.
+  for (int i = 0; i < numChars; i++)
+  {
+    const uint8_t asciiValueStart = 48; // http://www.asciitable.com/
+    uint8_t value = scoreStringBuf[i] - asciiValueStart;
+    if (value < 0 || value > 9)
+    {
+      value = 0; // The default value;
+    }
+
+    // The sprite object is temporary because once the data
+    // of the sprite is written to the matrix (with SetSpriteOnScreen())
+    // the sprite object isn't used anymore
+    SpriteViewer tmpSprite = *m_numberSprites[value];
+
+    startIndexSprite.X += 1; // One spacing pixel in front of each character
+    if (i > 0)
+    {
+      startIndexSprite.X += tmpSprite.GetSpriteSize().X;
+    }
+    startIndexSprite.Y = m_matrixScreenSize.Y - verticalSpacingFromBottom - tmpSprite.GetSpriteSize().Y - 1;
+
+    tmpSprite.SetPosition(startIndexSprite);
+    tmpSprite.SetPriteSolidColor(color);
+    tmpSprite.SetSpriteOnScreen();
   }
 }
 

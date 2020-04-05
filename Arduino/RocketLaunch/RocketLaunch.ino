@@ -160,8 +160,8 @@ void UpdateGameState()
       {
         if (doStart)
         {
-          StartGame();
           InitializeGame();
+          StartGame();
           delay(1); // Give the Micro:Bit some time to set its communication enable pin
 
           doStart = false;
@@ -264,13 +264,18 @@ void StartResetButtonPoll()
   const bool buttonState = digitalRead(startResetPin);
   const long currentMillis = millis();
 
-  if ((lastButtonState != LOW) && (buttonState == LOW))
+  // Button is pressed down but not yet released
+  if ((lastButtonState == HIGH) && (buttonState == LOW))
   {
-    // Button was pressed
     btnChangeTimestampMs = currentMillis;
 
+    doStart = false;
+    doReset = false;
     didReset = false;
   }
+  // Button is still pressed.
+  // Check if it is pressed for longer than the reset time threshold
+  // This approach makes sure that you don't have to release the button in order to reset the system
   else if ((lastButtonState == LOW) && (buttonState == LOW) && (didReset == false))
   {
     if ((currentMillis - btnChangeTimestampMs) > startResetBtnPressThresholdMs)
@@ -279,9 +284,10 @@ void StartResetButtonPoll()
       doReset = true;
     }
   }
-  else if ((lastButtonState != HIGH) && (buttonState == HIGH))
+  // Button was released
+  // Check if the button was released withing the start time threshold
+  else if ((lastButtonState == LOW) && (buttonState == HIGH))
   {
-    // Button was released
     if ((currentMillis - btnChangeTimestampMs) <= startResetBtnPressThresholdMs)
     {
       doStart = true;
@@ -297,7 +303,6 @@ void InitializeGame()
   // reading a 0 -> 1 player
   // reading a 1 -> 2 players
   playerCount = (digitalRead(playerSelectPin) == 0) ? 1 : 2;
-
   gameMode = (digitalRead(gameModePin) == 0) ? 1 : 2;
 
   scoreboard.SetPlayerCount(playerCount);
@@ -308,7 +313,6 @@ void InitializeGame()
 void StartGame()
 {
   microBitCom.SendStart();
-  scoreboard.Reset();
 }
 
 void StopGame()
@@ -316,7 +320,7 @@ void StopGame()
   microBitCom.SendQuit();
   player1.Reset();
   player2.Reset();
-  //scoreboard.Reset();
+  scoreboard.Reset();
 }
 
 void fireConfettiCannons()

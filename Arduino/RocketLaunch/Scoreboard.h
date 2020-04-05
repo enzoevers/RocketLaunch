@@ -58,6 +58,7 @@ class Scoreboard
     bool AnimationIdleInGame();
     void AnimationIdleInGame_SinglePlayer();
     void AnimationIdleInGame_DualPlayer();
+    void AnimationIdleInGame_WritePoints(char* scoreStringBuf, uint8_t numChars, CHSV color, MatrixUtil::XY startIndexSprite);
     bool AnimationNewScore(uint32_t newScore, uint8_t player);
     bool AnimationVictory(uint8_t player);
     bool AnimationStopGame();
@@ -93,7 +94,7 @@ class Scoreboard
       return 1000 / m_updateTimeMs;  // 1 second / m_updateTimeMs
     }
 
-    GameState m_prevState = GameState::OutOfGame;
+    GameState m_prevState = GameState::StopGame;
 
     const MatrixUtil::XY m_matrixScreenSize = { 32, 8 };
     static const int16_t m_numLeds = 32 * 8;
