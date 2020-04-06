@@ -10,6 +10,7 @@
 #include "SpriteCollection.h"
 #include "GameState.h"
 #include "Player.h"
+#include "Colors.h"
 #include <FastLED.h>
 
 // WS2812B datasheet: https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf
@@ -68,15 +69,16 @@ class Scoreboard
     const uint16_t m_durationMsStart = 6000;
     const uint16_t m_durationMsIdleInGame = 2000;
     const uint16_t m_durationMsNewScore = 1000;
-    const uint16_t m_durationMsVictory = 5000;
-    const uint16_t m_durationMsStopGame = 2000;
+    const uint16_t m_durationMsVictory = 4000;
+    const uint16_t m_durationMsStopGame = 1500;
 
     uint16_t m_numStepsIdleNoGame = 256/2;
     uint16_t m_numStepsStart = 5;
     uint16_t m_numStepsIdleInGame = 48;
     uint16_t m_numStepsNewScore = 1;
-    uint16_t m_numStepsVictory = 1; // TODO
-    uint16_t m_numStepsStopGame = 1; // TODO
+    uint16_t m_numStepsVictory = 1;
+    uint16_t m_numStepsStopGame = 32/2 + 7; // The animation is symmetrical in the vertical center of the matric (32/2)
+                                            // When the animation reached the middle 7 extra leds need to go down
     
     uint16_t m_curStepIdleNoGame = 0;
     uint16_t m_curStepStart = 0;
@@ -119,6 +121,9 @@ class Scoreboard
 
     uint32_t m_currentScorePlayer1 = 0;
     uint32_t m_currentScorePlayer2 = 0;
+
+    const uint8_t m_huePlayer1 = HSV_RAINDBOW_GREEN;
+    const uint8_t m_huePlayer2 = HSV_RAINDBOW_BLUE;
 
     // Sprites
     SpriteViewer* m_ballSpriteViewer = new SpriteViewer(SpriteCollection::ballSprite, m_ledMatrix, m_matrixScreenSize);

@@ -207,6 +207,9 @@ void UpdateGameState()
           {
             winningPlayer = player;               // Used in the GameState::ReachedMaxScore state
 
+            scoreboard.ReachedMaxScore(winningPlayer);
+            fireConfettiCannons();
+
             previousState = currentState;
             currentState = GameState::ReachedMaxScore;
           }
@@ -223,9 +226,6 @@ void UpdateGameState()
       }
     case GameState::ReachedMaxScore:
       {
-        scoreboard.ReachedMaxScore(winningPlayer);
-        fireConfettiCannons();
-
         if (doReset || animationRoundComplete)
         {
           previousState = currentState;

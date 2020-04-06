@@ -1,6 +1,4 @@
 #include "Scoreboard.h"
-#include "Colors.h"
-
 
 //===============
 // Constructor
@@ -126,17 +124,11 @@ bool Scoreboard::Update(GameState& state)
 
           if (m_lastScorePlayer1 != m_currentScorePlayer1)
           {
-            if (AnimationNewScore(m_currentScorePlayer1, 1))
-            {
-              m_lastScorePlayer1 = m_currentScorePlayer1;
-            }
+            m_lastScorePlayer1 = m_currentScorePlayer1;
           }
           if (m_lastScorePlayer2 != m_currentScorePlayer2)
           {
-            if (AnimationNewScore(m_currentScorePlayer2, 2))
-            {
-              m_lastScorePlayer2 = m_currentScorePlayer2;
-            }
+            m_lastScorePlayer2 = m_currentScorePlayer2;
           }
 
           break;
@@ -395,7 +387,7 @@ void Scoreboard::AnimationIdleInGame_SinglePlayer()
       if (c == 0 || c == (m_matrixScreenSize.X - 1)
           || r == 0 || r == (m_matrixScreenSize.Y - 1))
       {
-        color = CHSV(HSV_RAINDBOW_GREEN, 255, 80);
+        color = CHSV(m_huePlayer1, 255, 80);
       }
       else
       {
@@ -407,10 +399,10 @@ void Scoreboard::AnimationIdleInGame_SinglePlayer()
 
   //
   // Set sprites
-  //  
+  //
   char scoreStringBuf[4]; // Max score is < 1000 which means 3 characters + \0 at max
   const uint8_t numChars = sprintf(scoreStringBuf, "%d", m_currentScorePlayer1);
-  
+
   // All numeric sprites in the SpriteCollection namespace are 3 pixels wide
   // and in front of each number a one pixel spacing is given. This will result in
   // an length of a even value which makes dividing up the free space easier
@@ -422,7 +414,7 @@ void Scoreboard::AnimationIdleInGame_SinglePlayer()
     0
   };
 
-  AnimationIdleInGame_WritePoints(scoreStringBuf, numChars, CHSV(HSV_RAINDBOW_GREEN, 10, 150), startIndexSprite);
+  AnimationIdleInGame_WritePoints(scoreStringBuf, numChars, CHSV(m_huePlayer1, 10, 150), startIndexSprite);
 }
 
 void Scoreboard::AnimationIdleInGame_DualPlayer()
@@ -430,7 +422,7 @@ void Scoreboard::AnimationIdleInGame_DualPlayer()
   //
   // Right side: player 1
   //
-  
+
   //
   // Set Background
   //
@@ -444,7 +436,7 @@ void Scoreboard::AnimationIdleInGame_DualPlayer()
       if (c == 0 || c == (m_matrixScreenSize.X / 2 - 1)
           || r == 0 || r == (m_matrixScreenSize.Y - 1))
       {
-        color = CHSV(HSV_RAINDBOW_GREEN, 255, 80);
+        color = CHSV(m_huePlayer1, 255, 80);
       }
       else
       {
@@ -456,10 +448,10 @@ void Scoreboard::AnimationIdleInGame_DualPlayer()
 
   //
   // Set sprites
-  //  
+  //
   char scoreStringBuf[4]; // Max score is < 1000 which means 3 characters + \0 at max
   uint8_t numChars = sprintf(scoreStringBuf, "%d", m_currentScorePlayer1);
-  
+
   // All numeric sprites in the SpriteCollection namespace are 3 pixels wide
   // and in front of each number a one pixel spacing is given. This will result in
   // an length of a even value which makes dividing up the free space easier
@@ -467,11 +459,11 @@ void Scoreboard::AnimationIdleInGame_DualPlayer()
   uint8_t totalScoreWidth = numChars * spriteWidth;
   MatrixUtil::XY startIndexSprite =
   {
-    ((m_matrixScreenSize.X/2 - totalScoreWidth) / 2) - 1, // -1 to account for the index starting at 0
+    ((m_matrixScreenSize.X / 2 - totalScoreWidth) / 2) - 1, // -1 to account for the index starting at 0
     0
   };
 
-  AnimationIdleInGame_WritePoints(scoreStringBuf, numChars, CHSV(HSV_RAINDBOW_GREEN, 10, 150), startIndexSprite);
+  AnimationIdleInGame_WritePoints(scoreStringBuf, numChars, CHSV(m_huePlayer1, 10, 150), startIndexSprite);
 
   //
   // Left side: player 2
@@ -490,7 +482,7 @@ void Scoreboard::AnimationIdleInGame_DualPlayer()
       if (c == m_matrixScreenSize.X / 2 || c == (m_matrixScreenSize.X - 1)
           || r == 0 || r == (m_matrixScreenSize.Y - 1))
       {
-        color = CHSV(HSV_RAINDBOW_BLUE, 255, 80);
+        color = CHSV(m_huePlayer2, 255, 80);
       }
       else
       {
@@ -502,17 +494,17 @@ void Scoreboard::AnimationIdleInGame_DualPlayer()
 
   //
   // Set sprites
-  //  
+  //
   numChars = sprintf(scoreStringBuf, "%d", m_currentScorePlayer2);
-  
+
   totalScoreWidth = numChars * spriteWidth;
   startIndexSprite =
   {
-    (((m_matrixScreenSize.X/2 - totalScoreWidth) / 2) + m_matrixScreenSize.X/2) - 1, // -1 to account for the index starting at 0
+    (((m_matrixScreenSize.X / 2 - totalScoreWidth) / 2) + m_matrixScreenSize.X / 2) - 1, // -1 to account for the index starting at 0
     0
   };
 
-  AnimationIdleInGame_WritePoints(scoreStringBuf, numChars, CHSV(HSV_RAINDBOW_BLUE, 10, 150), startIndexSprite);
+  AnimationIdleInGame_WritePoints(scoreStringBuf, numChars, CHSV(m_huePlayer2, 10, 150), startIndexSprite);
 }
 
 void Scoreboard::AnimationIdleInGame_WritePoints(char* scoreStringBuf, uint8_t numChars, CHSV color, MatrixUtil::XY startIndexSprite)
@@ -553,14 +545,7 @@ bool Scoreboard::AnimationNewScore(uint32_t newScore, uint8_t player)
 {
   bool animationComplete = false;
 
-  for (size_t c = 0; c < m_matrixScreenSize.X; c++)
-  {
-    for (size_t r = 0; r < m_matrixScreenSize.Y; r++)
-    {
-      size_t index = MatrixUtil::VerticalSerpentineMatrixToLinearIndex(c, r, m_matrixScreenSize.X, m_matrixScreenSize.Y);
-      m_ledMatrix[index] = CRGB::Black;
-    }
-  }
+  animationComplete = true;
 
   return animationComplete;
 }
@@ -580,7 +565,22 @@ bool Scoreboard::AnimationVictory(uint8_t player)
     for (size_t r = 0; r < m_matrixScreenSize.Y; r++)
     {
       size_t index = MatrixUtil::VerticalSerpentineMatrixToLinearIndex(c, r, m_matrixScreenSize.X, m_matrixScreenSize.Y);
-      m_ledMatrix[index] = CRGB::Blue;
+
+      uint8_t curHue;
+
+      switch (player)
+      {
+        case 1: {
+            curHue = m_huePlayer1;
+            break;
+          }
+        case 2: {
+            curHue = m_huePlayer2;
+            break;
+          }
+      };
+
+      m_ledMatrix[index] = CHSV(curHue, 255, 80);
     }
   }
 
@@ -605,7 +605,13 @@ bool Scoreboard::AnimationStopGame()
     for (size_t r = 0; r < m_matrixScreenSize.Y; r++)
     {
       size_t index = MatrixUtil::VerticalSerpentineMatrixToLinearIndex(c, r, m_matrixScreenSize.X, m_matrixScreenSize.Y);
-      m_ledMatrix[index] = CRGB::Yellow;
+      if ((
+            (c + r) <= m_curStepStopGame || // Left side
+            ((m_matrixScreenSize.X - 1) - (c - r)) <= m_curStepStopGame // Right side
+          ) && r <= m_curStepStopGame)
+      {
+        m_ledMatrix[index] = CRGB::Black;
+      }
     }
   }
 
