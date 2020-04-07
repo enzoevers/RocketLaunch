@@ -5,7 +5,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "RocketLaunch"
-Date "2020-03-14"
+Date "2020-04-07"
 Rev ""
 Comp "De Bibliotheek Eindhoven - MakersClub"
 Comment1 ""
@@ -46,51 +46,6 @@ F 3 "" H 2150 3300 50  0001 C CNN
 	1    2150 3300
 	1    0    0    -1  
 $EndComp
-$Comp
-L power:GND #PWR08
-U 1 1 5E71BCED
-P 4650 4900
-F 0 "#PWR08" H 4650 4650 50  0001 C CNN
-F 1 "GND" H 4655 4727 50  0000 C CNN
-F 2 "" H 4650 4900 50  0001 C CNN
-F 3 "" H 4650 4900 50  0001 C CNN
-	1    4650 4900
-	0    1    1    0   
-$EndComp
-Wire Wire Line
-	5350 4900 4650 4900
-$Comp
-L power:GND #PWR09
-U 1 1 5E71BCF4
-P 6500 4900
-F 0 "#PWR09" H 6500 4650 50  0001 C CNN
-F 1 "GND" H 6505 4727 50  0000 C CNN
-F 2 "" H 6500 4900 50  0001 C CNN
-F 3 "" H 6500 4900 50  0001 C CNN
-	1    6500 4900
-	0    -1   -1   0   
-$EndComp
-Wire Wire Line
-	6500 4900 5850 4900
-$Comp
-L Connector_Generic:Conn_02x06_Row_Letter_Last J10
-U 1 1 5E71BCFB
-P 5550 4900
-F 0 "J10" H 5650 5200 50  0000 R CNN
-F 1 "LogicConverter_BiDirectional" H 6150 4500 50  0000 R CNN
-F 2 "" H 5550 4900 50  0001 C CNN
-F 3 "~" H 5550 4900 50  0001 C CNN
-	1    5550 4900
-	1    0    0    -1  
-$EndComp
-Text Label 6450 5000 2    50   ~ 0
-5V_PowerSupply
-Wire Wire Line
-	6450 5000 5850 5000
-Text Label 4850 5000 0    50   ~ 0
-MicroBit_3V3
-Wire Wire Line
-	5350 5000 4850 5000
 Text Label 6500 6350 3    50   ~ 0
 5V_PowerSupply
 Wire Wire Line
@@ -133,12 +88,12 @@ $EndComp
 $Comp
 L Connector_Generic:Conn_02x20_Row_Letter_Last J3
 U 1 1 5E6AC8BC
-P 3350 4950
-F 0 "J3" H 3400 6067 50  0000 C CNN
-F 1 "MicroBit_40PinExtender" H 3400 5976 50  0000 C CNN
-F 2 "" H 3350 4950 50  0001 C CNN
-F 3 "~" H 3350 4950 50  0001 C CNN
-	1    3350 4950
+P 3200 4950
+F 0 "J3" H 3250 6067 50  0000 C CNN
+F 1 "MicroBit_40PinExtender" H 3250 5976 50  0000 C CNN
+F 2 "" H 3200 4950 50  0001 C CNN
+F 3 "~" H 3200 4950 50  0001 C CNN
+	1    3200 4950
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -215,67 +170,6 @@ F 3 "" H 5050 1300 50  0001 C CNN
 $EndComp
 Text Label 4850 1500 1    50   ~ 0
 5V_PowerSupply
-Wire Wire Line
-	5450 3650 5950 3650
-Text Label 5950 3650 2    50   ~ 0
-MicroBit_3V3
-Wire Wire Line
-	4550 3650 4950 3650
-Text Label 4550 3650 0    50   ~ 0
-Arduino_5V
-Wire Wire Line
-	3900 3750 4950 3750
-$Comp
-L power:GND #PWR04
-U 1 1 5E7065B4
-P 3900 3750
-F 0 "#PWR04" H 3900 3500 50  0001 C CNN
-F 1 "GND" H 3905 3577 50  0000 C CNN
-F 2 "" H 3900 3750 50  0001 C CNN
-F 3 "" H 3900 3750 50  0001 C CNN
-	1    3900 3750
-	0    1    1    0   
-$EndComp
-Wire Wire Line
-	5450 3750 6550 3750
-$Comp
-L power:GND #PWR05
-U 1 1 5E701E25
-P 6550 3750
-F 0 "#PWR05" H 6550 3500 50  0001 C CNN
-F 1 "GND" H 6555 3577 50  0000 C CNN
-F 2 "" H 6550 3750 50  0001 C CNN
-F 3 "" H 6550 3750 50  0001 C CNN
-	1    6550 3750
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Connector_Generic:Conn_02x06_Row_Letter_Last J8
-U 1 1 5E7120BA
-P 5250 3750
-F 0 "J8" H 5346 3362 50  0000 R CNN
-F 1 "LogicConverter_BiDirectional" H 5850 4050 50  0000 R CNN
-F 2 "" H 5250 3750 50  0001 C CNN
-F 3 "~" H 5250 3750 50  0001 C CNN
-	1    5250 3750
-	-1   0    0    1   
-$EndComp
-Text Label 6550 5200 2    50   ~ 0
-LedDataTarget1_5V
-Wire Wire Line
-	6550 5200 5850 5200
-Text Label 6550 5100 2    50   ~ 0
-LedDataTarget2_5V
-Wire Wire Line
-	6550 5100 5850 5100
-Text Label 6550 4800 2    50   ~ 0
-LedDataTarget3_5V
-Wire Wire Line
-	6550 4800 5850 4800
-Text Label 6550 4700 2    50   ~ 0
-LedDataTarget4_5V
-Wire Wire Line
-	6550 4700 5850 4700
 $Comp
 L power:GND #PWR019
 U 1 1 5E73009E
@@ -293,27 +187,11 @@ Wire Wire Line
 	6400 6800 6400 6950
 Wire Wire Line
 	6500 6350 6500 6950
-Text Label 4600 5200 0    50   ~ 0
-LedDataTarget1_3V3
-Wire Wire Line
-	4600 5200 5350 5200
-Text Label 4600 5100 0    50   ~ 0
-LedDataTarget2_3V3
-Wire Wire Line
-	4600 5100 5350 5100
-Text Label 4600 4800 0    50   ~ 0
-LedDataTarget3_3V3
-Wire Wire Line
-	4600 4800 5350 4800
-Text Label 4600 4700 0    50   ~ 0
-LedDataTarget4_3V3
-Wire Wire Line
-	4600 4700 5350 4700
 Text Label 900  5950 0    50   ~ 0
 MicroBit_P3
 Text Label 900  5850 0    50   ~ 0
 MicroBit_P0
-Text Notes 3050 5450 1    50   ~ 0
+Text Notes 2900 5450 1    50   ~ 0
 Notch connector on this side
 Text Label 900  5750 0    50   ~ 0
 MicroBit_P4
@@ -356,40 +234,32 @@ MicroBit_P16
 $Comp
 L power:GND #PWR021
 U 1 1 5E98B09B
-P 3650 4150
-F 0 "#PWR021" H 3650 3900 50  0001 C CNN
-F 1 "GND" V 3655 4022 50  0000 R CNN
-F 2 "" H 3650 4150 50  0001 C CNN
-F 3 "" H 3650 4150 50  0001 C CNN
-	1    3650 4150
+P 3500 4150
+F 0 "#PWR021" H 3500 3900 50  0001 C CNN
+F 1 "GND" V 3505 4022 50  0000 R CNN
+F 2 "" H 3500 4150 50  0001 C CNN
+F 3 "" H 3500 4150 50  0001 C CNN
+	1    3500 4150
 	0    -1   -1   0   
 $EndComp
-Text Label 4450 4550 2    50   ~ 0
+Text Label 4300 4550 2    50   ~ 0
 LedDataTarget4_3V3
-Text Label 4450 4650 2    50   ~ 0
+Text Label 4300 4650 2    50   ~ 0
 LedDataTarget3_3V3
-Text Label 4450 4750 2    50   ~ 0
+Text Label 4300 4750 2    50   ~ 0
 LedDataTarget2_3V3
-Text Label 4450 5250 2    50   ~ 0
+Text Label 4300 5250 2    50   ~ 0
 LedDataTarget1_3V3
-Text Label 4200 5850 2    50   ~ 0
+Text Label 4050 5850 2    50   ~ 0
 SwitchTarget1
-Text Label 4200 5650 2    50   ~ 0
+Text Label 4050 5650 2    50   ~ 0
 SwitchTarget2
-Text Label 4200 5350 2    50   ~ 0
+Text Label 4050 5350 2    50   ~ 0
 SwitchTarget3
-Text Label 4200 4950 2    50   ~ 0
+Text Label 4050 4950 2    50   ~ 0
 SwitchTarget4
-Text Label 4800 5950 2    50   ~ 0
+Text Label 4650 5950 2    50   ~ 0
 Serial_Arduino_RX_Enable_3V3
-Wire Wire Line
-	4950 3550 3850 3550
-Text Label 3850 3550 0    50   ~ 0
-Serial_MicroBit_RX_Enable_5V
-Wire Wire Line
-	5450 3550 6600 3550
-Text Label 6600 3550 2    50   ~ 0
-Serial_MicroBit_RX_Enable_3V3
 Wire Wire Line
 	2750 2400 3150 2400
 Text Label 2750 2400 0    50   ~ 0
@@ -407,15 +277,11 @@ F 3 "" H 3700 2400 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	3650 2400 3700 2400
-Text Label 4850 5550 2    50   ~ 0
+Text Label 4700 5550 2    50   ~ 0
 Serial_MicroBit_RX_Enable_3V3
-Text Label 6350 3850 2    50   ~ 0
+Text Label 4400 4450 2    50   ~ 0
 Serial_MicroBit_RX_3V3
-Wire Wire Line
-	5450 3850 6350 3850
-Text Label 4550 4450 2    50   ~ 0
-Serial_MicroBit_RX_3V3
-Text Label 4550 4350 2    50   ~ 0
+Text Label 4400 4350 2    50   ~ 0
 Serial_MicroBit_TX_3V3
 Wire Wire Line
 	3800 1500 4500 1500
@@ -435,30 +301,8 @@ Text Label 4500 1300 2    50   ~ 0
 StartResetSignal
 Text Notes 1850 7500 0    50   ~ 0
 All SwitchTarget<n> are connected to the Micro:Bit pins which have an internal pull-up resistor of 13K ohm.
-Text Notes 7200 4350 0    50   ~ 0
+Text Notes 7250 4050 0    50   ~ 0
 The start/reset switch is connected to the Arduino pin which has \nan internal pull-up resistor with \na value between 20K-50K ohm. (Some measured around 35K)
-$Comp
-L Device:R R5
-U 1 1 5ED5FAB6
-P 5850 2900
-F 0 "R5" V 5900 3000 50  0000 L CNN
-F 1 "1K" V 5850 2850 50  0000 L CNN
-F 2 "" V 5780 2900 50  0001 C CNN
-F 3 "~" H 5850 2900 50  0001 C CNN
-	1    5850 2900
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Device:C C5
-U 1 1 5ED5FABC
-P 6000 2750
-F 0 "C5" H 6000 2850 50  0000 L CNN
-F 1 "0.1uF" H 6100 2750 50  0000 L CNN
-F 2 "" H 6038 2600 50  0001 C CNN
-F 3 "~" H 6000 2750 50  0001 C CNN
-	1    6000 2750
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	8200 3450 7550 3450
 Text Label 7550 3450 0    50   ~ 0
@@ -570,7 +414,7 @@ F 3 " ~" H 2850 3450 50  0001 C CNN
 	1    2700 3500
 	1    0    0    -1  
 $EndComp
-Connection ~ 3650 5250
+Connection ~ 3500 5250
 Text Label 2300 4550 2    50   ~ 0
 LedDataTarget4_3V3
 Text Label 2300 4650 2    50   ~ 0
@@ -617,9 +461,8 @@ Wire Wire Line
 	900  5850 2050 5850
 Wire Wire Line
 	900  5950 2650 5950
-Connection ~ 3650 4150
 Wire Wire Line
-	3650 4050 3650 4150
+	3500 4050 3500 4150
 $Comp
 L Connector_Generic:Conn_01x05 J4
 U 1 1 5E7ECC5B
@@ -945,36 +788,6 @@ Wire Wire Line
 Text Label 5000 6950 0    50   ~ 0
 SizeTarget4
 $Comp
-L Connector_Generic:Conn_02x05_Counter_Clockwise J13
-U 1 1 5E8CF06C
-P 5350 2900
-F 0 "J13" H 5400 2600 50  0000 C CNN
-F 1 "ExternalGameControlIO" H 5400 3226 50  0000 C CNN
-F 2 "" H 5350 2900 50  0001 C CNN
-F 3 "~" H 5350 2900 50  0001 C CNN
-	1    5350 2900
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR020
-U 1 1 5E8DAE92
-P 6150 2600
-F 0 "#PWR020" H 6150 2350 50  0001 C CNN
-F 1 "GND" V 6155 2472 50  0000 R CNN
-F 2 "" H 6150 2600 50  0001 C CNN
-F 3 "" H 6150 2600 50  0001 C CNN
-	1    6150 2600
-	0    -1   -1   0   
-$EndComp
-Wire Wire Line
-	5650 3100 6600 3100
-Text Label 6600 3100 2    50   ~ 0
-PlayerCountSignal
-Wire Wire Line
-	5650 3000 6600 3000
-Text Label 6600 3000 2    50   ~ 0
-GameModeSignal
-$Comp
 L power:GND #PWR024
 U 1 1 5E8F3D2E
 P 8000 1400
@@ -1023,30 +836,14 @@ Text Label 9400 1300 2    50   ~ 0
 PointSelectorSwitch
 Wire Wire Line
 	9400 1300 8650 1300
-Wire Wire Line
-	4450 2900 3350 2900
-Text Label 3350 2900 0    50   ~ 0
-PointSelectorEncoderA
-Wire Wire Line
-	4550 3000 3450 3000
-Text Label 3450 3000 0    50   ~ 0
-PointSelectorEncoderB
-Text Label 3650 3100 0    50   ~ 0
-PointSelectorSwitch
-Wire Wire Line
-	3650 3100 4650 3100
-Text Notes 1550 3100 1    50   ~ 0
-Notch connector on this side
+Text Notes 1500 4050 1    50   ~ 0
+Notch of the IDC connectors (see list) on this side:\n- Arduino_GPIO\n- Arduino_Serial_and_5V\n- MicroBit_40PinExtender
 Wire Notes Line
 	2750 6100 1600 6100
 Wire Notes Line
 	1600 6100 1600 7600
 Text Notes 5700 1350 0    50   ~ 0
 Inside this space means the\ncomponents are on the main\nboard
-Text Label 4750 2700 0    50   ~ 0
-Arduino_5V
-Wire Wire Line
-	4750 2700 5150 2700
 Text Label 5600 1600 0    50   ~ 0
 Arduino_5V
 Wire Wire Line
@@ -1066,7 +863,7 @@ Text Label 5250 1700 0    50   ~ 0
 ConfettiCannon
 Wire Wire Line
 	5250 1700 5850 1700
-Text Label 2650 4250 0    50   ~ 0
+Text Label 2500 4250 0    50   ~ 0
 MicroBit_3V3
 Wire Notes Line
 	1750 4100 2450 4100
@@ -1092,26 +889,6 @@ Text Label 2050 2300 0    50   ~ 0
 Serial_Arduino_RX_Enable_5V
 Wire Wire Line
 	3150 2300 2050 2300
-Text Label 6600 3450 2    50   ~ 0
-Serial_Arduino_RX_Enable_3V3
-Wire Wire Line
-	5450 3450 6600 3450
-Text Label 3850 3450 0    50   ~ 0
-Serial_Arduino_RX_Enable_5V
-Wire Wire Line
-	4950 3450 3850 3450
-Text Label 6350 3950 2    50   ~ 0
-Serial_MicroBit_TX_3V3
-Wire Wire Line
-	5450 3950 6350 3950
-Text Label 4150 3850 0    50   ~ 0
-Serial_Arduino_TX_5V
-Wire Wire Line
-	4950 3850 4150 3850
-Wire Wire Line
-	4950 3950 4150 3950
-Text Label 4150 3950 0    50   ~ 0
-Serial_Arduino_RX_5V
 Text Label 550  1700 0    50   ~ 0
 Arduino_P1
 Text Label 550  1800 0    50   ~ 0
@@ -1151,16 +928,6 @@ PointSelectorSwitch
 Wire Wire Line
 	550  900  1900 900 
 Wire Wire Line
-	5650 2900 5700 2900
-Text Label 6750 2900 2    50   ~ 0
-StartResetSignal
-Wire Wire Line
-	5650 2700 5850 2700
-Wire Wire Line
-	5850 2700 5850 2600
-Wire Wire Line
-	5850 2600 6000 2600
-Wire Wire Line
 	8750 1900 8750 2100
 Wire Wire Line
 	8750 2650 8750 2850
@@ -1196,108 +963,6 @@ Wire Wire Line
 Wire Wire Line
 	5900 1900 5850 1900
 Connection ~ 5850 1900
-Wire Wire Line
-	5150 2900 5100 2900
-Wire Wire Line
-	5150 3000 5100 3000
-Wire Wire Line
-	5150 3100 5100 3100
-$Comp
-L Device:R R7
-U 1 1 5EC9E8CF
-P 4950 2900
-F 0 "R7" V 5000 2700 50  0000 L CNN
-F 1 "1K" V 4950 2850 50  0000 L CNN
-F 2 "" V 4880 2900 50  0001 C CNN
-F 3 "~" H 4950 2900 50  0001 C CNN
-	1    4950 2900
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Device:R R8
-U 1 1 5ECACC72
-P 4950 3000
-F 0 "R8" V 5000 2800 50  0000 L CNN
-F 1 "1K" V 4950 2950 50  0000 L CNN
-F 2 "" V 4880 3000 50  0001 C CNN
-F 3 "~" H 4950 3000 50  0001 C CNN
-	1    4950 3000
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Device:R R9
-U 1 1 5ECBAF3A
-P 4950 3100
-F 0 "R9" V 5000 2900 50  0000 L CNN
-F 1 "1K" V 4950 3050 50  0000 L CNN
-F 2 "" V 4880 3100 50  0001 C CNN
-F 3 "~" H 4950 3100 50  0001 C CNN
-	1    4950 3100
-	0    -1   -1   0   
-$EndComp
-Wire Wire Line
-	6000 2900 6750 2900
-Connection ~ 6000 2900
-Wire Wire Line
-	6000 2600 6150 2600
-Connection ~ 6000 2600
-$Comp
-L Device:C C8
-U 1 1 5ED22825
-P 4650 2950
-F 0 "C8" H 4650 3050 50  0000 L CNN
-F 1 "0.1uF" H 4400 2850 50  0000 L CNN
-F 2 "" H 4688 2800 50  0001 C CNN
-F 3 "~" H 4650 2950 50  0001 C CNN
-	1    4650 2950
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:C C7
-U 1 1 5ED5AEFD
-P 4550 2850
-F 0 "C7" H 4550 2950 50  0000 L CNN
-F 1 "0.1uF" H 4300 2750 50  0000 L CNN
-F 2 "" H 4588 2700 50  0001 C CNN
-F 3 "~" H 4550 2850 50  0001 C CNN
-	1    4550 2850
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	4650 3100 4800 3100
-Connection ~ 4650 3100
-Wire Wire Line
-	4550 3000 4800 3000
-Connection ~ 4550 3000
-$Comp
-L Device:C C6
-U 1 1 5EDDB888
-P 4450 2750
-F 0 "C6" H 4450 2850 50  0000 L CNN
-F 1 "0.1uF" H 4200 2650 50  0000 L CNN
-F 2 "" H 4488 2600 50  0001 C CNN
-F 3 "~" H 4450 2750 50  0001 C CNN
-	1    4450 2750
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	4450 2900 4800 2900
-Connection ~ 4450 2900
-Wire Wire Line
-	4650 2800 4650 2600
-Wire Wire Line
-	4550 2700 4550 2600
-Wire Wire Line
-	4450 2600 4550 2600
-Connection ~ 4550 2600
-Wire Wire Line
-	4550 2600 4650 2600
-Wire Wire Line
-	4550 2600 4550 2500
-Wire Wire Line
-	4550 2500 6000 2500
-Wire Wire Line
-	6000 2500 6000 2600
 Wire Notes Line
 	6900 7600 1600 7600
 Wire Notes Line
@@ -1323,86 +988,444 @@ PointSelectorSwitch
 Wire Wire Line
 	2500 1300 3300 1300
 Wire Wire Line
-	3200 5250 3650 5250
+	3050 5250 3500 5250
 Wire Wire Line
-	2650 4250 3150 4250
-Connection ~ 3150 4250
-Connection ~ 3650 4050
-Connection ~ 3650 4350
-Connection ~ 3650 4450
-Connection ~ 3650 4550
-Connection ~ 3650 4650
-Connection ~ 3650 4750
-Connection ~ 3650 5350
-Connection ~ 3650 5550
-Connection ~ 3650 5850
-Connection ~ 3650 5950
+	2500 4250 3000 4250
+Connection ~ 3000 4250
+Connection ~ 3500 4350
+Connection ~ 3500 4450
+Connection ~ 3500 4550
+Connection ~ 3500 4650
+Connection ~ 3500 4750
+Connection ~ 3500 5350
+Connection ~ 3500 5550
+Connection ~ 3500 5850
+Connection ~ 3500 5950
 Wire Wire Line
-	3150 5850 3650 5850
+	3000 5850 3500 5850
 Wire Wire Line
-	3150 5650 3650 5650
+	3000 5650 3500 5650
 Wire Wire Line
-	3150 5550 3650 5550
+	3000 5550 3500 5550
 Wire Wire Line
-	3150 5450 3650 5450
+	3000 5450 3500 5450
 Wire Wire Line
-	3150 5350 3650 5350
+	3000 5350 3500 5350
 Wire Wire Line
-	3150 5150 3650 5150
+	3000 5150 3500 5150
 Wire Wire Line
-	3150 5050 3650 5050
+	3000 5050 3500 5050
 Wire Wire Line
-	3150 4950 3650 4950
+	3000 4950 3500 4950
 Wire Wire Line
-	3150 4850 3650 4850
+	3000 4850 3500 4850
 Wire Wire Line
-	3150 4750 3650 4750
+	3000 4750 3500 4750
 Wire Wire Line
-	3150 4650 3650 4650
+	3000 4650 3500 4650
 Wire Wire Line
-	3150 4450 3650 4450
+	3000 4450 3500 4450
 Wire Wire Line
-	3150 4350 3650 4350
+	3000 4350 3500 4350
 Wire Wire Line
-	3150 4150 3650 4150
+	3000 4150 3500 4150
 Wire Wire Line
-	3150 4050 3650 4050
+	3000 4050 3500 4050
 Wire Wire Line
-	3150 5950 3650 5950
+	3000 5950 3500 5950
 Wire Wire Line
-	3650 4550 4450 4550
+	3500 4550 4300 4550
 Wire Wire Line
-	3150 4550 3650 4550
+	3000 4550 3500 4550
 Wire Wire Line
-	3650 4650 4450 4650
+	3500 4650 4300 4650
 Wire Wire Line
-	3650 4750 4450 4750
+	3500 4750 4300 4750
 Wire Wire Line
-	3650 4950 4200 4950
+	3500 4950 4050 4950
 Wire Wire Line
-	3150 5750 3650 5750
+	3000 5750 3500 5750
 Wire Wire Line
-	3150 4250 3650 4250
+	3000 4250 3500 4250
 Wire Wire Line
-	3650 4350 4550 4350
+	3500 4350 4400 4350
 Wire Wire Line
-	3650 4450 4550 4450
+	3500 4450 4400 4450
 Wire Wire Line
-	3650 5350 4200 5350
+	3500 5350 4050 5350
 Wire Wire Line
-	3650 5550 4850 5550
+	3500 5550 4700 5550
 Wire Wire Line
-	3650 5650 4200 5650
+	3500 5650 4050 5650
 Wire Wire Line
-	3650 5850 4200 5850
+	3500 5850 4050 5850
 Wire Wire Line
-	3650 5950 4800 5950
+	3500 5950 4650 5950
 Wire Wire Line
-	3650 5250 4450 5250
+	3500 5250 4300 5250
 Wire Wire Line
 	900  4950 2050 4950
 Wire Wire Line
 	900  5150 1400 5150
-Connection ~ 3650 4950
-Connection ~ 3650 5650
+Connection ~ 3500 4950
+Connection ~ 3500 5650
+$Comp
+L RocketLaunch_Library:Bi-Directional_logic_shifter U1
+U 1 1 5E8F48B9
+P 5250 3800
+F 0 "U1" H 5400 4250 50  0000 C CNN
+F 1 "Bi-Directional_logic_shifter" H 4600 4250 50  0000 C CNN
+F 2 "" H 5250 3800 50  0001 C CNN
+F 3 "" H 5250 3800 50  0001 C CNN
+	1    5250 3800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5650 3650 6800 3650
+Text Label 6800 3650 2    50   ~ 0
+Serial_Arduino_RX_Enable_5V
+Text Label 6800 3750 2    50   ~ 0
+Serial_MicroBit_RX_Enable_5V
+Wire Wire Line
+	5650 3750 6800 3750
+Text Label 6500 3850 2    50   ~ 0
+Serial_Arduino_TX_5V
+Wire Wire Line
+	5650 3850 6500 3850
+Wire Wire Line
+	5650 3950 6500 3950
+Text Label 6500 3950 2    50   ~ 0
+Serial_Arduino_RX_5V
+Wire Wire Line
+	4800 3250 5200 3250
+Text Label 4800 3250 0    50   ~ 0
+Arduino_5V
+Wire Wire Line
+	5200 3250 5200 3300
+$Comp
+L power:GND #PWR04
+U 1 1 5EA19618
+P 5300 3250
+F 0 "#PWR04" H 5300 3000 50  0001 C CNN
+F 1 "GND" V 5305 3077 50  0000 C CNN
+F 2 "" H 5300 3250 50  0001 C CNN
+F 3 "" H 5300 3250 50  0001 C CNN
+	1    5300 3250
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	5300 3250 5300 3300
+$Comp
+L power:GND #PWR05
+U 1 1 5EA3BCA6
+P 5300 4350
+F 0 "#PWR05" H 5300 4100 50  0001 C CNN
+F 1 "GND" H 5305 4177 50  0000 C CNN
+F 2 "" H 5300 4350 50  0001 C CNN
+F 3 "" H 5300 4350 50  0001 C CNN
+	1    5300 4350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5300 4300 5300 4350
+Wire Wire Line
+	5200 4400 4700 4400
+Text Label 4700 4400 0    50   ~ 0
+MicroBit_3V3
+Wire Wire Line
+	5200 4300 5200 4400
+Wire Wire Line
+	4850 3750 3650 3750
+Text Label 3650 3750 0    50   ~ 0
+Serial_MicroBit_RX_Enable_3V3
+Text Label 3650 3650 0    50   ~ 0
+Serial_Arduino_RX_Enable_3V3
+Wire Wire Line
+	4850 3650 3650 3650
+Text Label 3900 3850 0    50   ~ 0
+Serial_MicroBit_RX_3V3
+Wire Wire Line
+	4850 3850 3900 3850
+Text Label 3900 3950 0    50   ~ 0
+Serial_MicroBit_TX_3V3
+Wire Wire Line
+	4850 3950 3900 3950
+$Comp
+L RocketLaunch_Library:Bi-Directional_logic_shifter U2
+U 1 1 5EB82D47
+P 5650 5250
+F 0 "U2" H 5800 5700 50  0000 C CNN
+F 1 "Bi-Directional_logic_shifter" H 5000 5700 50  0000 C CNN
+F 2 "" H 5650 5250 50  0001 C CNN
+F 3 "" H 5650 5250 50  0001 C CNN
+	1    5650 5250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5200 4700 5600 4700
+Text Label 5200 4700 0    50   ~ 0
+Arduino_5V
+Wire Wire Line
+	5600 4700 5600 4750
+$Comp
+L power:GND #PWR08
+U 1 1 5EB84976
+P 5700 4700
+F 0 "#PWR08" H 5700 4450 50  0001 C CNN
+F 1 "GND" V 5705 4527 50  0000 C CNN
+F 2 "" H 5700 4700 50  0001 C CNN
+F 3 "" H 5700 4700 50  0001 C CNN
+	1    5700 4700
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	5700 4700 5700 4750
+$Comp
+L power:GND #PWR09
+U 1 1 5EB94E6F
+P 5700 5800
+F 0 "#PWR09" H 5700 5550 50  0001 C CNN
+F 1 "GND" H 5705 5627 50  0000 C CNN
+F 2 "" H 5700 5800 50  0001 C CNN
+F 3 "" H 5700 5800 50  0001 C CNN
+	1    5700 5800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5700 5750 5700 5800
+Wire Wire Line
+	5600 5850 5100 5850
+Text Label 5100 5850 0    50   ~ 0
+MicroBit_3V3
+Wire Wire Line
+	5600 5750 5600 5850
+Wire Wire Line
+	4450 5200 5250 5200
+Text Label 4450 5200 0    50   ~ 0
+LedDataTarget2_3V3
+Wire Wire Line
+	4450 5100 5250 5100
+Text Label 4450 5100 0    50   ~ 0
+LedDataTarget1_3V3
+Text Label 4450 5300 0    50   ~ 0
+LedDataTarget3_3V3
+Wire Wire Line
+	4450 5300 5250 5300
+Wire Wire Line
+	4450 5400 5250 5400
+Text Label 4450 5400 0    50   ~ 0
+LedDataTarget4_3V3
+Text Label 6800 5400 2    50   ~ 0
+LedDataTarget4_5V
+Wire Wire Line
+	6800 5400 6050 5400
+Text Label 6800 5300 2    50   ~ 0
+LedDataTarget3_5V
+Wire Wire Line
+	6800 5300 6050 5300
+Wire Wire Line
+	6800 5100 6050 5100
+Text Label 6800 5100 2    50   ~ 0
+LedDataTarget1_5V
+Text Label 6800 5200 2    50   ~ 0
+LedDataTarget2_5V
+Wire Wire Line
+	6800 5200 6050 5200
+Wire Wire Line
+	4550 2350 6000 2350
+Wire Wire Line
+	6000 2350 6000 2450
+Wire Wire Line
+	4550 2450 4550 2350
+Wire Wire Line
+	4550 2450 4650 2450
+Connection ~ 4550 2450
+Wire Wire Line
+	4450 2450 4550 2450
+Wire Wire Line
+	4550 2550 4550 2450
+Wire Wire Line
+	4650 2650 4650 2450
+Connection ~ 4450 2750
+Wire Wire Line
+	4450 2750 4800 2750
+$Comp
+L Device:C C6
+U 1 1 5EDDB888
+P 4450 2600
+F 0 "C6" H 4450 2700 50  0000 L CNN
+F 1 "0.1uF" H 4200 2500 50  0000 L CNN
+F 2 "" H 4488 2450 50  0001 C CNN
+F 3 "~" H 4450 2600 50  0001 C CNN
+	1    4450 2600
+	1    0    0    -1  
+$EndComp
+Connection ~ 4550 2850
+Wire Wire Line
+	4550 2850 4800 2850
+Connection ~ 4650 2950
+Wire Wire Line
+	4650 2950 4800 2950
+$Comp
+L Device:C C7
+U 1 1 5ED5AEFD
+P 4550 2700
+F 0 "C7" H 4550 2800 50  0000 L CNN
+F 1 "0.1uF" H 4300 2600 50  0000 L CNN
+F 2 "" H 4588 2550 50  0001 C CNN
+F 3 "~" H 4550 2700 50  0001 C CNN
+	1    4550 2700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C8
+U 1 1 5ED22825
+P 4650 2800
+F 0 "C8" H 4650 2900 50  0000 L CNN
+F 1 "0.1uF" H 4400 2700 50  0000 L CNN
+F 2 "" H 4688 2650 50  0001 C CNN
+F 3 "~" H 4650 2800 50  0001 C CNN
+	1    4650 2800
+	1    0    0    -1  
+$EndComp
+Connection ~ 6000 2450
+Wire Wire Line
+	6000 2450 6150 2450
+Connection ~ 6000 2750
+Wire Wire Line
+	6000 2750 6750 2750
+$Comp
+L Device:R R9
+U 1 1 5ECBAF3A
+P 4950 2950
+F 0 "R9" V 5000 2750 50  0000 L CNN
+F 1 "1K" V 4950 2900 50  0000 L CNN
+F 2 "" V 4880 2950 50  0001 C CNN
+F 3 "~" H 4950 2950 50  0001 C CNN
+	1    4950 2950
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:R R8
+U 1 1 5ECACC72
+P 4950 2850
+F 0 "R8" V 5000 2650 50  0000 L CNN
+F 1 "1K" V 4950 2800 50  0000 L CNN
+F 2 "" V 4880 2850 50  0001 C CNN
+F 3 "~" H 4950 2850 50  0001 C CNN
+	1    4950 2850
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:R R7
+U 1 1 5EC9E8CF
+P 4950 2750
+F 0 "R7" V 5000 2550 50  0000 L CNN
+F 1 "1K" V 4950 2700 50  0000 L CNN
+F 2 "" V 4880 2750 50  0001 C CNN
+F 3 "~" H 4950 2750 50  0001 C CNN
+	1    4950 2750
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	5150 2950 5100 2950
+Wire Wire Line
+	5150 2850 5100 2850
+Wire Wire Line
+	5150 2750 5100 2750
+Wire Wire Line
+	5850 2450 6000 2450
+Wire Wire Line
+	5850 2550 5850 2450
+Wire Wire Line
+	5650 2550 5850 2550
+Text Label 6750 2750 2    50   ~ 0
+StartResetSignal
+Wire Wire Line
+	5650 2750 5700 2750
+Wire Wire Line
+	4750 2550 5150 2550
+Text Label 4750 2550 0    50   ~ 0
+Arduino_5V
+Wire Wire Line
+	3650 2950 4650 2950
+Text Label 3650 2950 0    50   ~ 0
+PointSelectorSwitch
+Text Label 3450 2850 0    50   ~ 0
+PointSelectorEncoderB
+Wire Wire Line
+	4550 2850 3450 2850
+Text Label 3350 2750 0    50   ~ 0
+PointSelectorEncoderA
+Wire Wire Line
+	4450 2750 3350 2750
+Text Label 6600 2850 2    50   ~ 0
+GameModeSignal
+Wire Wire Line
+	5650 2850 6600 2850
+Text Label 6600 2950 2    50   ~ 0
+PlayerCountSignal
+Wire Wire Line
+	5650 2950 6600 2950
+$Comp
+L power:GND #PWR020
+U 1 1 5E8DAE92
+P 6150 2450
+F 0 "#PWR020" H 6150 2200 50  0001 C CNN
+F 1 "GND" V 6155 2322 50  0000 R CNN
+F 2 "" H 6150 2450 50  0001 C CNN
+F 3 "" H 6150 2450 50  0001 C CNN
+	1    6150 2450
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_02x05_Counter_Clockwise J13
+U 1 1 5E8CF06C
+P 5350 2750
+F 0 "J13" H 5400 2450 50  0000 C CNN
+F 1 "ExternalGameControlIO" H 5400 3076 50  0000 C CNN
+F 2 "" H 5350 2750 50  0001 C CNN
+F 3 "~" H 5350 2750 50  0001 C CNN
+	1    5350 2750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C5
+U 1 1 5ED5FABC
+P 6000 2600
+F 0 "C5" H 6000 2700 50  0000 L CNN
+F 1 "0.1uF" H 6100 2600 50  0000 L CNN
+F 2 "" H 6038 2450 50  0001 C CNN
+F 3 "~" H 6000 2600 50  0001 C CNN
+	1    6000 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R5
+U 1 1 5ED5FAB6
+P 5850 2750
+F 0 "R5" V 5900 2850 50  0000 L CNN
+F 1 "1K" V 5850 2700 50  0000 L CNN
+F 2 "" V 5780 2750 50  0001 C CNN
+F 3 "~" H 5850 2750 50  0001 C CNN
+	1    5850 2750
+	0    -1   -1   0   
+$EndComp
+NoConn ~ 2400 2900
+NoConn ~ 2400 3000
+NoConn ~ 2000 3300
+NoConn ~ 3000 3500
+NoConn ~ 3000 3600
+NoConn ~ 2600 3900
+NoConn ~ 3500 4850
+NoConn ~ 3500 5050
+NoConn ~ 3500 5150
+NoConn ~ 3500 5450
+NoConn ~ 1400 4850
+NoConn ~ 1400 5050
+NoConn ~ 1400 5150
+NoConn ~ 1400 5450
+NoConn ~ 1400 5750
+Connection ~ 3500 4150
+Connection ~ 3500 4050
 $EndSCHEMATC

@@ -1,0 +1,29 @@
+EESchema-LIBRARY Version 2.4
+#encoding utf-8
+#
+# Bi-Directional_logic_shifter
+#
+DEF Bi-Directional_logic_shifter U 0 40 Y Y 1 F N
+F0 "U" 150 550 50 H V C CNN
+F1 "Bi-Directional_logic_shifter" 650 450 50 H V C CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+DRAW
+S -300 400 300 -400 0 1 0 f
+S 300 -300 300 -300 0 1 0 N
+X LV1 1 -400 150 100 R 50 50 1 1 B
+X HV 10 -50 500 100 D 50 50 1 1 I
+X HV2 11 400 50 100 L 50 50 1 1 B
+X HV1 12 400 150 100 L 50 50 1 1 B
+X LV2 2 -400 50 100 R 50 50 1 1 B
+X LV 3 -50 -500 100 U 50 50 1 1 I
+X GND_LV 4 50 -500 100 U 50 50 1 1 I
+X LV3 5 -400 -50 100 R 50 50 1 1 B
+X LV4 6 -400 -150 100 R 50 50 1 1 B
+X HV4 7 400 -150 100 L 50 50 1 1 B
+X HV3 8 400 -50 100 L 50 50 1 1 B
+X GND_HV 9 50 500 100 D 50 50 1 1 I
+ENDDRAW
+ENDDEF
+#
+#End Library
