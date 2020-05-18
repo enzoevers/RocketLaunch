@@ -36,7 +36,7 @@ Hoe deze code er uit ziet kan je zien in de bestanden op deze pagina. Om meer te
 # Bouw je eigen mini versie
 Wil je dit nou ook thuis spelen? Dat kan! Klik op de afbeelding om naar de video te gaan.
 
-<a href="https://www.youtube.com/watch?v=fMZb9fl21DU">
+<a href="https://youtu.be/fMZb9fl21DU">
     <p align="center">
         <img src="./img/MiniRocketLaunchLivestream.png" alt="MiniRocketLaunchLivestream.png" height="500px">
     </p>
