@@ -27,7 +27,7 @@ Door **code** te schrijven voor de Arduino en Micro:Bit kunnen ze geprogrammeerd
 
 In het geval van RocketLaunch willen we dat de Micro:Bit de LEDs op de doelen een bepaalde kleur geeft en dat de Micro:Bit leest of een doel is geraarkt en dit doorgeeft aan de Arduino. De Arduino heeft andere taken. In het systeem moet de Arduino de punten van de spelers bijhouden door de berichten van de Micro:Bit te lezen. De Arduino moet de punten daarna op het scoreboard laten zien.
 
-Hoe deze code er uit ziet kan je zien in de bestanden op deze pagina. Om meer te leren over hoe deze code precies werkt kan je naar de [wiki](#) gaan.
+Hoe deze code er uit ziet kan je zien in de bestanden op deze pagina. Om meer te leren over hoe deze code precies werkt kan je naar de [wiki](https://gitlab.com/MakersClub040/rocketlaunch/-/wikis/home) gaan.
 
 # Bouw je eigen mini versie
 Wil je dit nou ook thuis spelen? Dat kan! Klik op de afbeelding om naar de video te gaan.
