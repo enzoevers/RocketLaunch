@@ -5,10 +5,12 @@
 //===============
 // Constructor
 //===============
-MicroBitCommunication::MicroBitCommunication(ITransport& communication, const uint8_t communicatioArduinoRxEnablePin, const uint8_t communicatioMicrobitRxSendEnablePin)
+MicroBitCommunication::MicroBitCommunication(ITransport& communication, const uint8_t communicatioArduinoRxEnablePin, const uint8_t communicatioMicrobitRxSendEnablePin,
+                                              void (*targetHitCallback)(const uint8_t player, const uint8_t points))
   : m_communication(communication),
     m_communicatioArduinoRxEnablePin(communicatioArduinoRxEnablePin),
-    m_communicatioMicrobitRxSendEnablePin(communicatioMicrobitRxSendEnablePin)
+    m_communicatioMicrobitRxSendEnablePin(communicatioMicrobitRxSendEnablePin),
+    m_targetHitCallback(targetHitCallback)
 {
 
 }
@@ -35,7 +37,7 @@ void MicroBitCommunication::DisableCommunication()
 }
 
 
-void MicroBitCommunication::Update()
+void MicroBitCommunication::update()
 {
   if (m_communication.Update())
   {
@@ -49,17 +51,6 @@ void MicroBitCommunication::Update()
       }
     }
   }
-}
-
-bool MicroBitCommunication::OnTargetHit(void (*onTargetHitCallback)(const uint8_t player, const uint8_t points))
-{
-  if (onTargetHitCallback == nullptr)
-  {
-    return false;
-  }
-
-  m_onTargetHitCallback = onTargetHitCallback;
-  return true;
 }
 
 void MicroBitCommunication::GiveNumPlayers(const uint8_t numPlayers)
@@ -93,7 +84,7 @@ void MicroBitCommunication::CallCallback()
   {
     case ReceiveSubject::Hit:
       {
-        m_onTargetHitCallback(m_receivedValues[0], m_receivedValues[1]);
+        m_targetHitCallback(m_receivedValues[0], m_receivedValues[1]);
         break;
       }
     default:

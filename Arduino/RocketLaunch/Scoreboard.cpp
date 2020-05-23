@@ -3,7 +3,8 @@
 //===============
 // Constructor
 //===============
-Scoreboard::Scoreboard()
+Scoreboard::Scoreboard(void (*scoreboardAnimationCompleteCallback)(void))
+: m_scoreboardAnimationCompleteCallback(scoreboardAnimationCompleteCallback)
 {
   FastLED.addLeds<WS2812B, SCOREBOARD_DATA_PIN, GRB>(m_ledMatrix, m_numLeds);
 }
@@ -35,8 +36,8 @@ void Scoreboard::Reset()
   m_lastScorePlayer1 = 0;
   m_lastScorePlayer2 = 0;
 
-  m_currentScorePlayer1 = 0;
-  m_currentScorePlayer2 = 0;
+  player1.Reset();
+  player2.Reset();
 
   m_curStepIdleNoGame = 0;
   m_curStepStart = 0;
@@ -49,7 +50,7 @@ void Scoreboard::Reset()
   //ClearMatrix();
 }
 
-bool Scoreboard::Update(GameState& state)
+void Scoreboard::update(GameState state)
 {
   bool animationComplete = false;
 
@@ -78,10 +79,6 @@ bool Scoreboard::Update(GameState& state)
           tmpUpdateTimeMs = m_durationMsIdleInGame / m_numStepsIdleInGame;
           break;
         }
-      case GameState::InGameScored:
-        {
-          break;
-        }
       case GameState::ReachedMaxScore:
         {
           tmpUpdateTimeMs = m_durationMsVictory / m_numStepsVictory;
@@ -90,6 +87,10 @@ bool Scoreboard::Update(GameState& state)
       case GameState::StopGame:
         {
           tmpUpdateTimeMs = m_durationMsStopGame / m_numStepsStopGame;
+          break;
+        }
+      default:
+        {
           break;
         }
     };
@@ -122,21 +123,15 @@ bool Scoreboard::Update(GameState& state)
         {
           animationComplete = AnimationIdleInGame();
 
-          if (m_lastScorePlayer1 != m_currentScorePlayer1)
+          if (m_lastScorePlayer1 != player1.getCurrentPoints())
           {
-            m_lastScorePlayer1 = m_currentScorePlayer1;
+            m_lastScorePlayer1 = player1.getCurrentPoints();
           }
-          if (m_lastScorePlayer2 != m_currentScorePlayer2)
+          if (m_lastScorePlayer2 != player2.getCurrentPoints())
           {
-            m_lastScorePlayer2 = m_currentScorePlayer2;
+            m_lastScorePlayer2 = player2.getCurrentPoints();
           }
 
-          break;
-        }
-      case GameState::InGameScored:
-        {
-          // Handled by Scoreboard::UpdateScore(...)
-          // since it is an overlay on AnimationIdleInGame()
           break;
         }
       case GameState::ReachedMaxScore:
@@ -149,10 +144,17 @@ bool Scoreboard::Update(GameState& state)
           animationComplete = AnimationStopGame();
           break;
         }
+      default:
+        {
+          break;
+        }
     };
   }
 
-  return animationComplete;
+  if(animationComplete)
+  {
+    m_scoreboardAnimationCompleteCallback();
+  }
 }
 
 bool Scoreboard::SetPlayerCount(const uint8_t numPlayers)
@@ -171,30 +173,18 @@ uint8_t Scoreboard::GetPlayerCount()
   return m_playerCount;
 }
 
-bool Scoreboard::UpdateScore(uint32_t newScore, uint8_t player)
+uint32_t Scoreboard::updateScore(uint32_t points, uint8_t player)
 {
   if (player > m_playerCount)
   {
     return false;
   }
 
-  switch (player)
-  {
-    case 1:
-      {
-        m_currentScorePlayer1 = newScore;
-        break;
-      }
-    case 2:
-      {
-        m_currentScorePlayer2 = newScore;
-        break;
-      }
-  };
+  players[player - 1]->AddPoints(points);
 
   m_updateScreenNow = true;
 
-  return true;
+  return players[player - 1]->getCurrentPoints();
 }
 
 bool Scoreboard::ReachedMaxScore(uint8_t player)
@@ -401,7 +391,7 @@ void Scoreboard::AnimationIdleInGame_SinglePlayer()
   // Set sprites
   //
   char scoreStringBuf[4]; // Max score is < 1000 which means 3 characters + \0 at max
-  const uint8_t numChars = sprintf(scoreStringBuf, "%d", m_currentScorePlayer1);
+  const uint8_t numChars = sprintf(scoreStringBuf, "%d", player1.getCurrentPoints());
 
   // All numeric sprites in the SpriteCollection namespace are 3 pixels wide
   // and in front of each number a one pixel spacing is given. This will result in
@@ -450,7 +440,7 @@ void Scoreboard::AnimationIdleInGame_DualPlayer()
   // Set sprites
   //
   char scoreStringBuf[4]; // Max score is < 1000 which means 3 characters + \0 at max
-  uint8_t numChars = sprintf(scoreStringBuf, "%d", m_currentScorePlayer1);
+  uint8_t numChars = sprintf(scoreStringBuf, "%d", player1.getCurrentPoints());
 
   // All numeric sprites in the SpriteCollection namespace are 3 pixels wide
   // and in front of each number a one pixel spacing is given. This will result in
@@ -495,7 +485,7 @@ void Scoreboard::AnimationIdleInGame_DualPlayer()
   //
   // Set sprites
   //
-  numChars = sprintf(scoreStringBuf, "%d", m_currentScorePlayer2);
+  numChars = sprintf(scoreStringBuf, "%d", player2.getCurrentPoints());
 
   totalScoreWidth = numChars * spriteWidth;
   startIndexSprite =

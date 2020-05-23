@@ -14,7 +14,7 @@ const uint32_t Player::AddPoints(const uint8_t earnedPoints)
   return m_currentPoints;
 }
 
-const uint32_t Player::GetCurrentPoints()
+const uint32_t Player::getCurrentPoints()
 {
   return m_currentPoints;
 }

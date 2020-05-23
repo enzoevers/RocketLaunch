@@ -8,7 +8,7 @@
 #include "MatrixUtil.h"
 #include "SpriteViewer.h"
 #include "SpriteCollection.h"
-#include "GameState.h"
+#include "GameStateManager.h"
 #include "Player.h"
 #include "Colors.h"
 #include <FastLED.h>
@@ -35,22 +35,23 @@
 class Scoreboard
 {
   public:
-    Scoreboard();
+    Scoreboard(void (*scoreboardAnimationCompleteCallback)(void));
     ~Scoreboard();
 
-    bool Update(GameState& state);
+    void update(GameState state);
 
     bool SetPlayerCount(const uint8_t numPlayers);
     uint8_t GetPlayerCount();
     
     void Reset();
-    bool UpdateScore(uint32_t newScore, uint8_t player);
+    uint32_t updateScore(uint32_t points, uint8_t player);
     bool ReachedMaxScore(uint8_t player);
 
     uint32_t GetWriteTime();
 
   private:
-
+    void (*m_scoreboardAnimationCompleteCallback)(void);
+    
     // These functions return:
     //  true: all steps of one anumation round are done
     //  false: not all steps of one animation round are executed yet
@@ -119,8 +120,9 @@ class Scoreboard
     uint32_t m_lastScorePlayer1 = 0;
     uint32_t m_lastScorePlayer2 = 0;
 
-    uint32_t m_currentScorePlayer1 = 0;
-    uint32_t m_currentScorePlayer2 = 0;
+    Player player1;
+    Player player2; // player2 my not be used
+    const Player* players[2] = { &player1, &player2 };
 
     const uint8_t m_huePlayer1 = HSV_RAINDBOW_GREEN;
     const uint8_t m_huePlayer2 = HSV_RAINDBOW_BLUE;

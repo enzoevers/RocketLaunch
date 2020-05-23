@@ -13,7 +13,7 @@ class Player
     // Return: the new total score
     const uint32_t AddPoints(const uint8_t earnedPoints);
     
-    const uint32_t GetCurrentPoints();
+    const uint32_t getCurrentPoints();
 
   private:
     uint32_t m_currentPoints = 0;

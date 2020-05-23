@@ -22,14 +22,14 @@ enum class ReceiveSubject
 class MicroBitCommunication
 {
   public:
-    MicroBitCommunication(ITransport& communication, const uint8_t communicatioArduinoRxEnablePin, const uint8_t communicatioMicrobitRxSendEnablePin);
+    MicroBitCommunication(ITransport& communication, const uint8_t communicatioArduinoRxEnablePin, const uint8_t communicatioMicrobitRxSendEnablePin,
+                          void (*targetHitCallback)(const uint8_t player, const uint8_t points));
 
     void Start();
     void EnableCommunication();
     void DisableCommunication();
 
-    void Update();
-    bool OnTargetHit(void (*onTargetHitCallback)(const uint8_t player, const uint8_t points));
+    void update();
     void GiveNumPlayers(const uint8_t numPlayers);
     //void GiveGameMode(const uint8_t mode);
     void SendStart();
@@ -44,7 +44,7 @@ class MicroBitCommunication
 
     ITransport& m_communication;
     const char m_valueSeparator = ';';
-    void (*m_onTargetHitCallback)(const uint8_t player, const uint8_t points);
+    void (*m_targetHitCallback)(const uint8_t player, const uint8_t points);
 
     ReceiveSubject m_receivedSubject = ReceiveSubject::SubjectCount;
     uint8_t m_numReceivedValues = 0;
