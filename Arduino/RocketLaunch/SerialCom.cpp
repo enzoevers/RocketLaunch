@@ -75,23 +75,23 @@ SerialCom::SerialCom(const long baud, const char startChar, const char stopChar)
 // Public functions
 //===============
 
-void SerialCom::Open()
+void SerialCom::open()
 {
   m_mySerial.begin(m_baud);
 }
 
-bool SerialCom::Update()
+bool SerialCom::update()
 {
   if (m_mySerial.available())
   {
     uint8_t receivedByte = m_mySerial.read();
-    ParseByte(receivedByte);
+    parseByte(receivedByte);
   }
 
   return m_newMessasge;
 }
 
-size_t SerialCom::GetReceivedBuffer(uint8_t*& receiveBuffer)
+size_t SerialCom::getReceivedBuffer(uint8_t*& receiveBuffer)
 {
   // When this function is called, the latest received message is returned,
   // meaning that there no longer is a new message available.
@@ -102,7 +102,7 @@ size_t SerialCom::GetReceivedBuffer(uint8_t*& receiveBuffer)
   return m_processedReceiveBufferSize;
 }
 
-size_t SerialCom::SendBuffer(const uint8_t* sendBuffer, const size_t sendBufferSizeBytes)
+size_t SerialCom::sendBuffer(const uint8_t* sendBuffer, const size_t sendBufferSizeBytes)
 {
   size_t sendCount = 0;
 
@@ -118,7 +118,7 @@ size_t SerialCom::SendBuffer(const uint8_t* sendBuffer, const size_t sendBufferS
 // Private functions
 //===============
 
-void SerialCom::ParseByte(const uint8_t receivedByte)
+void SerialCom::parseByte(const uint8_t receivedByte)
 {
   switch (m_readingState)
   {

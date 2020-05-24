@@ -5,10 +5,12 @@
 //===============
 // Constructor
 //===============
-MicroBitCommunication::MicroBitCommunication(ITransport& communication, const uint8_t communicatioArduinoRxEnablePin, const uint8_t communicatioMicrobitRxSendEnablePin)
+MicroBitCommunication::MicroBitCommunication(ITransport& communication, const uint8_t communicatioArduinoRxEnablePin, const uint8_t communicatioMicrobitRxSendEnablePin,
+                                              void (*targetHitCallback)(const uint8_t player, const uint8_t points))
   : m_communication(communication),
     m_communicatioArduinoRxEnablePin(communicatioArduinoRxEnablePin),
-    m_communicatioMicrobitRxSendEnablePin(communicatioMicrobitRxSendEnablePin)
+    m_communicatioMicrobitRxSendEnablePin(communicatioMicrobitRxSendEnablePin),
+    m_targetHitCallback(targetHitCallback)
 {
 
 }
@@ -17,83 +19,72 @@ MicroBitCommunication::MicroBitCommunication(ITransport& communication, const ui
 // Public functions
 //===============
 
-void MicroBitCommunication::Start()
+void MicroBitCommunication::start()
 {
   pinMode(m_communicatioArduinoRxEnablePin, OUTPUT);
   pinMode(m_communicatioMicrobitRxSendEnablePin, INPUT);
-  EnableCommunication();
+  enableCommunication();
 }
 
-void MicroBitCommunication::EnableCommunication()
+void MicroBitCommunication::enableCommunication()
 {
   digitalWrite(m_communicatioArduinoRxEnablePin, HIGH);
 }
 
-void MicroBitCommunication::DisableCommunication()
+void MicroBitCommunication::disableCommunication()
 {
   digitalWrite(m_communicatioArduinoRxEnablePin, LOW);
 }
 
 
-void MicroBitCommunication::Update()
+void MicroBitCommunication::update()
 {
-  if (m_communication.Update())
+  if (m_communication.update())
   {
     uint8_t* receiveBufferPtr;
-    size_t bufferSize = m_communication.GetReceivedBuffer(receiveBufferPtr);
+    size_t bufferSize = m_communication.getReceivedBuffer(receiveBufferPtr);
     if (receiveBufferPtr != nullptr)
     {
-      if (ParseReceiveBuffer(receiveBufferPtr, bufferSize))
+      if (parseReceiveBuffer(receiveBufferPtr, bufferSize))
       {
-        CallCallback();
+        callCallback();
       }
     }
   }
 }
 
-bool MicroBitCommunication::OnTargetHit(void (*onTargetHitCallback)(const uint8_t player, const uint8_t points))
-{
-  if (onTargetHitCallback == nullptr)
-  {
-    return false;
-  }
-
-  m_onTargetHitCallback = onTargetHitCallback;
-  return true;
-}
-
-void MicroBitCommunication::GiveNumPlayers(const uint8_t numPlayers)
+void MicroBitCommunication::giveNumPlayers(const uint8_t numPlayers)
 {
   const uint8_t numPlayersBuf[] = {static_cast<uint8_t>(SendSubject::PlayerCount), m_valueSeparator, numPlayers};
   while(digitalRead(m_communicatioMicrobitRxSendEnablePin) == LOW){};
-  m_communication.SendBuffer(numPlayersBuf, sizeof(numPlayersBuf) / sizeof(numPlayersBuf[0]));
+  m_communication.sendBuffer(numPlayersBuf, sizeof(numPlayersBuf) / sizeof(numPlayersBuf[0]));
 }
 
-void MicroBitCommunication::SendStart()
+void MicroBitCommunication::sendStart()
 {
   const uint8_t buf[] = {static_cast<uint8_t>(SendSubject::Start)};
   while(digitalRead(m_communicatioMicrobitRxSendEnablePin) == LOW){};
-  m_communication.SendBuffer(buf, sizeof(buf) / sizeof(buf[0]));
+  m_communication.sendBuffer(buf, sizeof(buf) / sizeof(buf[0]));
 }
 
-void MicroBitCommunication::SendQuit()
+void MicroBitCommunication::sendQuit()
 {
   const uint8_t buf[] = {static_cast<uint8_t>(SendSubject::Quit)};
   while(digitalRead(m_communicatioMicrobitRxSendEnablePin) == LOW){};
-  m_communication.SendBuffer(buf, sizeof(buf) / sizeof(buf[0]));
+  m_communication.sendBuffer(buf, sizeof(buf) / sizeof(buf[0]));
 }
 
 //===============
 // Private functions
 //===============
 
-void MicroBitCommunication::CallCallback()
+void MicroBitCommunication::callCallback()
 {
   switch (m_receivedSubject)
   {
     case ReceiveSubject::Hit:
       {
-        m_onTargetHitCallback(m_receivedValues[0], m_receivedValues[1]);
+        m_targetHitCallback(m_receivedValues[0], m_receivedValues[1]);
         break;
       }
     default:
@@ -103,7 +94,7 @@ void MicroBitCommunication::CallCallback()
   };
 }
 
-bool MicroBitCommunication::ParseReceiveBuffer(const uint8_t* buffer, size_t bufferSize)
+bool MicroBitCommunication::parseReceiveBuffer(const uint8_t* buffer, size_t bufferSize)
 {
   uint8_t numValues = 0;
   uint8_t numValuesFound = 0;

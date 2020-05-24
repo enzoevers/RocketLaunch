@@ -15,12 +15,12 @@ SpriteViewer::SpriteViewer(Sprite sprite, CRGB* matrixScreen, MatrixUtil::XY mat
 // Public functions
 //===============
 
-const MatrixUtil::XY SpriteViewer::GetSpriteSize()
+const MatrixUtil::XY SpriteViewer::getSpriteSize()
 {
   return m_sprite.spriteSize;
 }
 
-bool SpriteViewer::SetScreen(CRGB* matrixScreen, MatrixUtil::XY matrixSize)
+bool SpriteViewer::setScreen(CRGB* matrixScreen, MatrixUtil::XY matrixSize)
 {
   if (matrixScreen == nullptr)
   {
@@ -37,7 +37,7 @@ bool SpriteViewer::SetScreen(CRGB* matrixScreen, MatrixUtil::XY matrixSize)
   return true;
 }
 
-bool SpriteViewer::SetSprite(Sprite sprite, MatrixUtil::XY spriteTopLeftPosition)
+bool SpriteViewer::setSprite(Sprite sprite, MatrixUtil::XY spriteTopLeftPosition)
 {
   if (sprite.spriteMask == nullptr)
   {
@@ -54,23 +54,23 @@ bool SpriteViewer::SetSprite(Sprite sprite, MatrixUtil::XY spriteTopLeftPosition
   return true;
 }
 
-void SpriteViewer::SetPriteSolidColor(CHSV newSolidColor)
+void SpriteViewer::setPriteSolidColor(CHSV newSolidColor)
 {
   m_sprite.colorHSV = newSolidColor;
 }
 
-void SpriteViewer::SetPosition(MatrixUtil::XY topLeftPosition)
+void SpriteViewer::setPosition(MatrixUtil::XY topLeftPosition)
 {
   m_topLeftPosition = topLeftPosition;
 }
 
-void SpriteViewer::TranslateSprite(MatrixUtil::XY translation)
+void SpriteViewer::translateSprite(MatrixUtil::XY translation)
 {
   m_topLeftPosition.X += translation.X;
   m_topLeftPosition.Y += translation.Y;
 }
 
-bool SpriteViewer::SetSpriteOnScreen()
+bool SpriteViewer::setSpriteOnScreen()
 {
   if (m_sprite.spriteMask == nullptr)
   {
@@ -104,10 +104,10 @@ bool SpriteViewer::SetSpriteOnScreen()
     {
       MatrixUtil::XY matrixCoordinate = { m_topLeftPosition.X + c, m_topLeftPosition.Y + r };
 
-      if (CoordinateIsInScreen(matrixCoordinate))
+      if (coordinateIsInScreen(matrixCoordinate))
       {
-        size_t matrixIndex = MatrixUtil::VerticalSerpentineMatrixToLinearIndex(matrixCoordinate.X, matrixCoordinate.Y, m_matrixSize.X, m_matrixSize.Y);
-        size_t spriteIndex = MatrixUtil::VerticalSerpentineMatrixToLinearIndex(c, r, m_sprite.spriteSize.X, m_sprite.spriteSize.Y);
+        size_t matrixIndex = MatrixUtil::verticalSerpentineMatrixToLinearIndex(matrixCoordinate.X, matrixCoordinate.Y, m_matrixSize.X, m_matrixSize.Y);
+        size_t spriteIndex = MatrixUtil::verticalSerpentineMatrixToLinearIndex(c, r, m_sprite.spriteSize.X, m_sprite.spriteSize.Y);
 
         const uint64_t spriteRowMask = 1 << ((m_sprite.spriteSize.X - 1) - c);
         if (m_sprite.spriteMask[r] & spriteRowMask)
@@ -126,7 +126,7 @@ bool SpriteViewer::SetSpriteOnScreen()
 // Private functions
 //===============
 
-bool SpriteViewer::CoordinateIsInScreen(const MatrixUtil::XY& coordinate)
+bool SpriteViewer::coordinateIsInScreen(const MatrixUtil::XY& coordinate)
 {
   bool isInScreen = true;
 

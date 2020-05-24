@@ -1,5 +1,12 @@
 #pragma once
 
+//====================
+//
+// Dependecies:
+//  - FastLED | V3.3.3 | https://github.com/FastLED/FastLED | Get it using the Arduino IDE "Sketch > Include Library > Manage Libraries > Search for FastLED (V 3.3.3)"
+//
+//====================
+
 #define SCOREBOARD_DATA_PIN 8
 
 // CREATE_NUMBER_SPRITE(2) outputs: new SpriteViewer(&SpriteCollection::character_2_Sprite, m_ledMatrix, m_matrixScreenSize)
@@ -8,7 +15,7 @@
 #include "MatrixUtil.h"
 #include "SpriteViewer.h"
 #include "SpriteCollection.h"
-#include "GameState.h"
+#include "GameStateManager.h"
 #include "Player.h"
 #include "Colors.h"
 #include <FastLED.h>
@@ -35,35 +42,36 @@
 class Scoreboard
 {
   public:
-    Scoreboard();
+    Scoreboard(void (*scoreboardAnimationCompleteCallback)(void));
     ~Scoreboard();
 
-    bool Update(GameState& state);
+    void update(GameState state);
 
-    bool SetPlayerCount(const uint8_t numPlayers);
-    uint8_t GetPlayerCount();
+    bool setPlayerCount(const uint8_t numPlayers);
+    uint8_t getPlayerCount();
     
-    void Reset();
-    bool UpdateScore(uint32_t newScore, uint8_t player);
-    bool ReachedMaxScore(uint8_t player);
+    void reset();
+    uint32_t updateScore(uint32_t points, uint8_t player);
+    bool reachedMaxScore(uint8_t player);
 
-    uint32_t GetWriteTime();
+    uint32_t getWriteTime();
 
   private:
-
+    void (*m_scoreboardAnimationCompleteCallback)(void);
+    
     // These functions return:
     //  true: all steps of one anumation round are done
     //  false: not all steps of one animation round are executed yet
-    bool AnimationIdleNoGame();
-    bool AnimationStart();
-    bool AnimationIdleInGame();
-    void AnimationIdleInGame_SinglePlayer();
-    void AnimationIdleInGame_DualPlayer();
-    void AnimationIdleInGame_WritePoints(char* scoreStringBuf, uint8_t numChars, CHSV color, MatrixUtil::XY startIndexSprite);
-    bool AnimationNewScore(uint32_t newScore, uint8_t player);
-    bool AnimationVictory(uint8_t player);
-    bool AnimationStopGame();
-    bool ClearMatrix();
+    bool animationIdleNoGame();
+    bool animationStart();
+    bool animationIdleInGame();
+    void animationIdleInGame_singlePlayer();
+    void animationIdleInGame_dualPlayer();
+    void animationIdleInGame_writePoints(char* scoreStringBuf, uint8_t numChars, CHSV color, MatrixUtil::XY startIndexSprite);
+    bool animationNewScore(uint32_t newScore, uint8_t player);
+    bool animationVictory(uint8_t player);
+    bool animationStopGame();
+    bool clearMatrix();
 
     const uint16_t m_durationMsIdleNoGame = 2500;
     const uint16_t m_durationMsStart = 6000;
@@ -119,8 +127,9 @@ class Scoreboard
     uint32_t m_lastScorePlayer1 = 0;
     uint32_t m_lastScorePlayer2 = 0;
 
-    uint32_t m_currentScorePlayer1 = 0;
-    uint32_t m_currentScorePlayer2 = 0;
+    Player player1;
+    Player player2; // player2 my not be used
+    const Player* players[2] = { &player1, &player2 };
 
     const uint8_t m_huePlayer1 = HSV_RAINDBOW_GREEN;
     const uint8_t m_huePlayer2 = HSV_RAINDBOW_BLUE;

@@ -19,14 +19,14 @@ class SerialCom : public ITransport
 
     //---------------
     // ITransport
-    void Open() override;
-    bool Update() override;
-    size_t GetReceivedBuffer(uint8_t*& receiveBuffer) override;
-    size_t SendBuffer(const uint8_t* sendBuffer, const size_t sendBufferSizeBytes) override;
+    void open() override;
+    bool update() override;
+    size_t getReceivedBuffer(uint8_t*& receiveBuffer) override;
+    size_t sendBuffer(const uint8_t* sendBuffer, const size_t sendBufferSizeBytes) override;
     //---------------
 
   private:
-    void ParseByte(const uint8_t receivedByte);
+    void parseByte(const uint8_t receivedByte);
 
     HardwareSerial& m_mySerial = Serial;
 
