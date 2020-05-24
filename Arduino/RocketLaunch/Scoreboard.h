@@ -40,14 +40,14 @@ class Scoreboard
 
     void update(GameState state);
 
-    bool SetPlayerCount(const uint8_t numPlayers);
-    uint8_t GetPlayerCount();
+    bool setPlayerCount(const uint8_t numPlayers);
+    uint8_t getPlayerCount();
     
-    void Reset();
+    void reset();
     uint32_t updateScore(uint32_t points, uint8_t player);
-    bool ReachedMaxScore(uint8_t player);
+    bool reachedMaxScore(uint8_t player);
 
-    uint32_t GetWriteTime();
+    uint32_t getWriteTime();
 
   private:
     void (*m_scoreboardAnimationCompleteCallback)(void);
@@ -55,16 +55,16 @@ class Scoreboard
     // These functions return:
     //  true: all steps of one anumation round are done
     //  false: not all steps of one animation round are executed yet
-    bool AnimationIdleNoGame();
-    bool AnimationStart();
-    bool AnimationIdleInGame();
-    void AnimationIdleInGame_SinglePlayer();
-    void AnimationIdleInGame_DualPlayer();
-    void AnimationIdleInGame_WritePoints(char* scoreStringBuf, uint8_t numChars, CHSV color, MatrixUtil::XY startIndexSprite);
-    bool AnimationNewScore(uint32_t newScore, uint8_t player);
-    bool AnimationVictory(uint8_t player);
-    bool AnimationStopGame();
-    bool ClearMatrix();
+    bool animationIdleNoGame();
+    bool animationStart();
+    bool animationIdleInGame();
+    void animationIdleInGame_singlePlayer();
+    void animationIdleInGame_dualPlayer();
+    void animationIdleInGame_writePoints(char* scoreStringBuf, uint8_t numChars, CHSV color, MatrixUtil::XY startIndexSprite);
+    bool animationNewScore(uint32_t newScore, uint8_t player);
+    bool animationVictory(uint8_t player);
+    bool animationStopGame();
+    bool clearMatrix();
 
     const uint16_t m_durationMsIdleNoGame = 2500;
     const uint16_t m_durationMsStart = 6000;

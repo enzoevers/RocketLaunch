@@ -18,24 +18,24 @@ class SpriteViewer
   public:
     SpriteViewer(Sprite sprite, CRGB* matrixScreen, MatrixUtil::XY matrixSize);
 
-    const MatrixUtil::XY GetSpriteSize();
-    const MatrixUtil::XY GetPosition() { return m_topLeftPosition; }
-    const Sprite& GetSprite() { return m_sprite; }
+    const MatrixUtil::XY getSpriteSize();
+    const MatrixUtil::XY getPosition() { return m_topLeftPosition; }
+    const Sprite& getSprite() { return m_sprite; }
 
-    bool SetScreen(CRGB* matrixScreen, MatrixUtil::XY matrixSize);
-    bool SetSprite(Sprite sprite, MatrixUtil::XY spriteTopLeftPosition);
+    bool setScreen(CRGB* matrixScreen, MatrixUtil::XY matrixSize);
+    bool setSprite(Sprite sprite, MatrixUtil::XY spriteTopLeftPosition);
 
-    void SetPriteSolidColor(CHSV newSolidColor);
-    void SetPosition(MatrixUtil::XY topLeftPosition);
-    void TranslateSprite(MatrixUtil::XY translation);
+    void setPriteSolidColor(CHSV newSolidColor);
+    void setPosition(MatrixUtil::XY topLeftPosition);
+    void translateSprite(MatrixUtil::XY translation);
 
     // This does not show the sprite.
     // It only sets the sprite data in the screen.
     // FastLed.show() should be called separately
-    bool SetSpriteOnScreen();
+    bool setSpriteOnScreen();
 
   private:
-    bool CoordinateIsInScreen(const MatrixUtil::XY& coordinate);
+    bool coordinateIsInScreen(const MatrixUtil::XY& coordinate);
 
     Sprite m_sprite;
 

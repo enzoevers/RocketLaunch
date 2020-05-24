@@ -1,6 +1,6 @@
 #include "MatrixUtil.h"
 
-const size_t MatrixUtil::VerticalSerpentineMatrixToLinearIndex(const size_t column, const size_t row, const size_t numColums, const size_t numRows)
+const size_t MatrixUtil::verticalSerpentineMatrixToLinearIndex(const size_t column, const size_t row, const size_t numColums, const size_t numRows)
 {
   if (column >= numColums || row >= numRows)
   {

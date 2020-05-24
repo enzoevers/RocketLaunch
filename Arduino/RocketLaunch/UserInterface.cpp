@@ -15,6 +15,9 @@ UserInterface::UserInterface(const uint8_t playerCountSelectPin, const uint8_t g
   pinMode(m_startResetPin, INPUT_PULLUP); // https://www.arduino.cc/en/Tutorial/InputPullupSerial
 }
 
+//==========
+// Public
+//==========
 void UserInterface::update()
 {
   const bool buttonState = digitalRead(m_startResetPin);
@@ -48,6 +51,9 @@ void UserInterface::update()
   m_lastButtonState = buttonState;
 }
 
+//==========
+// Private
+//==========
 const uint8_t UserInterface::getPlayerCountSelection()
 {
   return (digitalRead(m_playerCountSelectPin) == 0) ? 1 : 2;

@@ -30,5 +30,5 @@ struct XY
 //     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //
 // Layout for a vertical serpentine connected matrix
-const size_t VerticalSerpentineMatrixToLinearIndex(const size_t column, const size_t row, const size_t numColums, const size_t numRows);
+const size_t verticalSerpentineMatrixToLinearIndex(const size_t column, const size_t row, const size_t numColums, const size_t numRows);
 }

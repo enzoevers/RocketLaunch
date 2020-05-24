@@ -12,13 +12,16 @@ GameStateManager::GameStateManager(void (*stateChangeCallback_startGame)(const u
 
 }
 
-
+//==========
+// Public
+//==========
 void GameStateManager::update()
 {
   switch (m_currentState)
   {
     case GameState::OutOfGame:
       {
+        // exit
         if (m_doStart)
         {
           m_previousState = m_currentState;
@@ -29,6 +32,7 @@ void GameStateManager::update()
       }
     case GameState::StartGame:
       {
+        // entry
         if (m_doStart)
         {
           m_stateChangeCallback_startGame(m_numPlayers, m_gameMode);
@@ -37,6 +41,7 @@ void GameStateManager::update()
           m_doStart = false;
         }
 
+        // exit
         if (m_animationComplete)
         {
           m_previousState = m_currentState;
@@ -48,14 +53,14 @@ void GameStateManager::update()
       }
     case GameState::InGameIdle:
       {
-        // A result from StartResetButtonPoll()
+        // entry
         if (m_doReset)
         {
           m_previousState = m_currentState;
           m_currentState = GameState::StopGame;
         }
 
-        // Updated in TargetHitCallback()
+        // continuous
         if (m_receivedScoreInfo.newScoreFlag)
         {
           m_receivedScoreInfo.newScoreFlag = false; // Reset the flag
@@ -63,6 +68,7 @@ void GameStateManager::update()
           uint8_t player = m_receivedScoreInfo.player;
           uint32_t newScore = m_receivedScoreInfo.newScore;
 
+          // exit
           if (newScore >= m_maxScore)
           {
             m_stateChangeCallback_maxScore(player);
@@ -70,39 +76,39 @@ void GameStateManager::update()
             m_previousState = m_currentState;
             m_currentState = GameState::ReachedMaxScore;
           }
-          else
-          {
-            m_previousState = m_currentState;
-            m_currentState = GameState::InGameIdle;
-          }
         }
 
         break;
       }
     case GameState::ReachedMaxScore:
       {
+        // exit
         if (m_doReset || m_animationComplete)
         {
           m_previousState = m_currentState;
           m_currentState = GameState::StopGame;
           m_animationComplete = false;
 
-          // Make sure that it is true even if
-          // GameState::StopGame was set because
-          // animation finished (animationRoundComplete)
-          m_doReset = true;
+          if (m_animationComplete)
+          {
+            // Settings it to true makes sure that the entry in
+            // GameState::StopGame is performed
+            m_doReset = true;
+          }
         }
 
         break;
       }
     case GameState::StopGame:
       {
+        // entry
         if (m_doReset)
         {
           m_stateChangeCallback_stopGame();
           m_doReset = false;
         }
 
+        // exit
         if (m_animationComplete)
         {
           m_previousState = m_currentState;

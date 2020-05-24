@@ -5,13 +5,13 @@
 class Player
 {
   public:
-    void Reset();
+    void reset();
     
     // Arguments:
     //  earnedPoints: the points earned from hitting a target
     //
     // Return: the new total score
-    const uint32_t AddPoints(const uint8_t earnedPoints);
+    const uint32_t addPoints(const uint8_t earnedPoints);
     
     const uint32_t getCurrentPoints();
 

@@ -77,9 +77,9 @@ void setup()
   pinMode(cannonPin, OUTPUT);
   digitalWrite(cannonPin, LOW);
 
-  mySerial.Open();
-  microBitCom.Start();
-  scoreboard.Reset();
+  mySerial.open();
+  microBitCom.start();
+  scoreboard.reset();
 }
 
 void loop()
@@ -99,12 +99,12 @@ void loop()
   // the received bytes from the Micro:Bit and the button press
   gameStateManager.update();
 
-  microBitCom.DisableCommunication();
+  microBitCom.disableCommunication();
   delayMicroseconds(200); // Wait to make sure that last byte(s) is stored in the receive buffer
 
   scoreboard.update(gameStateManager.getCurrentState()); // Perform an animation step on the LED matrix
 
-  microBitCom.EnableCommunication();
+  microBitCom.enableCommunication();
   delay(5); // Time to receive data
 }
 
@@ -137,23 +137,23 @@ void scoreboardAnimationCompleteEventCallback()
 // StateChange events
 void stateChangeCallback_startGame(const uint8_t numPlayers, const uint8_t gameMode)
 {
-  scoreboard.SetPlayerCount(numPlayers);
-  microBitCom.GiveNumPlayers(numPlayers);
+  scoreboard.setPlayerCount(numPlayers);
+  microBitCom.giveNumPlayers(numPlayers);
   //microBitCom.GiveGameMode();
   
-  microBitCom.SendStart();
+  microBitCom.sendStart();
 }
 
 void stateChangeCallback_maxScore(const uint8_t winningPlayer)
 {
-  scoreboard.ReachedMaxScore(winningPlayer);
+  scoreboard.reachedMaxScore(winningPlayer);
   fireConfettiCannons();
 }
 
 void stateChangeCallback_stopGame()
 {
-  microBitCom.SendQuit();
-  scoreboard.Reset();
+  microBitCom.sendQuit();
+  scoreboard.reset();
 }
 //----------
 

@@ -25,19 +25,19 @@ class MicroBitCommunication
     MicroBitCommunication(ITransport& communication, const uint8_t communicatioArduinoRxEnablePin, const uint8_t communicatioMicrobitRxSendEnablePin,
                           void (*targetHitCallback)(const uint8_t player, const uint8_t points));
 
-    void Start();
-    void EnableCommunication();
-    void DisableCommunication();
+    void start();
+    void enableCommunication();
+    void disableCommunication();
 
     void update();
-    void GiveNumPlayers(const uint8_t numPlayers);
+    void giveNumPlayers(const uint8_t numPlayers);
     //void GiveGameMode(const uint8_t mode);
-    void SendStart();
-    void SendQuit();
+    void sendStart();
+    void sendQuit();
 
   private:
-    bool ParseReceiveBuffer(const uint8_t* buffer, size_t bufferSize);
-    void CallCallback();
+    bool parseReceiveBuffer(const uint8_t* buffer, size_t bufferSize);
+    void callCallback();
 
     const uint8_t m_communicatioArduinoRxEnablePin;
     const uint8_t m_communicatioMicrobitRxSendEnablePin;
