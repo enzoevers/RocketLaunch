@@ -1,5 +1,12 @@
 #pragma once
 
+//====================
+//
+// Dependecies:
+//  - FastLED | V3.3.3 | https://github.com/FastLED/FastLED | Get it using the Arduino IDE "Sketch > Include Library > Manage Libraries > Search for FastLED (V 3.3.3)"
+//
+//====================
+
 #define SCOREBOARD_DATA_PIN 8
 
 // CREATE_NUMBER_SPRITE(2) outputs: new SpriteViewer(&SpriteCollection::character_2_Sprite, m_ledMatrix, m_matrixScreenSize)

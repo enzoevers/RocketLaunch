@@ -31,4 +31,5 @@ class UserInterface
     //  1> seconds: Start
     //  1< seconds: Reset
     const uint32_t m_startResetBtnPressThresholdMs = 1000; // 1 second
+    bool m_sentReset = false;
 };

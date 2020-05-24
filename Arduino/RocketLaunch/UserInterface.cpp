@@ -27,15 +27,17 @@ void UserInterface::update()
   if ((m_lastButtonState == HIGH) && (buttonState == LOW))
   {
     m_btnChangeTimestampMs = currentMillis;
+    m_sentReset = false;
   }
   // Button is still pressed.
   // Check if it is pressed for longer than the reset time threshold
   // This approach makes sure that you don't have to release the button in order to reset the system
-  else if ((m_lastButtonState == LOW) && (buttonState == LOW))
+  else if ((m_lastButtonState == LOW) && (buttonState == LOW) && (m_sentReset == false))
   {
     if ((currentMillis - m_btnChangeTimestampMs) > m_startResetBtnPressThresholdMs)
     {
       m_resetCallback();
+      m_sentReset = true;
     }
   }
   // Button was released
