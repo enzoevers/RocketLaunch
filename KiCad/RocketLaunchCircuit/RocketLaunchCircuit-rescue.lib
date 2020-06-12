@@ -1,11 +1,11 @@
 EESchema-LIBRARY Version 2.4
 #encoding utf-8
 #
-# RocketLaunchCircuit-rescue_C-Device
+# C-Device
 #
-DEF RocketLaunchCircuit-rescue_C-Device C 0 10 N Y 1 F N
+DEF C-Device C 0 10 N Y 1 F N
 F0 "C" 25 100 50 H V L CNN
-F1 "RocketLaunchCircuit-rescue_C-Device" 25 -100 50 H V L CNN
+F1 "C-Device" 25 -100 50 H V L CNN
 F2 "" 38 -150 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -19,11 +19,11 @@ X ~ 2 0 -150 110 U 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# RocketLaunchCircuit-rescue_Conn_01x03-Connector_Generic
+# Conn_01x03-Connector_Generic
 #
-DEF RocketLaunchCircuit-rescue_Conn_01x03-Connector_Generic J 0 40 Y N 1 F N
+DEF Conn_01x03-Connector_Generic J 0 40 Y N 1 F N
 F0 "J" 0 200 50 H V C CNN
-F1 "RocketLaunchCircuit-rescue_Conn_01x03-Connector_Generic" 0 -200 50 H V C CNN
+F1 "Conn_01x03-Connector_Generic" 0 -200 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -40,11 +40,11 @@ X Pin_3 3 -200 -100 150 R 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# RocketLaunchCircuit-rescue_Conn_01x05-Connector_Generic
+# Conn_01x05-Connector_Generic
 #
-DEF RocketLaunchCircuit-rescue_Conn_01x05-Connector_Generic J 0 40 Y N 1 F N
+DEF Conn_01x05-Connector_Generic J 0 40 Y N 1 F N
 F0 "J" 0 300 50 H V C CNN
-F1 "RocketLaunchCircuit-rescue_Conn_01x05-Connector_Generic" 0 -300 50 H V C CNN
+F1 "Conn_01x05-Connector_Generic" 0 -300 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -65,11 +65,11 @@ X Pin_5 5 -200 -200 150 R 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# RocketLaunchCircuit-rescue_Conn_02x03_Counter_Clockwise-Connector_Generic
+# Conn_02x03_Counter_Clockwise-Connector_Generic
 #
-DEF RocketLaunchCircuit-rescue_Conn_02x03_Counter_Clockwise-Connector_Generic J 0 40 Y N 1 F N
+DEF Conn_02x03_Counter_Clockwise-Connector_Generic J 0 40 Y N 1 F N
 F0 "J" 50 200 50 H V C CNN
-F1 "RocketLaunchCircuit-rescue_Conn_02x03_Counter_Clockwise-Connector_Generic" 50 -200 50 H V C CNN
+F1 "Conn_02x03_Counter_Clockwise-Connector_Generic" 50 -200 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -92,11 +92,11 @@ X Pin_6 6 300 100 150 L 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# RocketLaunchCircuit-rescue_Conn_02x05_Counter_Clockwise-Connector_Generic
+# Conn_02x05_Counter_Clockwise-Connector_Generic
 #
-DEF RocketLaunchCircuit-rescue_Conn_02x05_Counter_Clockwise-Connector_Generic J 0 40 Y N 1 F N
+DEF Conn_02x05_Counter_Clockwise-Connector_Generic J 0 40 Y N 1 F N
 F0 "J" 50 300 50 H V C CNN
-F1 "RocketLaunchCircuit-rescue_Conn_02x05_Counter_Clockwise-Connector_Generic" 50 -300 50 H V C CNN
+F1 "Conn_02x05_Counter_Clockwise-Connector_Generic" 50 -300 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -127,11 +127,11 @@ X Pin_9 9 300 100 150 L 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# RocketLaunchCircuit-rescue_Conn_02x20_Row_Letter_Last-Connector_Generic
+# Conn_02x20_Row_Letter_Last-Connector_Generic
 #
-DEF RocketLaunchCircuit-rescue_Conn_02x20_Row_Letter_Last-Connector_Generic J 0 40 Y N 1 F N
+DEF Conn_02x20_Row_Letter_Last-Connector_Generic J 0 40 Y N 1 F N
 F0 "J" 50 1000 50 H V C CNN
-F1 "RocketLaunchCircuit-rescue_Conn_02x20_Row_Letter_Last-Connector_Generic" 50 -1100 50 H V C CNN
+F1 "Conn_02x20_Row_Letter_Last-Connector_Generic" 50 -1100 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -222,11 +222,11 @@ X Pin_9b 9b 300 100 150 L 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# RocketLaunchCircuit-rescue_GND-power
+# GND-power
 #
-DEF RocketLaunchCircuit-rescue_GND-power #PWR 0 0 Y Y 1 F P
+DEF GND-power #PWR 0 0 Y Y 1 F P
 F0 "#PWR" 0 -250 50 H I C CNN
-F1 "RocketLaunchCircuit-rescue_GND-power" 0 -150 50 H V C CNN
+F1 "GND-power" 0 -150 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 DRAW
@@ -235,11 +235,11 @@ X GND 1 0 0 0 D 50 50 1 1 W N
 ENDDRAW
 ENDDEF
 #
-# RocketLaunchCircuit-rescue_R-Device
+# R-Device
 #
-DEF RocketLaunchCircuit-rescue_R-Device R 0 0 N Y 1 F N
+DEF R-Device R 0 0 N Y 1 F N
 F0 "R" 80 0 50 V V C CNN
-F1 "RocketLaunchCircuit-rescue_R-Device" 0 0 50 V V C CNN
+F1 "R-Device" 0 0 50 V V C CNN
 F2 "" -70 0 50 V I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -252,11 +252,11 @@ X ~ 2 0 -150 50 U 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# RocketLaunchCircuit-rescue_R_Small-Device
+# R_Small-Device
 #
-DEF RocketLaunchCircuit-rescue_R_Small-Device R 0 10 N N 1 F N
+DEF R_Small-Device R 0 10 N N 1 F N
 F0 "R" 30 20 50 H V L CNN
-F1 "RocketLaunchCircuit-rescue_R_Small-Device" 30 -40 50 H V L CNN
+F1 "R_Small-Device" 30 -40 50 H V L CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -269,11 +269,11 @@ X ~ 2 0 -100 30 U 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# RocketLaunchCircuit-rescue_Rotary_Encoder_Switch-Device
+# Rotary_Encoder_Switch-Device
 #
-DEF RocketLaunchCircuit-rescue_Rotary_Encoder_Switch-Device SW 0 10 Y N 1 F N
+DEF Rotary_Encoder_Switch-Device SW 0 10 Y N 1 F N
 F0 "SW" 0 260 50 H V C CNN
-F1 "RocketLaunchCircuit-rescue_Rotary_Encoder_Switch-Device" 0 -260 50 H V C CNN
+F1 "Rotary_Encoder_Switch-Device" 0 -260 50 H V C CNN
 F2 "" -150 160 50 H I C CNN
 F3 "" 0 260 50 H I C CNN
 $FPLIST
@@ -307,11 +307,11 @@ X S2 S2 300 -100 100 L 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# RocketLaunchCircuit-rescue_SW_DPDT_x2-Switch
+# SW_DPDT_x2-Switch
 #
-DEF RocketLaunchCircuit-rescue_SW_DPDT_x2-Switch SW 0 0 Y N 2 F N
+DEF SW_DPDT_x2-Switch SW 0 0 Y N 2 F N
 F0 "SW" 0 170 50 H V C CNN
-F1 "RocketLaunchCircuit-rescue_SW_DPDT_x2-Switch" 0 -200 50 H V C CNN
+F1 "SW_DPDT_x2-Switch" 0 -200 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -331,11 +331,11 @@ X C 6 200 -100 100 L 50 50 2 1 P
 ENDDRAW
 ENDDEF
 #
-# RocketLaunchCircuit-rescue_SW_DPST_x2-Switch
+# SW_DPST_x2-Switch
 #
-DEF RocketLaunchCircuit-rescue_SW_DPST_x2-Switch SW 0 0 Y N 2 F N
+DEF SW_DPST_x2-Switch SW 0 0 Y N 2 F N
 F0 "SW" 0 125 50 H V C CNN
-F1 "RocketLaunchCircuit-rescue_SW_DPST_x2-Switch" 0 -100 50 H V C CNN
+F1 "SW_DPST_x2-Switch" 0 -100 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 DRAW
@@ -349,11 +349,11 @@ X B 4 200 0 100 L 50 50 2 1 P
 ENDDRAW
 ENDDEF
 #
-# RocketLaunchCircuit-rescue_Screw_Terminal_01x02-Connector
+# Screw_Terminal_01x02-Connector
 #
-DEF RocketLaunchCircuit-rescue_Screw_Terminal_01x02-Connector J 0 40 Y N 1 F N
+DEF Screw_Terminal_01x02-Connector J 0 40 Y N 1 F N
 F0 "J" 0 100 50 H V C CNN
-F1 "RocketLaunchCircuit-rescue_Screw_Terminal_01x02-Connector" 0 -200 50 H V C CNN
+F1 "Screw_Terminal_01x02-Connector" 0 -200 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -372,11 +372,11 @@ X Pin_2 2 -200 -100 150 R 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# RocketLaunchCircuit-rescue_USB_A-Connector
+# USB_A-Connector
 #
-DEF RocketLaunchCircuit-rescue_USB_A-Connector J 0 40 Y Y 1 F N
+DEF USB_A-Connector J 0 40 Y Y 1 F N
 F0 "J" -200 450 50 H V L CNN
-F1 "RocketLaunchCircuit-rescue_USB_A-Connector" -200 350 50 H V L CNN
+F1 "USB_A-Connector" -200 350 50 H V L CNN
 F2 "" 150 -50 50 H I C CNN
 F3 "" 150 -50 50 H I C CNN
 $FPLIST
@@ -402,31 +402,6 @@ X D- 2 300 -100 100 L 50 50 1 1 P
 X D+ 3 300 0 100 L 50 50 1 1 P
 X GND 4 0 -400 100 U 50 50 1 1 W
 X Shield 5 -100 -400 100 U 50 50 1 1 P
-ENDDRAW
-ENDDEF
-#
-# RocketLaunch_Library_Bi-Directional_logic_shifter
-#
-DEF RocketLaunch_Library_Bi-Directional_logic_shifter U 0 40 Y Y 1 F N
-F0 "U" 150 550 50 H V C CNN
-F1 "RocketLaunch_Library_Bi-Directional_logic_shifter" 650 450 50 H V C CNN
-F2 "" 0 0 50 H I C CNN
-F3 "" 0 0 50 H I C CNN
-DRAW
-S -300 400 300 -400 0 1 0 f
-S 300 -300 300 -300 0 1 0 N
-X LV1 1 -400 150 100 R 50 50 1 1 B
-X HV 10 -50 500 100 D 50 50 1 1 I
-X HV2 11 400 50 100 L 50 50 1 1 B
-X HV1 12 400 150 100 L 50 50 1 1 B
-X LV2 2 -400 50 100 R 50 50 1 1 B
-X LV 3 -50 -500 100 U 50 50 1 1 I
-X GND_LV 4 50 -500 100 U 50 50 1 1 I
-X LV3 5 -400 -50 100 R 50 50 1 1 B
-X LV4 6 -400 -150 100 R 50 50 1 1 B
-X HV4 7 400 -150 100 L 50 50 1 1 B
-X HV3 8 400 -50 100 L 50 50 1 1 B
-X GND_HV 9 50 500 100 D 50 50 1 1 I
 ENDDRAW
 ENDDEF
 #

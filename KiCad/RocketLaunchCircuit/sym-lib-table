@@ -1,3 +1,4 @@
 (sym_lib_table
   (lib (name RocketLaunch_Library)(type Legacy)(uri ${KIPRJMOD}/RocketLaunch_Library.lib)(options "")(descr ""))
+  (lib (name RocketLaunchCircuit-rescue)(type Legacy)(uri ${KIPRJMOD}/RocketLaunchCircuit-rescue.lib)(options "")(descr ""))
 )

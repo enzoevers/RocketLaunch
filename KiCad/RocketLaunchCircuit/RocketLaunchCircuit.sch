@@ -14,7 +14,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L Connector:Screw_Terminal_01x02 J15
+L RocketLaunchCircuit-rescue:Screw_Terminal_01x02-Connector J15
 U 1 1 5E6E483D
 P 6500 7150
 F 0 "J15" V 6450 6850 50  0000 L CNN
@@ -25,7 +25,7 @@ F 3 "~" H 6500 7150 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L Switch:SW_DPDT_x2 SW2
+L RocketLaunchCircuit-rescue:SW_DPDT_x2-Switch SW2
 U 1 1 5E6E85BB
 P 8500 2100
 F 0 "SW2" H 8500 2400 50  0000 L CNN
@@ -36,7 +36,7 @@ F 3 "~" H 8500 2100 50  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L power:GND #PWR011
+L RocketLaunchCircuit-rescue:GND-power #PWR011
 U 1 1 5E707618
 P 2150 3300
 F 0 "#PWR011" H 2150 3050 50  0001 C CNN
@@ -53,7 +53,7 @@ Wire Wire Line
 Text Label 3000 2700 2    50   ~ 0
 5V_PowerSupply
 $Comp
-L Connector_Generic:Conn_01x03 J9
+L RocketLaunchCircuit-rescue:Conn_01x03-Connector_Generic J9
 U 1 1 5E6A9AF2
 P 4950 700
 F 0 "J9" V 4914 512 50  0000 R CNN
@@ -64,7 +64,7 @@ F 3 "~" H 4950 700 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Connector_Generic:Conn_02x03_Counter_Clockwise J2
+L RocketLaunchCircuit-rescue:Conn_02x03_Counter_Clockwise-Connector_Generic J2
 U 1 1 5E6AB262
 P 3350 2300
 F 0 "J2" H 3400 2617 50  0000 C CNN
@@ -75,7 +75,7 @@ F 3 "~" H 3350 2300 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector_Generic:Conn_02x05_Counter_Clockwise J1
+L RocketLaunchCircuit-rescue:Conn_02x05_Counter_Clockwise-Connector_Generic J1
 U 1 1 5E6AC440
 P 3500 1300
 F 0 "J1" H 3550 1717 50  0000 C CNN
@@ -86,7 +86,7 @@ F 3 "~" H 3500 1300 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector_Generic:Conn_02x20_Row_Letter_Last J3
+L RocketLaunchCircuit-rescue:Conn_02x20_Row_Letter_Last-Connector_Generic J3
 U 1 1 5E6AC8BC
 P 3200 4950
 F 0 "J3" H 3250 6067 50  0000 C CNN
@@ -99,7 +99,7 @@ $EndComp
 Wire Wire Line
 	8300 2000 7950 2000
 $Comp
-L power:GND #PWR017
+L RocketLaunchCircuit-rescue:GND-power #PWR017
 U 1 1 5E6AFC6B
 P 8050 2200
 F 0 "#PWR017" H 8050 1950 50  0001 C CNN
@@ -118,7 +118,7 @@ Wire Wire Line
 Text Label 7950 1900 0    50   ~ 0
 PlayerCountSignal
 $Comp
-L Switch:SW_DPDT_x2 SW3
+L RocketLaunchCircuit-rescue:SW_DPDT_x2-Switch SW3
 U 1 1 5E6B920E
 P 8500 2850
 F 0 "SW3" H 8500 3150 50  0000 L CNN
@@ -131,7 +131,7 @@ $EndComp
 Wire Wire Line
 	8300 2750 7950 2750
 $Comp
-L power:GND #PWR018
+L RocketLaunchCircuit-rescue:GND-power #PWR018
 U 1 1 5E6B9215
 P 8050 2950
 F 0 "#PWR018" H 8050 2700 50  0001 C CNN
@@ -158,7 +158,7 @@ Wire Wire Line
 Text Label 4950 1500 1    50   ~ 0
 LedMatrixData
 $Comp
-L power:GND #PWR07
+L RocketLaunchCircuit-rescue:GND-power #PWR07
 U 1 1 5E6CDC4C
 P 5050 1300
 F 0 "#PWR07" H 5050 1050 50  0001 C CNN
@@ -171,7 +171,7 @@ $EndComp
 Text Label 4850 1500 1    50   ~ 0
 5V_PowerSupply
 $Comp
-L power:GND #PWR019
+L RocketLaunchCircuit-rescue:GND-power #PWR019
 U 1 1 5E73009E
 P 6300 6800
 F 0 "#PWR019" H 6300 6550 50  0001 C CNN
@@ -232,7 +232,7 @@ MicroBit_P15
 Text Label 900  4350 0    50   ~ 0
 MicroBit_P16
 $Comp
-L power:GND #PWR021
+L RocketLaunchCircuit-rescue:GND-power #PWR021
 U 1 1 5E98B09B
 P 3500 4150
 F 0 "#PWR021" H 3500 3900 50  0001 C CNN
@@ -265,7 +265,7 @@ Wire Wire Line
 Text Label 2750 2400 0    50   ~ 0
 Arduino_5V
 $Comp
-L power:GND #PWR022
+L RocketLaunchCircuit-rescue:GND-power #PWR022
 U 1 1 5EBDEE77
 P 3700 2400
 F 0 "#PWR022" H 3700 2150 50  0001 C CNN
@@ -308,7 +308,7 @@ Wire Wire Line
 Text Label 7550 3450 0    50   ~ 0
 StartResetSignal
 $Comp
-L power:GND #PWR016
+L RocketLaunchCircuit-rescue:GND-power #PWR016
 U 1 1 5ED7A6E1
 P 8650 3450
 F 0 "#PWR016" H 8650 3200 50  0001 C CNN
@@ -319,7 +319,7 @@ F 3 "" H 8650 3450 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Switch:SW_DPST_x2 SW1
+L RocketLaunchCircuit-rescue:SW_DPST_x2-Switch SW1
 U 1 1 5E6EA688
 P 8400 3450
 F 0 "SW1" H 8400 3350 50  0000 C CNN
@@ -376,7 +376,7 @@ Wire Wire Line
 Wire Wire Line
 	2100 3300 2150 3300
 $Comp
-L Connector:USB_A J5
+L RocketLaunchCircuit-rescue:USB_A-Connector J5
 U 1 1 5E70F829
 P 2100 2900
 F 0 "J5" H 2157 3367 50  0000 C CNN
@@ -387,7 +387,7 @@ F 3 " ~" H 2250 2850 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR012
+L RocketLaunchCircuit-rescue:GND-power #PWR012
 U 1 1 5E77BF6C
 P 2750 3900
 F 0 "#PWR012" H 2750 3650 50  0001 C CNN
@@ -404,7 +404,7 @@ Text Label 3600 3300 2    50   ~ 0
 Wire Wire Line
 	2700 3900 2750 3900
 $Comp
-L Connector:USB_A J6
+L RocketLaunchCircuit-rescue:USB_A-Connector J6
 U 1 1 5E77BF75
 P 2700 3500
 F 0 "J6" H 2757 3967 50  0000 C CNN
@@ -464,7 +464,7 @@ Wire Wire Line
 Wire Wire Line
 	3500 4050 3500 4150
 $Comp
-L Connector_Generic:Conn_01x05 J4
+L RocketLaunchCircuit-rescue:Conn_01x05-Connector_Generic J4
 U 1 1 5E7ECC5B
 P 2450 7150
 F 0 "J4" V 2650 7100 50  0000 L CNN
@@ -475,7 +475,7 @@ F 3 "~" H 2450 7150 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L power:GND #PWR02
+L RocketLaunchCircuit-rescue:GND-power #PWR02
 U 1 1 5E7EF8C8
 P 2750 6850
 F 0 "#PWR02" H 2750 6600 50  0001 C CNN
@@ -498,7 +498,7 @@ Wire Wire Line
 Text Label 2450 6250 3    50   ~ 0
 LedDataTarget1_5V
 $Comp
-L Device:R R1
+L RocketLaunchCircuit-rescue:R-Device R1
 U 1 1 5E7EF8D4
 P 2300 6500
 F 0 "R1" H 2150 6550 50  0000 L CNN
@@ -509,7 +509,7 @@ F 3 "~" H 2300 6500 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:C C1
+L RocketLaunchCircuit-rescue:C-Device C1
 U 1 1 5E7EF8DA
 P 2050 6500
 F 0 "C1" H 1900 6600 50  0000 L CNN
@@ -524,7 +524,7 @@ Wire Wire Line
 Text Label 2300 6350 2    50   ~ 0
 SwitchTarget1
 $Comp
-L power:GND #PWR01
+L RocketLaunchCircuit-rescue:GND-power #PWR01
 U 1 1 5E80F09C
 P 2100 6650
 F 0 "#PWR01" H 2100 6400 50  0001 C CNN
@@ -545,7 +545,7 @@ Wire Wire Line
 Text Label 1850 6950 0    50   ~ 0
 SizeTarget1
 $Comp
-L Connector_Generic:Conn_01x05 J7
+L RocketLaunchCircuit-rescue:Conn_01x05-Connector_Generic J7
 U 1 1 5E87FD51
 P 3500 7150
 F 0 "J7" V 3700 7100 50  0000 L CNN
@@ -556,7 +556,7 @@ F 3 "~" H 3500 7150 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L power:GND #PWR06
+L RocketLaunchCircuit-rescue:GND-power #PWR06
 U 1 1 5E87FD57
 P 3800 6850
 F 0 "#PWR06" H 3800 6600 50  0001 C CNN
@@ -577,9 +577,9 @@ Text Label 3600 6350 3    50   ~ 0
 Wire Wire Line
 	3500 6950 3500 6250
 Text Label 3500 6250 3    50   ~ 0
-LedDataTarget1_5V
+LedDataTarget2_5V
 $Comp
-L Device:R R2
+L RocketLaunchCircuit-rescue:R-Device R2
 U 1 1 5E87FD63
 P 3350 6500
 F 0 "R2" H 3200 6550 50  0000 L CNN
@@ -590,7 +590,7 @@ F 3 "~" H 3350 6500 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:C C2
+L RocketLaunchCircuit-rescue:C-Device C2
 U 1 1 5E87FD69
 P 3100 6500
 F 0 "C2" H 2950 6600 50  0000 L CNN
@@ -605,7 +605,7 @@ Wire Wire Line
 Text Label 3350 6350 2    50   ~ 0
 SwitchTarget2
 $Comp
-L power:GND #PWR03
+L RocketLaunchCircuit-rescue:GND-power #PWR03
 U 1 1 5E87FD71
 P 3150 6650
 F 0 "#PWR03" H 3150 6400 50  0001 C CNN
@@ -626,7 +626,7 @@ Wire Wire Line
 Text Label 2900 6950 0    50   ~ 0
 SizeTarget2
 $Comp
-L Connector_Generic:Conn_01x05 J11
+L RocketLaunchCircuit-rescue:Conn_01x05-Connector_Generic J11
 U 1 1 5E88B164
 P 4550 7150
 F 0 "J11" V 4750 7100 50  0000 L CNN
@@ -637,7 +637,7 @@ F 3 "~" H 4550 7150 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L power:GND #PWR013
+L RocketLaunchCircuit-rescue:GND-power #PWR013
 U 1 1 5E88B16A
 P 4850 6850
 F 0 "#PWR013" H 4850 6600 50  0001 C CNN
@@ -658,9 +658,9 @@ Text Label 4650 6350 3    50   ~ 0
 Wire Wire Line
 	4550 6950 4550 6250
 Text Label 4550 6250 3    50   ~ 0
-LedDataTarget1_5V
+LedDataTarget3_5V
 $Comp
-L Device:R R3
+L RocketLaunchCircuit-rescue:R-Device R3
 U 1 1 5E88B176
 P 4400 6500
 F 0 "R3" H 4250 6550 50  0000 L CNN
@@ -671,7 +671,7 @@ F 3 "~" H 4400 6500 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:C C3
+L RocketLaunchCircuit-rescue:C-Device C3
 U 1 1 5E88B17C
 P 4150 6500
 F 0 "C3" H 4000 6600 50  0000 L CNN
@@ -686,7 +686,7 @@ Wire Wire Line
 Text Label 4400 6350 2    50   ~ 0
 SwitchTarget3
 $Comp
-L power:GND #PWR010
+L RocketLaunchCircuit-rescue:GND-power #PWR010
 U 1 1 5E88B184
 P 4200 6650
 F 0 "#PWR010" H 4200 6400 50  0001 C CNN
@@ -707,7 +707,7 @@ Wire Wire Line
 Text Label 3950 6950 0    50   ~ 0
 SizeTarget3
 $Comp
-L Connector_Generic:Conn_01x05 J12
+L RocketLaunchCircuit-rescue:Conn_01x05-Connector_Generic J12
 U 1 1 5E897B46
 P 5600 7150
 F 0 "J12" V 5800 7100 50  0000 L CNN
@@ -718,7 +718,7 @@ F 3 "~" H 5600 7150 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L power:GND #PWR015
+L RocketLaunchCircuit-rescue:GND-power #PWR015
 U 1 1 5E897B4C
 P 5900 6850
 F 0 "#PWR015" H 5900 6600 50  0001 C CNN
@@ -739,9 +739,9 @@ Text Label 5700 6350 3    50   ~ 0
 Wire Wire Line
 	5600 6950 5600 6250
 Text Label 5600 6250 3    50   ~ 0
-LedDataTarget1_5V
+LedDataTarget4_5V
 $Comp
-L Device:R R4
+L RocketLaunchCircuit-rescue:R-Device R4
 U 1 1 5E897B58
 P 5450 6500
 F 0 "R4" H 5300 6550 50  0000 L CNN
@@ -752,7 +752,7 @@ F 3 "~" H 5450 6500 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:C C4
+L RocketLaunchCircuit-rescue:C-Device C4
 U 1 1 5E897B5E
 P 5200 6500
 F 0 "C4" H 5050 6600 50  0000 L CNN
@@ -767,7 +767,7 @@ Wire Wire Line
 Text Label 5450 6350 2    50   ~ 0
 SwitchTarget4
 $Comp
-L power:GND #PWR014
+L RocketLaunchCircuit-rescue:GND-power #PWR014
 U 1 1 5E897B66
 P 5250 6650
 F 0 "#PWR014" H 5250 6400 50  0001 C CNN
@@ -788,7 +788,7 @@ Wire Wire Line
 Text Label 5000 6950 0    50   ~ 0
 SizeTarget4
 $Comp
-L power:GND #PWR024
+L RocketLaunchCircuit-rescue:GND-power #PWR024
 U 1 1 5E8F3D2E
 P 8000 1400
 F 0 "#PWR024" H 8000 1150 50  0001 C CNN
@@ -809,7 +809,7 @@ Wire Wire Line
 Text Label 7200 1500 0    50   ~ 0
 PointSelectorEncoderB
 $Comp
-L power:GND #PWR025
+L RocketLaunchCircuit-rescue:GND-power #PWR025
 U 1 1 5E942130
 P 8700 1500
 F 0 "#PWR025" H 8700 1250 50  0001 C CNN
@@ -820,7 +820,7 @@ F 3 "" H 8700 1500 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Device:Rotary_Encoder_Switch SW4
+L RocketLaunchCircuit-rescue:Rotary_Encoder_Switch-Device SW4
 U 1 1 5E8F157E
 P 8350 1400
 F 0 "SW4" H 8350 1767 50  0000 C CNN
@@ -849,7 +849,7 @@ Arduino_5V
 Wire Wire Line
 	5600 1600 6000 1600
 $Comp
-L power:GND #PWR023
+L RocketLaunchCircuit-rescue:GND-power #PWR023
 U 1 1 5EB8702E
 P 5850 1900
 F 0 "#PWR023" H 5850 1650 50  0001 C CNN
@@ -932,7 +932,7 @@ Wire Wire Line
 Wire Wire Line
 	8750 2650 8750 2850
 $Comp
-L Connector_Generic:Conn_01x03 J14
+L RocketLaunchCircuit-rescue:Conn_01x03-Connector_Generic J14
 U 1 1 5EB538A7
 P 6200 1700
 F 0 "J14" H 6300 1700 50  0000 L CNN
@@ -943,7 +943,7 @@ F 3 "~" H 6200 1700 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:R_Small R6
+L RocketLaunchCircuit-rescue:R_Small-Device R6
 U 1 1 5EB9F373
 P 5850 1800
 F 0 "R6" H 5700 1850 50  0000 L CNN
@@ -1103,7 +1103,7 @@ Arduino_5V
 Wire Wire Line
 	5200 3250 5200 3300
 $Comp
-L power:GND #PWR04
+L RocketLaunchCircuit-rescue:GND-power #PWR04
 U 1 1 5EA19618
 P 5300 3250
 F 0 "#PWR04" H 5300 3000 50  0001 C CNN
@@ -1116,7 +1116,7 @@ $EndComp
 Wire Wire Line
 	5300 3250 5300 3300
 $Comp
-L power:GND #PWR05
+L RocketLaunchCircuit-rescue:GND-power #PWR05
 U 1 1 5EA3BCA6
 P 5300 4350
 F 0 "#PWR05" H 5300 4100 50  0001 C CNN
@@ -1168,7 +1168,7 @@ Arduino_5V
 Wire Wire Line
 	5600 4700 5600 4750
 $Comp
-L power:GND #PWR08
+L RocketLaunchCircuit-rescue:GND-power #PWR08
 U 1 1 5EB84976
 P 5700 4700
 F 0 "#PWR08" H 5700 4450 50  0001 C CNN
@@ -1181,7 +1181,7 @@ $EndComp
 Wire Wire Line
 	5700 4700 5700 4750
 $Comp
-L power:GND #PWR09
+L RocketLaunchCircuit-rescue:GND-power #PWR09
 U 1 1 5EB94E6F
 P 5700 5800
 F 0 "#PWR09" H 5700 5550 50  0001 C CNN
@@ -1250,7 +1250,7 @@ Connection ~ 4450 2750
 Wire Wire Line
 	4450 2750 4800 2750
 $Comp
-L Device:C C6
+L RocketLaunchCircuit-rescue:C-Device C6
 U 1 1 5EDDB888
 P 4450 2600
 F 0 "C6" H 4450 2700 50  0000 L CNN
@@ -1267,7 +1267,7 @@ Connection ~ 4650 2950
 Wire Wire Line
 	4650 2950 4800 2950
 $Comp
-L Device:C C7
+L RocketLaunchCircuit-rescue:C-Device C7
 U 1 1 5ED5AEFD
 P 4550 2700
 F 0 "C7" H 4550 2800 50  0000 L CNN
@@ -1278,7 +1278,7 @@ F 3 "~" H 4550 2700 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:C C8
+L RocketLaunchCircuit-rescue:C-Device C8
 U 1 1 5ED22825
 P 4650 2800
 F 0 "C8" H 4650 2900 50  0000 L CNN
@@ -1295,7 +1295,7 @@ Connection ~ 6000 2750
 Wire Wire Line
 	6000 2750 6750 2750
 $Comp
-L Device:R R9
+L RocketLaunchCircuit-rescue:R-Device R9
 U 1 1 5ECBAF3A
 P 4950 2950
 F 0 "R9" V 5000 2750 50  0000 L CNN
@@ -1306,7 +1306,7 @@ F 3 "~" H 4950 2950 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Device:R R8
+L RocketLaunchCircuit-rescue:R-Device R8
 U 1 1 5ECACC72
 P 4950 2850
 F 0 "R8" V 5000 2650 50  0000 L CNN
@@ -1317,7 +1317,7 @@ F 3 "~" H 4950 2850 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Device:R R7
+L RocketLaunchCircuit-rescue:R-Device R7
 U 1 1 5EC9E8CF
 P 4950 2750
 F 0 "R7" V 5000 2550 50  0000 L CNN
@@ -1368,7 +1368,7 @@ PlayerCountSignal
 Wire Wire Line
 	5650 2950 6600 2950
 $Comp
-L power:GND #PWR020
+L RocketLaunchCircuit-rescue:GND-power #PWR020
 U 1 1 5E8DAE92
 P 6150 2450
 F 0 "#PWR020" H 6150 2200 50  0001 C CNN
@@ -1379,7 +1379,7 @@ F 3 "" H 6150 2450 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Connector_Generic:Conn_02x05_Counter_Clockwise J13
+L RocketLaunchCircuit-rescue:Conn_02x05_Counter_Clockwise-Connector_Generic J13
 U 1 1 5E8CF06C
 P 5350 2750
 F 0 "J13" H 5400 2450 50  0000 C CNN
@@ -1390,7 +1390,7 @@ F 3 "~" H 5350 2750 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:C C5
+L RocketLaunchCircuit-rescue:C-Device C5
 U 1 1 5ED5FABC
 P 6000 2600
 F 0 "C5" H 6000 2700 50  0000 L CNN
@@ -1401,7 +1401,7 @@ F 3 "~" H 6000 2600 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:R R5
+L RocketLaunchCircuit-rescue:R-Device R5
 U 1 1 5ED5FAB6
 P 5850 2750
 F 0 "R5" V 5900 2850 50  0000 L CNN
