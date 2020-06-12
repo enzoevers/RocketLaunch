@@ -293,7 +293,7 @@ bool Scoreboard::animationStart()
     if (m_curStepStart >= 1)
     {
       SpriteViewer ballOne = *m_ballSpriteViewer;
-      ballOne.setPriteSolidColor(CHSV(HSV_RAINDBOW_RED, 255, 255));
+      ballOne.setSpriteSolidColor(CHSV(HSV_RAINDBOW_RED, 255, 255));
       ballOne.setPosition({2, 2});
       ballOne.setSpriteOnScreen();
     }
@@ -301,7 +301,7 @@ bool Scoreboard::animationStart()
     if (m_curStepStart >= 2)
     {
       SpriteViewer ballTwo = *m_ballSpriteViewer;
-      ballTwo.setPriteSolidColor(CHSV(HSV_RAINDBOW_RED, 255, 255));
+      ballTwo.setSpriteSolidColor(CHSV(HSV_RAINDBOW_RED, 255, 255));
       ballTwo.setPosition({13, 2});
       ballTwo.setSpriteOnScreen();
     }
@@ -309,7 +309,7 @@ bool Scoreboard::animationStart()
     if (m_curStepStart >= 3)
     {
       SpriteViewer ballThree = *m_ballSpriteViewer;
-      ballThree.setPriteSolidColor(CHSV(HSV_RAINDBOW_RED, 255, 255));
+      ballThree.setSpriteSolidColor(CHSV(HSV_RAINDBOW_RED, 255, 255));
       ballThree.setPosition({25, 2});
       ballThree.setSpriteOnScreen();
     }
@@ -526,7 +526,7 @@ void Scoreboard::animationIdleInGame_writePoints(char* scoreStringBuf, uint8_t n
     startIndexSprite.Y = m_matrixScreenSize.Y - verticalSpacingFromBottom - tmpSprite.getSpriteSize().Y - 1;
 
     tmpSprite.setPosition(startIndexSprite);
-    tmpSprite.setPriteSolidColor(color);
+    tmpSprite.setSpriteSolidColor(color);
     tmpSprite.setSpriteOnScreen();
   }
 }
