@@ -54,7 +54,7 @@ bool SpriteViewer::setSprite(Sprite sprite, MatrixUtil::XY spriteTopLeftPosition
   return true;
 }
 
-void SpriteViewer::setPriteSolidColor(CHSV newSolidColor)
+void SpriteViewer::setSpriteSolidColor(CHSV newSolidColor)
 {
   m_sprite.colorHSV = newSolidColor;
 }

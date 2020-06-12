@@ -25,7 +25,7 @@ class SpriteViewer
     bool setScreen(CRGB* matrixScreen, MatrixUtil::XY matrixSize);
     bool setSprite(Sprite sprite, MatrixUtil::XY spriteTopLeftPosition);
 
-    void setPriteSolidColor(CHSV newSolidColor);
+    void setSpriteSolidColor(CHSV newSolidColor);
     void setPosition(MatrixUtil::XY topLeftPosition);
     void translateSprite(MatrixUtil::XY translation);
 

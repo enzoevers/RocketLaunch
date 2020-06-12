@@ -5,13 +5,6 @@
 // When programming the Arduino, pin 0 and 1 may need to be disconnected.
 #include <HardwareSerial.h>
 
-enum class ReadState
-{
-  WaitForStart,
-  ReadingMessage,
-  MessageComplete
-};
-
 class SerialCom : public ITransport
 {
   public:
@@ -34,6 +27,13 @@ class SerialCom : public ITransport
 
     const char m_startChar = '#';
     const char m_stopChar = '%';
+
+    enum class ReadState
+    {
+      WaitForStart,
+      ReadingMessage,
+      MessageComplete
+    };
 
     ReadState m_readingState = ReadState::WaitForStart;
     bool m_newMessasge = false;
