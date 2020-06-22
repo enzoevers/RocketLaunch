@@ -1428,4 +1428,21 @@ F 3 "~" H 3350 2300 50  0001 C CNN
 	1    3350 2300
 	1    0    0    -1  
 $EndComp
+Wire Wire Line
+	2900 1400 3300 1400
+Text Label 2900 1400 0    50   ~ 0
+Arduino_5V
+$Comp
+L power:GND #PWR?
+U 1 1 5EF2356B
+P 3150 1500
+F 0 "#PWR?" H 3150 1250 50  0001 C CNN
+F 1 "GND" H 3155 1327 50  0000 C CNN
+F 2 "" H 3150 1500 50  0001 C CNN
+F 3 "" H 3150 1500 50  0001 C CNN
+	1    3150 1500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3150 1500 3300 1500
 $EndSCHEMATC
