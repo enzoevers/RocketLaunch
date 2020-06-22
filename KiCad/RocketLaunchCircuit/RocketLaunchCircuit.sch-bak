@@ -64,28 +64,6 @@ F 3 "~" H 4950 700 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L RocketLaunchCircuit-rescue:Conn_02x03_Counter_Clockwise-Connector_Generic J2
-U 1 1 5E6AB262
-P 3350 2300
-F 0 "J2" H 3400 2617 50  0000 C CNN
-F 1 "Arduino_Serial_And_5V" H 3400 2526 50  0000 C CNN
-F 2 "" H 3350 2300 50  0001 C CNN
-F 3 "~" H 3350 2300 50  0001 C CNN
-	1    3350 2300
-	1    0    0    -1  
-$EndComp
-$Comp
-L RocketLaunchCircuit-rescue:Conn_02x05_Counter_Clockwise-Connector_Generic J1
-U 1 1 5E6AC440
-P 3500 1300
-F 0 "J1" H 3550 1717 50  0000 C CNN
-F 1 "Arduino_GPIO" H 3550 1626 50  0000 C CNN
-F 2 "" H 3500 1300 50  0001 C CNN
-F 3 "~" H 3500 1300 50  0001 C CNN
-	1    3500 1300
-	1    0    0    -1  
-$EndComp
-$Comp
 L RocketLaunchCircuit-rescue:Conn_02x20_Row_Letter_Last-Connector_Generic J3
 U 1 1 5E6AC8BC
 P 3200 4950
@@ -1428,4 +1406,26 @@ NoConn ~ 1400 5450
 NoConn ~ 1400 5750
 Connection ~ 3500 4150
 Connection ~ 3500 4050
+$Comp
+L Connector_Generic:Conn_02x05_Odd_Even J?
+U 1 1 5EF161BD
+P 3500 1300
+F 0 "J?" H 3550 1717 50  0000 C CNN
+F 1 "Arduino_GPIO_IDC" H 3550 1626 50  0000 C CNN
+F 2 "" H 3500 1300 50  0001 C CNN
+F 3 "~" H 3500 1300 50  0001 C CNN
+	1    3500 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_02x03_Odd_Even J?
+U 1 1 5EF1750E
+P 3350 2300
+F 0 "J?" H 3400 2617 50  0000 C CNN
+F 1 "Arduino_Serial_And_5V_IDC" H 3400 2526 50  0000 C CNN
+F 2 "" H 3350 2300 50  0001 C CNN
+F 3 "~" H 3350 2300 50  0001 C CNN
+	1    3350 2300
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
