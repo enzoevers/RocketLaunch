@@ -57,7 +57,7 @@ UserInterface userInterface(playerSelectPin, gameModePin, startResetPin,
 
 //----------
 // Confetti cannons
-const uint8_t cannonPin = 2;
+const uint8_t cannonPin = 7;
 void fireConfettiCannons();
 //----------
 
