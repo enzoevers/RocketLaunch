@@ -1,4 +1,5 @@
 EESchema Schematic File Version 4
+LIBS:RocketLaunchCircuit-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
@@ -1180,33 +1181,33 @@ Wire Wire Line
 Wire Wire Line
 	4450 5200 5250 5200
 Text Label 4450 5200 0    50   ~ 0
-LedDataTarget2_3V3
+LedDataTarget3_3V3
 Wire Wire Line
 	4450 5100 5250 5100
 Text Label 4450 5100 0    50   ~ 0
-LedDataTarget1_3V3
+LedDataTarget4_3V3
 Text Label 4450 5300 0    50   ~ 0
-LedDataTarget3_3V3
+LedDataTarget2_3V3
 Wire Wire Line
 	4450 5300 5250 5300
 Wire Wire Line
 	4450 5400 5250 5400
 Text Label 4450 5400 0    50   ~ 0
-LedDataTarget4_3V3
+LedDataTarget1_3V3
 Text Label 6800 5400 2    50   ~ 0
-LedDataTarget4_5V
+LedDataTarget1_5V
 Wire Wire Line
 	6800 5400 6050 5400
 Text Label 6800 5300 2    50   ~ 0
-LedDataTarget3_5V
+LedDataTarget2_5V
 Wire Wire Line
 	6800 5300 6050 5300
 Wire Wire Line
 	6800 5100 6050 5100
 Text Label 6800 5100 2    50   ~ 0
-LedDataTarget1_5V
+LedDataTarget4_5V
 Text Label 6800 5200 2    50   ~ 0
-LedDataTarget2_5V
+LedDataTarget3_5V
 Wire Wire Line
 	6800 5200 6050 5200
 Wire Wire Line
